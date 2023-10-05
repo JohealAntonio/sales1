@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charles Solutions | Services for all</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="{% static 'css/soft-ui-dashboard.css' %}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" href="/static/img/logocs.png">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <style>
+    span, a
+    {
+     margin: auto 10px auto 10px;
+     font-family: 'Poppins', sans-serif;
+     color: #c8a47e;
+     font-weight: 400;
+    }
+
+    .hover-underline-animation 
+    {
+      display: inline-block;
+      position: relative;
+      color: #c8a47e;
+    }
+
+    .hover-underline-animation:after 
+    {
+     content: '';
+     position: absolute; 
+     width: 100%;
+     transform: scaleX(0);
+     height: .5px;
+     bottom: 0;
+     left: 0;
+     background-color: #c8a47e;
+     transform-origin: bottom right;
+     transition: transform 0.25s ease-out;
+     text-decoration: none;
+     color: #c8a47e;
+    }
+
+    .hover-underline-animation:hover
+    {
+     color: #c8a47e;
+     cursor: pointer;
+    }
+
+    .hover-underline-animation:hover:after 
+    {
+     transform: scaleX(1);
+     transform-origin: bottom left;
+     color: #c8a47e;
+    }
+
+    .btn:hover
+    {
+     cursor: pointer;
+     animation: btnmove .5s;
+     color: white; 
+     background-color: #ad846c;
+    }
+
+    @keyframes btnmove
+    {
+     from {color: rgb(0, 0, 0); background-color:#c8a47e; border: 0;}
+     to {color: rgb(255, 255, 255); background-color:#ad846c; border: 0;}
+    }
+
+    .btn
+    {
+     border: 0px;
+     font-family: 'Poppins', sans-serif;
+     font-weight: 200;
+     border-radius: 30px;
+     font-size: 16px;
+     text-align: center;
+     color: black;
+     background-color: #c8a47e;
+     margin-top: 10px;
+    }
+
+    .hdr
+    {
+     position: fixed;
+     background-color: black;
+    }
+
+   
+
+    @keyframes frmove
+    {
+     from {bottom: 100%; border: 0px;}
+     to {bottom: 30%; border: .5px solid rgb(44, 44, 44);} 
+    }
+
+
+    .fa:hover
+    {
+     cursor: pointer;
+     color:#ad8e6c;
+    }
+
+    img
+    {
+     width: 674.5px;
+     height: 449px;
+    }
+
+    label, .form-label
+    {
+     color: #c8a47e;
+    }
+
+    .asteriskField
+    {
+      display: none;
+    }
+
+    .logo
+    {
+     text-decoration: none;
+    }
+
+    .logo:hover
+    {
+     color:#c8a47e;
+    }
+
+    @keyframes fade-in
+    {
+     from {color: black}
+     to {color: #c8a47e;}
+    }
+
+    body::content
+    {
+     animation: fade-in 0.5s;
+    }
+
+    .lg
+    {
+     margin-top: 17px; 
+     margin-left: 25%; 
+     height: 35px; 
+     width: 35px;
+    }
+
+    #au 
+    {
+     margin-left: 100px;
+    }
+    
+
+    @media (max-width:1630px)
+    {
+     .lg 
+     {
+      margin-left:20%
+     }
+    }
+
+    @media (max-width:1434px)
+    {
+     #au
+     {
+      width: 70px;
+      margin-left: 100px
+     }
+     .lg 
+     {
+      margin-left: 15%;
+     }
+    }
+
+    @media (max-width:1308px)
+    {
+     .lg 
+     {
+      margin-left:14%
+     }
+    }
+
+    @media (max-width:1263px)
+    {
+     .lg 
+     {
+      margin-left: 13%
+     }
+    }
+
+    .hd
+    {
+     font-size: 30px;
+     font-weight: 600;
+    }
+
+    .bn 
+    {
+     margin-bottom: 5%;
+     border-radius: 10px;
+     border: 0px;
+     height: auto;
+     width: auto;
+     background-color: #c8a47e;
+    }
+
+    @keyframes hov 
+    {
+     from {background-color: #c8a47e; color: black;}
+     to {background-color:#ad846c; color: white; }
+    }
+
+
+    .bn:hover
+    {
+     animation: hov 0.5s;
+     background-color:#ad846c; 
+     color: white;
+    }
+
+    .oh 
+    {
+     text-align: center;
+     margin-top: -5%;
+    }
+
+    .week
+    {
+     width: 20%;
+     border-radius: 10px;
+     border: 0.5px solid rgb(50, 50, 50);
+     margin: auto;
+    }
+
+    input:focus, textarea:focus
+    {
+     outline: none;
+    }
+
+    </style>
+</head>
+<body style="background-color: rgb(0, 0, 0); font-family: 'Poppins', sans-serif; color: #c8a47e;">
+    <div class="hdr" style="width: 100%; margin: auto; display:flex; text-align: center;">
+        <img class="lg" src="/static/img/logocs.png" alt="">
+        <h1 style="margin-top: .8%; font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e;"><a style="font-weight: 600;" class="logo" href="#">Charles Solutions</a></h1>
+        <span style="margin-left: 0; margin-right: 0;"><a id="au" class="hover-underline-animation" style=" text-decoration: none;" href="#about_us">About us</a></span>
+        <span style="margin-left: 0; margin-right: 0;"><a class="hover-underline-animation" style=" text-decoration: none;" href="#services">Services</a></span>
+        <span style="margin-left: 0; margin-right: 0;"><a class="hover-underline-animation" style=" text-decoration: none;" href="#opening_hours">Opening Hours</a></span>
+        <span style="margin-left: 0; margin-right: 0;"><a class="hover-underline-animation" style=" text-decoration: none;" href="#location">Location</a></span>
+        <span style="margin-left: 0; margin-right: 0;"><a class="hover-underline-animation" style=" text-decoration: none;" href="#contact_us">Contact Us</a></span>
+    </div>
+    <br>
+    <center id="">
+        <h1 style="padding-top: 100px; color: #c8a47e;">Hey There! &#128522</h1>
+        <img style="margin-top: 50px; margin-bottom: 30px; height: 655px; width: 1294px; " src="/static/img/gadgets.jpg" alt="coding image">
+    </center>
+    <div  id="about_us" style="height: 50px; width: max-content;"></div>
+    <div style="height: auto; width: auto; margin-bottom: 10px;"></div>
+    <div style="display: inline;">
+      <h1 class="hd" style="margin: 0 67.45px 0 67.45px;">Charles Solutions - Your Trusted Gadgets Repair Center in India</h1>
+      <br><br>
+      <div>
+        <div style="float: right;">
+          <img style=" margin-right: 450px; width: 537px; height: 357.5px;" src="/static/img/computer_repair.jpg" alt="">
+        </div>
+        <div>
+          <p style="font-size: 20px; width: 40%; margin: 0 67.45px 0 67.45px;">
+            Charles Solutions is a leading repair service center located in the heart of India, dedicated to delivering unparalleled expertise and outstanding customer service in the realm of gadget repair. With a strong commitment to excellence, we have established ourselves as a trusted destination for individuals seeking efficient and reliable solutions for their electronic devices.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+    <div style="display: inline;">
+      <h1 class="hd" style="text-align: start; margin: 150px 0 0 67.45px;">Exceptional Customer Service</h1>
+      <br><br>
+      <div>
+        <div style="float: right;">
+          <img style="margin-right: 450px; width: 537px; height: 357.5px;" src="/static/img/customer service.jpg" alt="">
+        </div>
+        <div>
+          <p style="font-size: 20px; width: 40%; margin-left: 67.45px;">
+            Our core belief revolves around putting the customer first. We understand the frustration that arises when your cherished gadgets encounter problems, and we aim to alleviate your stress by offering a seamless and customer-centric experience. From the moment you contact us to the point when you receive your fully repaired device, we prioritize your satisfaction. Our friendly and knowledgeable staff is always ready to assist you, addressing your concerns and providing clear explanations throughout the repair process.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div style="display: inline;">
+      <h1 class="hd" style="text-align: start; margin: 100px 0 0 67.45px;">Join Us Today</h1>
+      <br><br>
+      <div>
+        <div style="float: right;">
+          <img style="margin-right: 450px; width: 537px; height: 357.5px;" src="/static/img/handshake.jpg" alt="">
+        </div>
+        <div>
+          <p style="font-size: 20px; width: 40%; margin-left: 67.45px;">
+            Whether you're experiencing a minor glitch or a major malfunction, Charles Solutions is your trusted partner in restoring your gadgets to their full glory. We invite you to experience our exceptional repair services, where expertise, quality, and customer satisfaction converge. Join the Charles Solutions family today and let us breathe new life into your cherished electronic devices. Your gadgets are in safe hands with us!
+          </p>
+        </div>
+      </div>
+    </div> 
+    <div  id="services" style=" margin-top: 15%; height: 60px; width: max-content;"></div>
+    <div style="margin-bottom: 30px; text-align: center;">
+      <h1>Services we provide</h1>
+    </div>
+    <div style="display: flex; margin-bottom: -200px;">
+      <div style="border-radius: 20px; text-align: center; float: left; margin: 0 auto 0 auto; height: max-content; width: 30%; border: 0.5px solid rgb(50, 50, 50);">
+        <h1 style="margin-top: 5%;">Mobile service</h1>
+        <img style="margin-bottom: 20px; height: 90%; width: 90%;" src="/static/img/mobile-repair.jpg" alt="">
+        <p>
+          Key features of our mobile repair services include:
+          <ul style="text-align:left;">
+            <li>Screen Repair and Replacement</li>
+            <li>Battery Replacement</li>
+            <li>Water Damage Repair</li>
+            <li>Software Troubleshooting</li>
+            <li>Hardware Repairs</li>
+            <li>Data Recovery</li>
+            <li>Accessories and Parts</li>
+            <li>Fast Turnaround</li>
+            <li>Professional Service</li>
+          </ul>
+          Whether you have a smartphone or tablet from Apple, Samsung, Google, or any other major brand, Charles Solutions is your one-stop destination for reliable, efficient, and affordable mobile repair services. Trust us to bring your device back to life and keep you connected in today's digital world.
+        </p>
+        <button class="bn">Book now</button>
+      </div>
+      <div style="border-radius: 20px; text-align: center; float: left; margin: 0 auto 0 auto; height: max-content; width: 30%; border: 0.5px solid rgb(50, 50, 50);">
+        <h1 style="margin-top: 5%;">Computer service</h1>
+        <img style="margin-bottom: 20px; height: 90%; width: 90%;" src="/static/img/Computer-repair.jpg" alt="">
+        <p>
+          Key features of our PC repair services include:
+          <ul style="text-align:left;">
+            <li>Hardware Repairs and Upgrades</li>
+            <li>Operating System Troubleshooting</li>
+            <li>Virus and Malware Removal</li>
+            <li>Data Recovery</li>
+            <li>Software Installation and Configuration</li>
+            <li>Network and Internet Troubleshooting</li>
+            <li>Computer Cleaning and Maintenance</li>
+            <li>Custom PC Builds</li>
+            <li>Affordable Pricing</li>
+          </ul>
+          Charles Solutions is your one-stop destination for reliable, efficient, and affordable PC repair services. Whether you have a Windows-based laptop, a macOS desktop, or a custom-built gaming rig, trust us to bring your computer back to peak performance and keep you productive and connected in the digital age.
+        </p>
+        <button class="bn">Book now</button>
+      </div>
+      <div style=" border-radius: 20px; text-align: center; float: none; margin: 0 auto 250px auto; height: max-content; width: 30%; border: 0.5px solid rgb(50, 50, 50);">
+        <h1 style="margin-top: 5%;">Other appliances</h1>
+        <img style="margin-bottom: 20px; height: 90%; width: 90%;" src="/static/img/other-appliance.jpg" alt="">
+        <p style="font-size: small;">
+          Key features of other electronic appliance repair services include:
+          <ul style="font-size: small; text-align:left;">
+            <li>Refrigerator Repair</li>
+            <li>Washing Machine and Dryer Repair</li>
+            <li>Oven and Stove Repair</li>
+            <li>Dishwasher Repair</li>
+            <li>Software Installation and Configuration</li>
+            <li>Air Conditioner Repair</li>
+            <li>Microwave and Small Appliance Repair</li>
+            <li>Commercial Appliance Repair</li>
+            <li>Replacement Parts</li>
+            <li>Preventive Maintenance</li>
+            <li>Customer Satisfaction</li>
+          </ul>
+          <p style="margin-bottom: 6.5%; font-size: small;">Whether you're a homeowner or a business owner, Charles Solutions is your trusted partner for reliable, efficient, and affordable electronic appliance repair services. We understand the importance of these appliances in your daily operations and lifestyle, and we're committed to keeping them running smoothly. Trust us to bring your electronic appliances back to life and provide you with peace of mind.</p>
+        </p>
+        <button class="bn">Book now</button>
+      </div>
+    </div>
+    <div id="opening_hours" style="height: 60px; width: max-content;"></div>
+    <div style="margin-bottom: 5%; width: auto;"></div>
+    <div class="oh">
+      <h1>Opening Hours</h1>
+      <div class="week">
+        <h2 style="margin-top: 20px;">Weekdays</h2>
+        <br>
+        <p id="mon">Monday <span id="mt">9am to 11pm</span></p>
+        <br>
+        <p id="tue">Tuesday<span id="tt">9am to 11pm</span></p>
+        <br>
+        <p id="wed">Wednesday <span id="wt">9am to 11pm</span></p>
+        <br>
+        <p id="thr">Thursday <span id="tht">9am to 11pm</span></p>
+        <br>
+        <p id="fri">Friday <span id="ft">9am to 11pm</span></p>
+        <br>
+        <h2 style="margin-top: 20px;">Weekends</h2>
+        <br>
+        <p id="sat">Saturday <span id="st">9am to 5pm</span></p>
+        <br>
+        <p id="sun">Sunday <span id="sut">9am to 5pm</span></p>
+        <br>
+      </div>
+    </div>
+
+    <div id="location" style="height: 20px; width: max-content;"></div>
+    <div style="margin-bottom: 5%; width: auto;"></div>
+    <div style="text-align: center;">
+      <h1>Our location</h1>
+      <iframe style="border-radius: 25px ;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.0088687116977!2d31.131629674704104!3d29.97917512166174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584587ac8f291b%3A0x810c2f3fa2a52424!2sThe%20Great%20Pyramid%20of%20Giza!5e0!3m2!1sen!2sin!4v1696054719661!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div id="contact_us" style="height: 20px; width: max-content;"></div>
+    <div style="margin-bottom: 5%; width: auto;"></div>
+    <div style="text-align: center;">
+      <h1>Get in touch</h1>
+      <div style="width: max-content; margin: auto;">
+        <div style="display: flex;">
+          <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
+            <label for="" style="display: block; text-align: left;">First Name</label>
+            <input  type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Rick">
+          </div>
+          <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
+            <label for="" style="display: block; text-align: left;">Last Name</label>
+            <input type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Astley">
+          </div>
+        </div>
+        <br>
+        <div style="display: flex;">
+          <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
+            <label for="" style="display: block; text-align: left;">Email</label>
+            <input  type="email" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="nggyu@gmail.com">
+          </div>
+          <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
+            <label for="" style="display: block; text-align: left;">Phone Number</label>
+            <input type="tel" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="+1234567890">
+          </div>
+        </div>
+        <br>
+        <div style="width: max-content;">
+          <label for="" style="display: block; text-align: left;">Message</label>
+          <textarea name="msg" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" id="" cols="50" rows="10" placeholder="Type what you want to tell us here..."></textarea>
+        </div>
+        <br>
+        <div style="float: left">
+          <input class="bn" type="submit">
+        </div>
+      </div>
+    </div>
+    <script>
+
+      function cl()
+      {
+        document.getElementById('loginfrm').style.display = "none";
+        document.getElementById('frmdiv').style.padding = "0px";
+        document.getElementById('frmdiv').style.border = "0px";
+      }
+
+      const d = new Date()
+      
+      if (d.getDay() == 1)
+      {
+      document.getElementById('mon').style.borderRadius = "10px";
+      document.getElementById('mon').style.backgroundColor = "#c8a47e";
+      document.getElementById('mon').style.color = "black";
+      document.getElementById('mon').style.fontWeight = "600";
+      document.getElementById('mon').style.width = "85%";
+      document.getElementById('mon').style.margin = "auto";
+      document.getElementById('mt').style.color = "black";
+      document.getElementById('mt').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 2)
+      {
+      document.getElementById('tue').style.borderRadius = "10px";
+      document.getElementById('tue').style.backgroundColor = "#c8a47e";
+      document.getElementById('tue').style.color = "black";
+      document.getElementById('tue').style.fontWeight = "600";
+      document.getElementById('tue').style.width = "85%";
+      document.getElementById('tue').style.margin = "auto";
+      document.getElementById('tt').style.color = "black";
+      document.getElementById('tt').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 3)
+      {
+      document.getElementById('wed').style.borderRadius = "10px";
+      document.getElementById('wed').style.backgroundColor = "#c8a47e";
+      document.getElementById('wed').style.color = "black";
+      document.getElementById('wed').style.fontWeight = "600";
+      document.getElementById('wed').style.width = "85%";
+      document.getElementById('wed').style.margin = "auto";
+      document.getElementById('wt').style.color = "black";
+      document.getElementById('wt').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 4)
+      {
+      document.getElementById('thr').style.borderRadius = "10px";
+      document.getElementById('thr').style.backgroundColor = "#c8a47e";
+      document.getElementById('thr').style.color = "black";
+      document.getElementById('thr').style.fontWeight = "600";
+      document.getElementById('thr').style.width = "85%";
+      document.getElementById('thr').style.margin = "auto";
+      document.getElementById('tht').style.color = "black";
+      document.getElementById('tht').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 5)
+      {
+      document.getElementById('fri').style.borderRadius = "10px";
+      document.getElementById('fri').style.backgroundColor = "#c8a47e";
+      document.getElementById('fri').style.color = "black";
+      document.getElementById('fri').style.fontWeight = "600";
+      document.getElementById('fri').style.width = "85%";
+      document.getElementById('fri').style.margin = "auto";
+      document.getElementById('ft').style.color = "black";
+      document.getElementById('ft').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 6)
+      {
+      document.getElementById('sat').style.borderRadius = "10px";
+      document.getElementById('sat').style.backgroundColor = "#c8a47e";
+      document.getElementById('sat').style.color = "black";
+      document.getElementById('sat').style.fontWeight = "600";
+      document.getElementById('sat').style.width = "85%";
+      document.getElementById('sat').style.margin = "auto";
+      document.getElementById('st').style.color = "black";
+      document.getElementById('st').style.fontWeight = "600";
+      }
+      else if (d.getDay() == 0)
+      {
+      document.getElementById('sun').style.borderRadius = "10px";
+      document.getElementById('sun').style.backgroundColor = "#c8a47e";
+      document.getElementById('sun').style.color = "black";
+      document.getElementById('sun').style.fontWeight = "600";
+      document.getElementById('sun').style.width = "85%";
+      document.getElementById('sun').style.margin = "auto";
+      document.getElementById('sut').style.color = "black";
+      document.getElementById('sut').style.fontWeight = "600";
+      }
+      
+    </script>
+</body>
+</html>

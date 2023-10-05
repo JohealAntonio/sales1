@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+
+{% block content %} 
+    <div class="form-container">
+        {% load crispy_forms_tags %}
+        <form  id="loginfrm" method="post" class="form-container"> 
+            <a onclick="cl()" class="fa fa-close" style="margin-left: 90%;"></a>
+            <h1>Login</h1> 
+            {% csrf_token %}
+            {{form|crispy}}
+            <p style=" margin-bottom: 20px; width: 250px; color: rgb(112, 112, 112);">Haven't registered yet?<a style="color: rgb(131, 195, 255);" href="http://127.0.0.1:8000/signup" >  Sign up</a>
+            </p>
+            <button type="submit" class="btn btn-primary">Login</button> 
+        </form> 
+    </div>
+{% endblock %}

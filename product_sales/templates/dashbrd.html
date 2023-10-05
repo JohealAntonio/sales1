@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700;800&family=Imbue:opsz,wght@10..100,100;10..100,600&family=Montserrat:wght@300&family=Nabla&family=Reem+Kufi+Fun:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
+    <link rel="icon" href="/static/img/logocs.png">
+    <title>{{ request.user }}</title>
+    <style>
+     
+    </style>
+</head>
+<body style="background-color: black;" id="body-pd">
+    <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
+        <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
+        <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
+    </header>
+    <div style="background-color: rgb(10, 10, 10);" class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> <a style="color: #c8a47e;" href="#" class="nav_logo"><img style="height: 20px; width: 20px;" src="/static/img/logocs.png" alt=""><span style="font-family: 'Poppins', sans-serif; font-weight: 600; color:#c8a47e;" class="nav_logo-name">Charles Solutions</span> </a>
+                <div class="nav_list"> 
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n1" onclick="changec(this)" class="nav_link active">
+                        <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span>
+                    </a> 
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n2" onclick="changec(this)" class="nav_link">
+                        <i class='bx bx-message-square-detail nav_icon'></i><span class="nav_name">Messages</span>
+                    </a> 
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n3" onclick="changec(this)" class="nav_link">
+                        <i class='bx bx-wrench'></i><span class="nav_name">Today's offer</span>
+                    </a>
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n4" onclick="changec(this)" class="nav_link">
+                        <i class='bx bx-info-circle'></i><span class="nav_name">Important updates</span>
+                    </a>
+                </div>
+            </div> 
+            {% if user.is_authenticated %}
+                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/index/">
+                    {% csrf_token %} 
+                    <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
+                        <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
+                            <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
+        </nav>
+    </div>
+ <script>
+    function changec(a)
+    {
+        if(a.id == "n1")
+        {
+         document.getElementById('n1').style.color = '#c8a47e';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n2")
+        {
+         document.getElementById('n2').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n3")
+        {
+         document.getElementById('n3').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n4")
+        {
+         document.getElementById('n4').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n5")
+        {
+         document.getElementById('n5').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n6")
+        {
+         document.getElementById('n6').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n7').style.color = '#856e53';
+        }
+        else if(a.id == "n7")
+        {
+         document.getElementById('n7').style.color = '#c8a47e';
+         document.getElementById('n1').style.color = '#856e53';
+         document.getElementById('n2').style.color = '#856e53';
+         document.getElementById('n3').style.color = '#856e53';
+         document.getElementById('n4').style.color = '#856e53';
+         document.getElementById('n5').style.color = '#856e53';
+         document.getElementById('n6').style.color = '#856e53';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+    const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+    const toggle = document.getElementById(toggleId),
+    nav = document.getElementById(navId),
+    bodypd = document.getElementById(bodyId),
+    headerpd = document.getElementById(headerId)
+
+    // Validate that all variables exist
+    if(toggle && nav && bodypd && headerpd){
+    toggle.addEventListener('click', ()=>{
+    // show navbar
+    nav.classList.toggle('show')
+    // change icon
+    toggle.classList.toggle('bx-x')
+    // add padding to body
+    bodypd.classList.toggle('body-pd')
+    // add padding to header
+    headerpd.classList.toggle('body-pd')
+    })
+    }
+    }
+
+    showNavbar('header-toggle','nav-bar','body-pd','header')
+
+    /*===== LINK ACTIVE =====*/
+    const linkColor = document.querySelectorAll('.nav_link')
+
+    function colorLink(){
+    if(linkColor){
+    linkColor.forEach(l=> l.classList.remove('active'))
+    this.classList.add('active')
+    }
+    }
+    linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+        // Your code to run since DOM is loaded and ready
+});
+ </script>
+</body>
+</html>

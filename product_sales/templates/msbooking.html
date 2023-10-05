@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+
+    body
+    {
+    background-color: rgb(0, 0, 0); 
+    font-family: 'Poppins', sans-serif; 
+    color: #c8a47e;
+    }
+
+    .lg
+    {
+    margin-top: 17px; 
+    height: 35px; 
+    width: 35px;
+    }
+
+    .logo
+    {
+    text-decoration: none;
+    }
+
+    .logo:hover
+    {
+    color:#c8a47e;
+    }
+
+    .hdr
+    {
+     position: fixed;
+     background-color: black;
+     height: max-content;
+     width: 100%;
+    }
+
+    input
+    {
+     border: 0;
+     border-radius: 5px;
+     background-color: rgb(15, 15, 15);
+     color: #c8a47e;
+     font-family: 'Poppins', sans-serif; 
+     font-size: large;
+     margin: auto;
+     width: 100%;
+    }
+
+    input:focus
+    {
+     outline: none;
+    }
+
+    label
+    {
+     display: block; 
+     text-align: left; 
+     font-size: medium; 
+     font-weight: 600;
+    }
+
+    input
+    {
+     margin-top: 5%;
+    }
+
+    .fmitm
+    {
+     width: max-content;
+     margin-left: 20px;
+    }
+
+    .bn 
+    {
+     margin-bottom: 5%;
+     border-radius: 10px;
+     border: 0px;
+     height: auto;
+     width: auto;
+     background-color: #c8a47e;
+     color: black;
+     font-size: medium;
+     font-family: 'Poppins',sans-serif;
+     font-weight: 600;
+    }
+
+    @keyframes hov 
+    {
+     from {background-color: #c8a47e; color: black;}
+     to {background-color:#ad846c; color: white; }
+    }
+
+
+    .bn:hover
+    {
+     animation: hov 0.5s;
+     background-color:#ad846c; 
+     color: white;
+     cursor: pointer;
+    }
+
+    </style>
+</head>
+<body>
+    <center class="hdr">
+        <h1 style="font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
+    </center>
+    <br><br><br>
+    <div style="width: 100%; margin-top: 50px;">
+        <h2 style="font-weight: 400; text-align: center;">Book for a mobile service here</h2>
+    </div>
+    <!-- <div style="width: fit-content; border: none; border-radius: 20px; background-color: rgb(23, 23, 23); margin: auto; text-align: center;">
+        <span style="width: 50%; float: left;">
+            <br>
+            <label>Service No.</label><br><br>
+            <label>Service Date</label><br><br>
+            <label>Service Time</label><br><br>
+            <label class="gp">Name</label><br><br>
+            <label class="gp">Phone no.</label><br><br>
+            <label class="gp">Email</label><br><br>
+            <label class="gp">Device type</label><br><br>
+            <label class="gp">Device brand</label><br><br>
+            <label class="gp">Device model</label><br><br>
+            <label class="gp">Cause for repair</label><br><br>
+            <label class="gp">Address</label><br><br>
+            <label class="gp">City</label><br><br>
+        </span>
+        <span style="width: 50%;  float: left;">
+            <br>
+            <input type="text" id="sno" readonly><br><br>
+            <input type="date" name="" id=""><br><br>
+            <input type="time" name="" id=""><br><br>
+            <input type="text" placeholder="Rick Astley" id=""><br><br>
+            <input type="text" placeholder="+1 234567890" id=""><br><br>
+            <input type="email" placeholder="nggyu@gmail.com" id=""><br><br>
+            <input type="text" value="Mobile" readonly id=""><br><br>
+            <input type="text" placeholder="Iphone" id=""><br><br>
+            <input type="text" placeholder="Xr" id=""><br><br>
+            <input type="text" placeholder="Screen damage" id=""><br><br>
+            <input type="text" placeholder="1D,123 St" id=""><br><br>
+            <input type="text" placeholder="Anna Nagar" id=""><br><br>
+        </span>
+    </div> -->
+    <form action="" method="POST">
+        <div style="width: 60%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
+            <br>
+            <div style="margin: auto;">
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: left;">
+                        <label>Service No.</label>
+                        <input name="service_no" type="text" id="sno" readonly>
+                    </div>
+                    <div class="fmitm" style="float: left;">
+                        <label>Service date</label>
+                        <input name="service_date" type="date">
+                    </div>
+                    <div class="fmitm" style="float: right;">
+                        <label>Service time</label>
+                        <input name="service_time" type="time">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Name</label>
+                        <input name="cstr_name" type="text" placeholder="Rick Astley">
+                    </div>
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Phone Number</label>
+                        <input name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
+                    </div>
+                    <div class="fmitm" style="float: inline-end;">
+                        <label>Email</label>
+                        <input  name="cstr_email" type="text" placeholder="nggyu@gmail.com">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Device type</label>
+                        <input name="device_type" type="text" value="Mobile" readonly>
+                    </div>
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Device brand</label>
+                        <input name="device_brand" type="text" placeholder="Samsung">
+                    </div>
+                    <div class="fmitm" style="float: inline-end;">
+                        <label>Device model</label>
+                        <input name="device_model" type="text" placeholder="S21">
+                    </div>
+                </div>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float">
+                        <label>Cause for a repair</label>
+                        <input name="reason_of_repair" type="text" placeholder="Damaged screen">
+                    </div>
+                    <div class="fmitm">
+                        <label>Address</label>
+                        <input name="address" type="text" placeholder="1A, 123 St">
+                    </div>
+                    <div class="fmitm">
+                        <label>City</label>
+                        <input name="city" type="text" placeholder="Anna Nagar, Chennai">
+                    </div>
+                </div>
+                <br>
+                <div class="fmitm">
+                    <button type="submit" class="bn">Submit</button> 
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+    
+    'use strict';
+    var chars = '1234567890',
+    serialLength = 10,
+    randomSerial = "CS-",
+    i,
+    randomNumber;
+    
+    for (i = 0; i < serialLength; i = i + 1) 
+    {
+    randomNumber = Math.floor(Math.random() * chars.length);
+    randomSerial += chars.substring(randomNumber, randomNumber + 1);
+    }
+    
+    document.getElementById('sno').value = randomSerial;
+
+    </script>
+</body>
+</html>
