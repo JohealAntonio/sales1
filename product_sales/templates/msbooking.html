@@ -148,9 +148,11 @@
             <input type="text" placeholder="Anna Nagar" id=""><br><br>
         </span>
     </div> -->
-    <form action="" method="POST">
+    <form action="http://127.0.0.1:8000/booking/mobileservice" method="POST">
+        {% csrf_token %} 
         <div style="width: 60%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
             <br>
+            <input type="number" name="id" hidden>
             <div style="margin: auto;">
                 <div style="display: flex;">
                     <div class="fmitm" style="float: left;">
@@ -213,7 +215,7 @@
                 </div>
                 <br>
                 <div class="fmitm">
-                    <button type="submit" class="bn">Submit</button> 
+                    <button type="submit" value="submit" class="bn">Submit</button> 
                 </div>
             </div>
         </div>
@@ -223,7 +225,7 @@
     'use strict';
     var chars = '1234567890',
     serialLength = 10,
-    randomSerial = "CS-",
+    randomSerial = "CSMS-",
     i,
     randomNumber;
     
@@ -234,6 +236,8 @@
     }
     
     document.getElementById('sno').value = randomSerial;
+
+
 
     </script>
 </body>

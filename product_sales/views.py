@@ -5,6 +5,9 @@ from django.shortcuts import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 #from django.middleware.csrf import _get_new_csrf_token
 from django.views.decorators.csrf import csrf_exempt,requires_csrf_token
+import cgi
+import mysql.connector
+
 
 
 def signup(request):
@@ -106,5 +109,63 @@ def lgn(request):
         form = AuthenticationForm()
         return render(request, 'index1.html', {'form': form})
     
+def scspg(request):
+    return render(request, 'scspage.html')
+    
 def msbkg(request):
-    return render(request, 'msbooking.html')
+    if request.method == 'POST':
+
+        sno=request.POST['service_no']
+        sdate=request.POST['service_date']
+        stime=request.POST['service_time']
+        cname=request.POST['cstr_name']
+        cmno=request.POST['cstr_mobile_no']
+        cemail=request.POST['cstr_email']
+        dtype=request.POST['device_type']
+        dbrd=request.POST['device_brand']
+        dmdl=request.POST['device_model']
+        ror=request.POST['reason_of_repair']
+        addr=request.POST['address']
+        cty=request.POST['city']
+
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `device_type`, `device_brand`, `device_model`, `reason_of_repair`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return redirect('http://127.0.0.1:8000/booking/successpage')
+    else:
+        return render(request, 'msbooking.html')
+
+def csbkg(request):
+    if request.method == 'POST':
+
+        sno=request.POST['service_no']
+        sdate=request.POST['service_date']
+        stime=request.POST['service_time']
+        cname=request.POST['cstr_name']
+        cmno=request.POST['cstr_mobile_no']
+        cemail=request.POST['cstr_email']
+        dtype=request.POST['device_type']
+        dbrd=request.POST['device_brand']
+        dmdl=request.POST['device_model']
+        ror=request.POST['reason_of_repair']
+        addr=request.POST['address']
+        cty=request.POST['city']
+
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `device_type`, `device_brand`, `device_model`, `reason_of_repair`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return redirect('http://127.0.0.1:8000/booking/successpage')
+    else:
+        return render(request, 'csbooking.html')

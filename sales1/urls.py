@@ -28,4 +28,6 @@ path('index/', views.index, name='index'),
 path('employee/login/', views.lgn, name='index_login'),
 path('employee/dashboard/',views.dashboard, name='dashboard'),
 path('booking/mobileservice',views.msbkg, name='msbkg'),
+path('booking/computerservice',views.csbkg, name='csbkg'),
+path('booking/successpage', views.scspg, name='scspage')
 ]
