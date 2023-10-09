@@ -41,7 +41,7 @@
      width: 100%;
     }
 
-    input
+    input, select
     {
      border: 0;
      border-radius: 5px;
@@ -53,7 +53,7 @@
      width: 100%;
     }
 
-    input:focus
+    input:focus, select:focus
     {
      outline: none;
     }
@@ -152,7 +152,6 @@
         {% csrf_token %} 
         <div style="width: 60%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
             <br>
-            <input type="number" name="id" hidden>
             <div style="margin: auto;">
                 <div style="display: flex;">
                     <div class="fmitm" style="float: left;">
@@ -212,6 +211,16 @@
                         <label>City</label>
                         <input name="city" type="text" placeholder="Anna Nagar, Chennai">
                     </div>
+                </div>
+                <br>
+                <div class="fmitm" style="float:inline-start">
+                    <label>Payment Method</label>
+                    <select name="payment_method">
+                        <option value="credit">Credit card</option>
+                        <option value="debit">Debit card</option>
+                        <option value="cash">Cash</option>
+                        <option value="online payment">Paying Online</option>
+                    </select>
                 </div>
                 <br>
                 <div class="fmitm">

@@ -41,7 +41,7 @@
      width: 100%;
     }
 
-    input
+    input, select
     {
      border: 0;
      border-radius: 5px;
@@ -53,7 +53,7 @@
      width: 100%;
     }
 
-    input:focus
+    input:focus, select:focus
     {
      outline: none;
     }
@@ -186,15 +186,15 @@
                 <br>
                 <div style="display: flex;">
                     <div class="fmitm" style="float: inline-start;">
-                        <label>Device type</label>
+                        <label>Electronics type</label>
                         <input name="device_type" type="text" placeholder="Laptop">
                     </div>
                     <div class="fmitm" style="float: inline-start;">
-                        <label>Device brand</label>
+                        <label>Brand</label>
                         <input name="device_brand" type="text" placeholder="Apple">
                     </div>
                     <div class="fmitm" style="float: inline-end;">
-                        <label>Device model</label>
+                        <label>Model No.</label>
                         <input name="device_model" type="text" placeholder="Macbook">
                     </div>
                 </div>
@@ -212,6 +212,16 @@
                         <label>City</label>
                         <input name="city" type="text" placeholder="Anna Nagar, Chennai">
                     </div>
+                </div>
+                <br>
+                <div class="fmitm" style="float:inline-start">
+                    <label>Payment Method</label>
+                    <select name="payment_method">
+                        <option value="credit">Credit card</option>
+                        <option value="debit">Debit card</option>
+                        <option value="cash">Cash</option>
+                        <option value="online payment">Paying Online</option>
+                    </select>
                 </div>
                 <br>
                 <div class="fmitm">
