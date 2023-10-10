@@ -142,6 +142,9 @@ def msbkg(request):
     else:
         return render(request, 'msbooking.html')
 
+def paymt(request):
+    return render(request, 'payment.html')
+
 def csbkg(request):
     if request.method == 'POST':
 
@@ -159,15 +162,23 @@ def csbkg(request):
         cty=request.POST['city']
         pm = request.POST['payment_method']
 
-        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
-        cur = con.cursor()
+        if pm == 'credit' or pm == 'debit':
+            return redirect('http://127.0.0.1:8000/booking/payment')
+        elif pm == 'cash':
+            con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+            cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`, `payment_method`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty,pm))
-        con.commit()
+            cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`, `payment_method`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty,pm))
+            con.commit()
+            
+            cur.close()
+            con.close()
+            return redirect('http://127.0.0.1:8000/booking/successpage')
+
         
-        cur.close()
-        con.close()
 
-        return redirect('http://127.0.0.1:8000/booking/successpage')
     else:
         return render(request, 'csbooking.html')
+
+def invoice(request):
+    return render(request, 'invoice.html')

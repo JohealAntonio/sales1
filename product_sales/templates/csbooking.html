@@ -53,6 +53,11 @@
      width: 100%;
     }
 
+    select
+    {
+     margin-top: 12px;
+    }
+
     input:focus, select:focus
     {
      outline: none;
@@ -202,7 +207,16 @@
                 <div style="display: flex;">
                     <div class="fmitm" style="float:inline-start">
                         <label>Cause for a repair</label>
-                        <input name="reason_of_repair" type="text" placeholder="Damaged Screen">
+                        <select name="reason_of_repair">
+                            <option value="Hardware Repairs and Upgrades">Hardware Repairs and Upgrades</option>
+                            <option value="Operating System Troubleshooting">Operating System Troubleshooting</option>
+                            <option value="Virus and Malware Removal">Virus and Malware Removal</option>
+                            <option value="Data Recovery">Data Recovery</option>
+                            <option value="Software Installation and Configuration">Software Installation and Configuration</option>
+                            <option value="Network and Internet Troubleshooting">Network and Internet Troubleshooting</option>
+                            <option value="Computer Cleaning and Maintenance">Computer Cleaning and Maintenance</option>
+                            <option value="Custom PC Builds">Custom PC Builds</option>
+                        </select>
                     </div>
                     <div class="fmitm" style="float:inline-start">
                         <label>Address</label>
@@ -220,7 +234,6 @@
                         <option value="credit">Credit card</option>
                         <option value="debit">Debit card</option>
                         <option value="cash">Cash</option>
-                        <option value="online payment">Paying Online</option>
                     </select>
                 </div>
                 <br>

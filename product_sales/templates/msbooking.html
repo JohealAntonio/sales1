@@ -53,6 +53,11 @@
      width: 100%;
     }
 
+    select
+    {
+     margin-top: 12px;
+    }
+
     input:focus, select:focus
     {
      outline: none;
@@ -150,7 +155,7 @@
     </div> -->
     <form action="http://127.0.0.1:8000/booking/mobileservice" method="POST">
         {% csrf_token %} 
-        <div style="width: 60%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
+        <div style="width: 65%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
             <br>
             <div style="margin: auto;">
                 <div style="display: flex;">
@@ -201,7 +206,15 @@
                 <div style="display: flex;">
                     <div class="fmitm" style="float:inline-start">
                         <label>Cause for a repair</label>
-                        <input name="reason_of_repair" type="text" placeholder="Damaged screen">
+                        <select name="reason_of_repair">
+                            <option value="Screen Repair and Replacement">Screen Repair and Replacement</option>
+                            <option value="Battery Replacement">Battery Replacement</option>
+                            <option value="Water Damage Repair">Water Damage Repair</option>
+                            <option value="Software Troubleshooting">Software Troubleshooting</option>
+                            <option value="Hardware Repairs">Hardware Repairs</option>
+                            <option value="Data Recovery">Data Recovery</option>
+                            <option value="Accessories and Parts">Accessories and Parts</option>
+                        </select>
                     </div>
                     <div class="fmitm" style="float:inline-start">
                         <label>Address</label>
@@ -219,7 +232,6 @@
                         <option value="credit">Credit card</option>
                         <option value="debit">Debit card</option>
                         <option value="cash">Cash</option>
-                        <option value="online payment">Paying Online</option>
                     </select>
                 </div>
                 <br>
