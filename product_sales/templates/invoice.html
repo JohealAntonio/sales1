@@ -79,9 +79,9 @@
         {
          color: #C27846;
          text-align: center; 
-         width: 40%;
          margin: auto;
-         height: max-content;
+         display: block;
+         width: 100%;
         }
 
         .lg 
@@ -89,12 +89,99 @@
          float: left;   
          width: 15%;
          height: 15%;
+         display: inline;
         }
 
-        h1
+        img
         {
-         padding-top: 5px;
+         padding-top: 5%;
         }
+
+        h2
+        {
+         color: black;
+         font-weight: 400;
+         font-size: x-large;
+        }
+
+        .logo
+        {
+         float: left;
+         width: 40%;
+        }
+
+        .ttl
+        {
+         float: right;
+        }
+
+        .ln 
+        {
+         border-bottom: 0.5px solid rgb(202, 202, 202);
+         height: 70px;
+        }
+
+        .ln2
+        {
+         border-bottom: 0.5px solid rgb(202, 202, 202);
+        }
+
+        .b4bill
+        {
+         width: 100%;
+         display: inline-block;
+        }
+
+        .it 
+        {
+         float: left;
+        }
+
+        .ino
+        {
+         float: right;
+        }
+
+        h4
+        {
+         margin-top: 5px;
+         margin-bottom: 5px;
+        }
+
+        p
+        {
+         margin: 5px 0 5px 0;
+        }
+
+        .billhd
+        {
+         display: inline-flex;
+         width: 100%;
+         margin: 10px 0 10px 0;
+        }
+
+        .bill
+        {
+         display: flex;
+         width: 100%;
+         margin: 50px 0 50px 0;
+        }
+
+
+        .svcbl, .elbl, .cstbl
+        {
+         margin: auto;
+         width: 33.3333333333%;
+         text-align: center;
+        }
+        
+        .svc, .el, .cst
+        {
+         margin: auto;
+         width: 33.3333333333333%;
+         text-align: center;
+        }
+
 
     </style>
   </head>
@@ -102,11 +189,75 @@
     <div class="sheet-outer A4">
         <section class="sheet padding-5mm">
             <div class="hdg"> 
-                <img class="lg" src="/static/img/logocs_white.png" alt="">
-                <h1>Charles Solutions</h1>
+                <div class="logo">
+                    <img class="lg" src="/static/img/logocs_white.png" alt="">
+                    <h1>Charles Solutions</h1>
+                </div>
+                <div class="ttl">
+                    <h2>INVOICE</h2>
+                </div>
             </div>
+            <div class="ln"></div>
+            <div class="b4bill">
+                <div class="it">
+                    <h4>BILLED TO</h4>
+                    <h4>Name</h4>
+                    <p>+1 23456890</p>
+                    <p>Home, Street</p>
+                    <p>City, State</p>
+                </div>
+                <div class="ino">
+                    <h4>INVOICE NO</h4>
+                    <p id="ino"></p>
+                    <p id="date"></p>
+                </div>
+            </div>
+            <div class="ln2"></div>
+            <div class="billhd">
+                <div class="svc">
+                    <h4>SERVICE</h4>
+                </div>
+                <div class="el">
+                    <h4>ELECTRONICS INVOLVED</h4>
+                </div>
+                <div class="cst">
+                    <h4>COST</h4>
+                </div>
+            </div>
+            <div class="ln2"></div>
+            <div class="bill">
+                <div class="svcbl">
+                    <p>Damaged Screen</p>
+                </div>
+                <div class="elbl">
+                    <p>Mobile</p>
+                </div>
+                <div class="cstbl">
+                    <p>$200</p>
+                </div>
+            </div>
+            <div class="ln2"></div>
         </section>
     </div>
+    <script>
+        var chars = '1234567890',
+        serialLength = 8,
+        randomSerial = "#",
+        i,
+        randomNumber;
+        
+        for (i = 0; i < serialLength; i = i + 1) 
+        {
+            randomNumber = Math.floor(Math.random() * chars.length);
+            randomSerial += chars.substring(randomNumber, randomNumber + 1);
+        }
+        
+        document.getElementById('ino').innerHTML = randomSerial;
+
+        const d = new Date().toLocaleDateString()
+
+        document.getElementById('date').innerHTML = d
+    </script>
 </body>
 </html>
 </body>
