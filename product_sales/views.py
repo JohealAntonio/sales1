@@ -111,6 +111,29 @@ def lgn(request):
     
 def scspg(request):
     return render(request, 'scspage.html')
+
+def cost(r, b):
+    if r == 'Screen Repair and Replacement' and (b == 'Iphone' or b == 'iphone'):
+        c = '₹3000' 
+        return c 
+    elif r == 'Screen Repair and Replacement' and (b != 'Iphone' and b != 'iphone'):
+        c = '₹500'
+        return c
+    elif r == 'Battery Replacement':
+        c =  '₹1000'
+        return c
+    elif r == 'Water Damage Repair' and (b == 'Iphone' or b == 'iphone'):
+        c =  '₹3000'         
+        return c
+    elif r == 'Water Damage Repair' and (b != 'Iphone' and b != 'iphone'):
+        c = "₹1000"
+        return c
+    elif r == 'Hardware Repairs' and (b == 'Iphone' or b == 'iphone'):
+        c = "₹2500"
+        return c
+    elif r == 'Hardware Repairs' and (b != 'Iphone' and b != 'iphone'):
+        c = "₹1000"
+        return c
     
 def msbkg(request):
     if request.method == 'POST':
@@ -138,7 +161,7 @@ def msbkg(request):
         cur.close()
         con.close()
 
-        return redirect('http://127.0.0.1:8000/booking/successpage')
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(ror,dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl })
     else:
         return render(request, 'msbooking.html')
 

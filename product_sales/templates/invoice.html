@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Invoice</title>
 </head>
 <body>
     <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Dynamic Invoice Generator</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,10 +200,10 @@
             <div class="b4bill">
                 <div class="it">
                     <h4>BILLED TO</h4>
-                    <h4>Name</h4>
-                    <p>+1 23456890</p>
-                    <p>Home, Street</p>
-                    <p>City, State</p>
+                    <h4>{{ cname }}</h4>
+                    <p>{{ cmno }}</p>
+                    <p>{{ addr }}</p>
+                    <p>{{ cty }}</p>
                 </div>
                 <div class="ino">
                     <h4>INVOICE NO</h4>
@@ -227,13 +226,13 @@
             <div class="ln2"></div>
             <div class="bill">
                 <div class="svcbl">
-                    <p>Damaged Screen</p>
+                    <p>{{ ror }} for {{ brand }} {{ model }}</p>
                 </div>
                 <div class="elbl">
-                    <p>Mobile</p>
+                    <p>{{ etype }}</p>
                 </div>
                 <div class="cstbl">
-                    <p>$200</p>
+                    <p>{{ cst }}</p>
                 </div>
             </div>
             <div class="ln2"></div>
@@ -257,6 +256,8 @@
         const d = new Date().toLocaleDateString()
 
         document.getElementById('date').innerHTML = d
+
+        
     </script>
 </body>
 </html>
