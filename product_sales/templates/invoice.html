@@ -78,7 +78,7 @@
         {
          color: #C27846;
          text-align: center; 
-         margin: auto;
+         margin-top: 50px;
          display: block;
          width: 100%;
         }
@@ -117,18 +117,26 @@
         .ln 
         {
          border-bottom: 0.5px solid rgb(202, 202, 202);
-         height: 70px;
+         height: 10%;
         }
 
         .ln2
         {
-         border-bottom: 0.5px solid rgb(202, 202, 202);
+         border-bottom: 0.5px dashed rgb(134, 134, 134);
+        }
+
+        .ln3
+        {
+         margin-left: auto;
+         width: 35%;
+         border-bottom: 0.5px dashed rgb(134, 134, 134);
         }
 
         .b4bill
         {
          width: 100%;
          display: inline-block;
+         margin: 30px 0 30px 0;
         }
 
         .it 
@@ -181,6 +189,52 @@
          text-align: center;
         }
 
+        .blwbill
+        {
+         display: flex;
+         width: 100%;
+         margin: 30px 0 30px 0;
+        }
+
+        .tax
+        {
+         display: flex;
+         width: 40%;
+         margin: 30px 0 30px 50%;
+        }
+        
+        .sbamt
+        {
+         margin: 0 13% 0 1.5%;
+        }
+
+        .sbtl
+        {
+         margin-left: auto;
+         text-align: center;
+        }
+
+        .tx
+        {
+         margin-left: auto;
+         text-align: center;
+        }
+
+        .txp
+        {
+         margin: 0 15% 0 5%;
+        }
+
+        .tl
+        {
+         margin: 0 11% 0 3%;
+        }
+
+        .tu
+        {
+         width: max-content;
+         float: left;
+        }
 
     </style>
   </head>
@@ -232,13 +286,51 @@
                     <p>{{ etype }}</p>
                 </div>
                 <div class="cstbl">
-                    <p>{{ cst }}</p>
+                    <p id="cost">{{ cst }}</p>
                 </div>
             </div>
             <div class="ln2"></div>
+            <div class="blwbill">
+                <div class="sbtl">
+                    <h4>SUBTOTAL</h4>
+                </div>
+                <div class="sbamt">
+                    <p>{{ cst }}</p>
+                </div>
+            </div>
+            <div class="tax">
+                <div class="tx">
+                    <h4>GST</h4>
+                </div>
+                <div class="txp">
+                    <p>7%</p>
+                </div>
+            </div>
+            <div class="tu">
+             <h2>Thank You!</h2>
+            </div>
+            <div class="ln3"></div>
+            <div class="tax">
+                <div class="tx">
+                    <h4>TOTAL</h4>
+                </div>
+                <div class="tl">
+                    <p id="tlamt"></p>
+                </div>
+            </div>
         </section>
     </div>
     <script>
+ 
+        var s = document.getElementById('cost').innerHTML  
+        let s1 = Number(s.substring(1))
+
+        s1 = s1+(s1*.07)
+
+        s2 = '₹' + String(s1)
+
+        document.getElementById('tlamt').innerHTML = s2
+
         var chars = '1234567890',
         serialLength = 8,
         randomSerial = "#",
@@ -257,6 +349,7 @@
 
         document.getElementById('date').innerHTML = d
 
+        alert("Click CTRL+P to save this invoice as pdf")
         
     </script>
 </body>

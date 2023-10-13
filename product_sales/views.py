@@ -161,7 +161,7 @@ def msbkg(request):
         cur.close()
         con.close()
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(ror,dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl })
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(ror,dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'msbooking.html')
 
