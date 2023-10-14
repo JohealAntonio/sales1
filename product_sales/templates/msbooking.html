@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
 
     body
@@ -111,6 +112,11 @@
      cursor: pointer;
     }
 
+    #wrtni
+    {
+     display: none;
+    }
+
     </style>
 </head>
 <body>
@@ -206,14 +212,16 @@
                 <div style="display: flex;">
                     <div class="fmitm" style="float:inline-start">
                         <label>Cause for a repair</label>
-                        <select name="reason_of_repair">
+                        <select name="reason_of_repair" id="slt">
                             <option value="Screen Repair and Replacement">Screen Repair and Replacement</option>
                             <option value="Battery Replacement">Battery Replacement</option>
                             <option value="Water Damage Repair">Water Damage Repair</option>
                             <option value="Software Troubleshooting">Software Troubleshooting</option>
                             <option value="Hardware Repairs">Hardware Repairs</option>
                             <option value="Data Recovery">Data Recovery</option>
-                            <option value="Accessories and Parts">Accessories and Parts</option>
+                            <option value="Accessorise">Accessorise your phone</option>
+                            <option id="otr">Other Services (Type here)</option>
+                            <input name="reason_of_repair" type="text" id="wrtni">
                         </select>
                     </div>
                     <div class="fmitm" style="float:inline-start">
@@ -226,15 +234,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="fmitm" style="float:inline-start">
-                    <label>Payment Method</label>
-                    <select name="payment_method">
-                        <option value="credit">Credit card</option>
-                        <option value="debit">Debit card</option>
-                        <option value="cash">Cash</option>
-                    </select>
-                </div>
-                <br>
                 <div class="fmitm">
                     <button type="submit" value="submit" class="bn">Submit</button> 
                 </div>
@@ -242,6 +241,16 @@
         </div>
     </form>
     <script>
+
+    const input = $('#wrtni');
+    const select = $('#slt');
+
+    select.on('change', function() {
+    const selectedOptionText = $(this).find('option:selected').text();
+
+    selectedOptionText === 'Other Services (Type here)' ? input.show() : input.hide();
+    selectedOptionText === 'Other Services (Type here)' ? select.hide() : select.show(); 
+    })
     
     'use strict';
     var chars = '1234567890',
@@ -257,8 +266,6 @@
     }
     
     document.getElementById('sno').value = randomSerial;
-
-    
 
     </script>
 </body>

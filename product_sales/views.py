@@ -112,27 +112,12 @@ def lgn(request):
 def scspg(request):
     return render(request, 'scspage.html')
 
-def cost(r, b):
-    if r == 'Screen Repair and Replacement' and (b == 'Iphone' or b == 'iphone'):
-        c = '₹3000' 
+def cost(b):
+    if b == 'Iphone' or b == 'iphone':
+        c = '₹1500' 
         return c 
-    elif r == 'Screen Repair and Replacement' and (b != 'Iphone' and b != 'iphone'):
-        c = '₹500'
-        return c
-    elif r == 'Battery Replacement':
-        c =  '₹1000'
-        return c
-    elif r == 'Water Damage Repair' and (b == 'Iphone' or b == 'iphone'):
-        c =  '₹3000'         
-        return c
-    elif r == 'Water Damage Repair' and (b != 'Iphone' and b != 'iphone'):
-        c = "₹1000"
-        return c
-    elif r == 'Hardware Repairs' and (b == 'Iphone' or b == 'iphone'):
-        c = "₹2500"
-        return c
-    elif r == 'Hardware Repairs' and (b != 'Iphone' and b != 'iphone'):
-        c = "₹1000"
+    else:
+        c = '₹500' 
         return c
     
 def msbkg(request):
@@ -150,18 +135,17 @@ def msbkg(request):
         ror=request.POST['reason_of_repair']
         addr=request.POST['address']
         cty=request.POST['city']
-        pm = request.POST['payment_method']
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`, `payment_method`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty,pm))
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty))
         con.commit()
         
         cur.close()
         con.close()
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(ror,dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'msbooking.html')
 
