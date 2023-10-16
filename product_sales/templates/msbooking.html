@@ -36,10 +36,9 @@
 
     .hdr
     {
-     position: fixed;
      background-color: black;
      height: max-content;
-     width: 100%;
+     display: flex;
     }
 
     input, select
@@ -117,16 +116,45 @@
      display: none;
     }
 
+    .fiaf
+    {
+     text-align: center;
+     width: 20%;
+     border: 0.1px solid rgb(48, 48, 48);
+     padding: 10px 0 10px 0;
+     border-radius: 20px;
+     z-index: 3;
+     background-color: black;
+     margin: 15% auto 0 auto;
+     display: none;
+    }
+
+
+    .bd
+    {
+     height: max-content;
+    }
+
+
+    .aldiv
+    {
+     width: 100%;
+     height: 250px;
+     position: absolute;
+    }
+
     </style>
 </head>
 <body>
-    <center class="hdr">
-        <h1 style="font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
-    </center>
-    <br><br><br>
-    <div style="width: 100%; margin-top: 50px;">
-        <h2 style="font-weight: 400; text-align: center;">Book for a mobile service here</h2>
+    <div class="aldiv">
+            <div id="faf" class="fiaf">
+                <h2>ALERT</h2>
+                <h4>Fill all fields.</h4>
+                <button id="ok" class="bn">Ok</button>
+            </div>
     </div>
+    
+   
     <!-- <div style="width: fit-content; border: none; border-radius: 20px; background-color: rgb(23, 23, 23); margin: auto; text-align: center;">
         <span style="width: 50%; float: left;">
             <br>
@@ -160,8 +188,14 @@
         </span>
     </div> -->
     <form action="http://127.0.0.1:8000/booking/mobileservice" method="POST">
+        <div class="hdr">
+            <h1 style="margin:0 auto 0 auto; font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
+        </div>
+        <div style="width: 100%; margin-top: 50px;">
+            <h2 style="font-weight: 400; text-align: center;">Book for a mobile service here</h2>
+        </div>
         {% csrf_token %} 
-        <div style="width: 65%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
+        <div style="z-index: 2; width: 65%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
             <br>
             <div style="margin: auto;">
                 <div style="display: flex;">
@@ -171,41 +205,41 @@
                     </div>
                     <div class="fmitm" style="float: left;">
                         <label>Service date</label>
-                        <input name="service_date" type="date">
+                        <input id="sdate" name="service_date" type="date">
                     </div>
                     <div class="fmitm" style="float: right;">
                         <label>Service time</label>
-                        <input name="service_time" type="time">
+                        <input id="stime" name="service_time" type="time">
                     </div>
                 </div>
                 <br>
                 <div style="display: flex;">
                     <div class="fmitm" style="float: inline-start;">
                         <label>Name</label>
-                        <input name="cstr_name" type="text" placeholder="Rick Astley">
+                        <input id="cnm" name="cstr_name" type="text" placeholder="Rick Astley">
                     </div>
                     <div class="fmitm" style="float: inline-start;">
                         <label>Phone Number</label>
-                        <input name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
+                        <input id="cmn" name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
                     </div>
                     <div class="fmitm" style="float: inline-end;">
                         <label>Email</label>
-                        <input  name="cstr_email" type="text" placeholder="nggyu@gmail.com">
+                        <input id="ce" name="cstr_email" type="text" placeholder="nggyu@gmail.com">
                     </div>
                 </div>
                 <br>
                 <div style="display: flex;">
                     <div class="fmitm" style="float: inline-start;">
                         <label>Device type</label>
-                        <input name="device_type" type="text" value="Mobile" readonly>
+                        <input id="dt" name="device_type" type="text" value="Mobile" readonly>
                     </div>
                     <div class="fmitm" style="float: inline-start;">
                         <label>Device brand</label>
-                        <input name="device_brand" type="text" placeholder="Samsung">
+                        <input id="db" name="device_brand" type="text" placeholder="Samsung">
                     </div>
                     <div class="fmitm" style="float: inline-end;">
                         <label>Device model</label>
-                        <input name="device_model" type="text" placeholder="S21">
+                        <input id="dm" name="device_model" type="text" placeholder="S21">
                     </div>
                 </div>
                 <br>
@@ -226,16 +260,16 @@
                     </div>
                     <div class="fmitm" style="float:inline-start">
                         <label>Address</label>
-                        <input name="address" type="text" placeholder="1A, 123 St">
+                        <input id="ad" name="address" type="text" placeholder="1A, 123 St">
                     </div>
                     <div class="fmitm" style="float:inline-end">
                         <label>City</label>
-                        <input name="city" type="text" placeholder="Anna Nagar, Chennai">
+                        <input id="ct" name="city" type="text" placeholder="Anna Nagar, Chennai">
                     </div>
                 </div>
                 <br>
                 <div class="fmitm">
-                    <button type="submit" value="submit" class="bn">Submit</button> 
+                    <button id="sbt" type="submit" value="submit" class="bn">Submit</button> 
                 </div>
             </div>
         </div>
@@ -267,6 +301,30 @@
     
     document.getElementById('sno').value = randomSerial;
 
+    sdate = document.getElementById('sdate').value
+    stime = document.getElementById('stime').value
+    cnm = document.getElementById('cnm').value
+    cmn = document.getElementById('cmn').value
+    ce = document.getElementById('ce').value
+    dt = document.getElementById('dt').value
+    db = document.getElementById('db').value
+    dm = document.getElementById('dm').value
+    slt = document.getElementById('slt').value
+    wrtni = document.getElementById('wrtni').value
+    ad = document.getElementById('ad').value
+    ct = document.getElementById('ct').value
+
+    l = [sdate,stime,cnm,cmn,ce,dt,db,dm,slt,wrtni,ad,ct]
+
+    for(i=0; i<l.length; i=i+1)
+    {
+     if (l[i]==null || l[i]==undefined)
+     {
+      document.getElementById('faf').style.display = 'contents';
+      document.getElementById('sbt').type = '';
+     }
+    }
+    
     </script>
 </body>
 </html>
