@@ -43,6 +43,14 @@ def signin(request):
 def profile(request): 
     return render(request, 'profile.html')
 
+def msgs(request): 
+    return render(request, 'employee_messages.html')
+
+def imptudts(request): 
+    return render(request, 'employee_updates.html')
+
+def offers(request): 
+    return render(request, 'employee_offers.html')
 
 def home(request):
     logout(request)  
@@ -65,7 +73,7 @@ def homesignin(request):
         return render(request, 'homesignin.html', {'form': form})
     
 def dashboard(request):
-    return render(request, 'dashbrd.html')
+    return render(request, 'employee_dashboard.html')
 
 # def register_user(request):
 #     context = {}
@@ -133,24 +141,33 @@ def msbkg(request):
         dbrd=request.POST['device_brand']
         dmdl=request.POST['device_model']
         ror=request.POST['reason_of_repair']
+        otr=request.POST['other_reason']
         addr=request.POST['address']
         cty=request.POST['city']
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty))
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
         con.commit()
         
         cur.close()
         con.close()
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':ror, 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        
+
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'msbooking.html')
 
 def paymt(request):
     return render(request, 'payment.html')
+
+def othr(r,o):
+    if (r=='Other'):
+        return o
+    else:
+        return r
 
 def csbkg(request):
     if request.method == 'POST':
