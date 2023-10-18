@@ -14,12 +14,52 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <script src="{% static 'js/cldr.js' %}" defer></script>
     <title>{{ request.user }}</title>
     <style>
-     
+
+     .insbdy
+     {
+      width: 100%;
+      display: flex;
+     }
+
+     .insbdy2
+     {
+      width: 100%;
+      display: flex;
+     }
+
+     .offer, .attendance
+     {
+      width: 50%;
+      border-radius: 20px;
+      height: 300px;
+      padding: 25px;
+      background-color: rgb(10, 10, 10);
+      margin: 20px 10px 0 10px;
+     }
+
+     .offer
+     {
+      float: left;
+     }
+
+     .attendance
+     {
+      float: right;
+     }
+
+     h3 
+     {
+      font-size: x-large;
+      font-weight: 700;
+     }
+
     </style>
 </head>
-<body style="background-color: black;" id="body-pd">
+<body style="background-color: black; color: #c8a47e;" id="body-pd">
     <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
@@ -53,6 +93,52 @@
                 </form>
             {% endif %}
         </nav>
+    </div>
+    <div class="insbdy">
+        <div class="offer">
+            <h3>OFFERS THIS MONTH</h3>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span class="month-picker" id="month-picker">April</span>
+                    <div class="year-picker">
+                        <span class="year-change" id="prev-year">
+                            <pre><</pre>
+                        </span>
+                        <span id="year">2022</span>
+                        <span class="year-change" id="next-year">
+                            <pre>></pre>
+                        </span>
+                    </div>
+                </div>
+                <div class="calendar-body">
+                    <div class="calendar-week-day">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days"></div>
+                </div>
+               
+                <div class="month-list"></div>
+            </div>
+            <script src="app.js"></script>       
+        </div>
+        <div class="attendance">
+            <h3>ATTENDANCE</h3>
+        </div>
+        
+    </div>
+    <div class="insbdy2">
+        <div class="offer">
+            <h3>MESSAGES</h3>
+        </div>
+        <div class="attendance">
+            <h3>UPDATES</h3>
+        </div>
     </div>
  <script>
     function changec(a)
