@@ -57,6 +57,17 @@
       font-weight: 700;
      }
 
+     .calendar-body
+     {
+      padding: 0;
+     }
+
+     .calendar-week-day
+     {
+      margin-right: 15px;
+      margin-left: -5px;
+     }
+
     </style>
 </head>
 <body style="background-color: black; color: #c8a47e;" id="body-pd">
@@ -99,15 +110,15 @@
             <h3>OFFERS THIS MONTH</h3>
             <div class="calendar">
                 <div class="calendar-header">
-                    <span class="month-picker" id="month-picker">April</span>
+                    <span class="year-change" id="prev-month">
+                        <pre><</pre>
+                    </span>
+                    <span class="month-picker" id="month-picker"></span>
+                    <span class="year-change" id="next-month">
+                        <pre>></pre>
+                    </span>
                     <div class="year-picker">
-                        <span class="year-change" id="prev-year">
-                            <pre><</pre>
-                        </span>
-                        <span id="year">2022</span>
-                        <span class="year-change" id="next-year">
-                            <pre>></pre>
-                        </span>
+                        <span id="year"></span>
                     </div>
                 </div>
                 <div class="calendar-body">
