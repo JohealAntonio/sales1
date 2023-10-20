@@ -68,6 +68,11 @@
       margin-left: -5px;
      }
 
+     .mth
+     {
+      display: none;
+     }
+
     </style>
 </head>
 <body style="background-color: black; color: #c8a47e;" id="body-pd">
@@ -110,13 +115,7 @@
             <h3>OFFERS THIS MONTH</h3>
             <div class="calendar">
                 <div class="calendar-header">
-                    <span class="year-change" id="prev-month">
-                        <pre><</pre>
-                    </span>
                     <span class="month-picker" id="month-picker"></span>
-                    <span class="year-change" id="next-month">
-                        <pre>></pre>
-                    </span>
                     <div class="year-picker">
                         <span id="year"></span>
                     </div>
@@ -131,7 +130,8 @@
                         <div>Fri</div>
                         <div>Sat</div>
                     </div>
-                    <div class="calendar-days"></div>
+                    <div class="calendar-days">
+                    </div>
                 </div>
                
                 <div class="month-list"></div>

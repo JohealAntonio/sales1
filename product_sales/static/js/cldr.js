@@ -10,6 +10,7 @@ getFebDays = (year) => {
     return isLeapYear(year) ? 29 : 28
 }
 
+
 generateCalendar = (month, year) => {
 
     let calendar_days = calendar.querySelector('.calendar-days')
@@ -63,6 +64,7 @@ let month_list = calendar.querySelector('.month-list')
 
 let month_picker = calendar.querySelector('#month-picker')
 
+
 let currDate = new Date()
 
 let curr_month = {value: currDate.getMonth()}
@@ -70,41 +72,37 @@ let curr_year = {value: currDate.getFullYear()}
 
 generateCalendar(curr_month.value, curr_year.value)
 
-if (curr_month.value != 0)
-{
- document.querySelector('#prev-month').onclick = () =>
- {
-  --curr_month.value
-  generateCalendar(curr_month.value, curr_year.value)
- }
-}
+// if (curr_month.value == 0) 
+// {
+//  document.querySelector('#prev-month').onclick = () =>
+//  {
+//   curr_month.value = 11
+//   --curr_year.value
+//   generateCalendar(curr_month.value, curr_year.value)
+//  }
+// }
 
-else if (curr_month.value != 11) 
-{
- document.querySelector('#next-month').onclick = () =>
- {
-  --curr_month.value
-  generateCalendar(curr_month.value, curr_year.value)
- }
-}
+// else if (curr_month.value != 11) 
+// {
+//  document.querySelector('#next-month').onclick = () =>
+//  {
+//   --curr_month.value
+//   generateCalendar(curr_month.value, curr_year.value)
+//  }
+// }
 
-else if (curr_month.value == 0) 
-{
- document.querySelector('#prev-month').onclick = () =>
- {
-  curr_month.value = 11
-  --curr_year.value
-  generateCalendar(curr_month.value, curr_year.value)
- }
-}
+// else if (curr_month.value == 11) 
+// {
+//  document.querySelector('#next-month').onclick = () => 
+//  {    
+//   curr_month.value = 0  
+//   ++curr_year.value
+//   generateCalendar(curr_month.value, curr_year.value)
+//  }
+// }
 
-else if (curr_month.value == 11) 
-{
- document.querySelector('#next-month').onclick = () => 
- {    
-  curr_month.value = 0  
-  ++curr_year.value
-  generateCalendar(curr_month.value, curr_year.value)
- }
-}
+// else if (curr_month.value != 0)
+// {
+ 
+// }
 
