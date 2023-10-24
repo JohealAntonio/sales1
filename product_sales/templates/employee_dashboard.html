@@ -15,7 +15,8 @@
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
-    <script src="{% static 'js/cldr.js' %}" defer></script>
+    <script src="{% static 'js/cldr.js' %}"></script>
+    <script src="{% static 'js/require.js' %}"></script>
     <title>{{ request.user }}</title>
     <style>
 
@@ -64,7 +65,7 @@
 
      .calendar-week-day
      {
-      margin-right: 15px;
+      margin-right: 10px;
       margin-left: -5px;
      }
 
@@ -136,12 +137,10 @@
                
                 <div class="month-list"></div>
             </div>
-            <script src="app.js"></script>       
         </div>
         <div class="attendance">
             <h3>ATTENDANCE</h3>
         </div>
-        
     </div>
     <div class="insbdy2">
         <div class="offer">
@@ -152,6 +151,8 @@
         </div>
     </div>
  <script>
+    
+
     function changec(a)
     {
         if(a.id == "n1")

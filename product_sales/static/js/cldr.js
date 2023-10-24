@@ -41,15 +41,32 @@ generateCalendar = (month, year) => {
                             <span></span>
                             <span></span>
                             <span></span>`
-            if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
-                day.classList.add('curr-date')
+            if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) 
+            {
+             day.classList.add('curr-date')
             }
         }
         calendar_days.appendChild(day)
     }
 }
 
-let month_list = calendar.querySelector('.month-list')
+
+import { createConnection } from 'mysql'
+
+var con = createConnection({
+host: "localhost",
+user: "root",
+password: "",
+database: "mydb"
+});
+
+con.connect(function(err) {
+    if (err) throw err;
+    con.query("SELECT service_date FROM offer", function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+    });
+  });
 
 // month_names.forEach((e, index) => {
 //     let month = document.createElement('div')
