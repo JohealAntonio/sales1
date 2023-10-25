@@ -34,5 +34,6 @@ path('booking/mobileservice',views.msbkg, name='msbkg'),
 path('booking/computerservice',views.csbkg, name='csbkg'),
 path('booking/successpage', views.scspg, name='scspage'),
 path('booking/payment', views.paymt, name='bkgpaymt'),
-path('invoice', views.invoice, name='invoice')
+path('invoice', views.invoice, name='invoice'),
+path('calendar', views.calendar, name='calendar')
 ]

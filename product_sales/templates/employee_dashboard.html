@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
-    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
-    <script src="{% static 'js/cldr.js' %}"></script>
-    <script src="{% static 'js/require.js' %}"></script>
+    <!-- <link rel="stylesheet/less" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <script defer src="{% static 'js/cldr.js' %}"></script> -->
     <title>{{ request.user }}</title>
     <style>
 
@@ -114,29 +114,34 @@
     <div class="insbdy">
         <div class="offer">
             <h3>OFFERS THIS MONTH</h3>
-            <div class="calendar">
-                <div class="calendar-header">
-                    <span class="month-picker" id="month-picker"></span>
-                    <div class="year-picker">
-                        <span id="year"></span>
+            <div class="calendar dark">
+                <div class="calendar_inner">
+                  <div class="calendar_controls">
+                    <div class="calendar_headings">
+                      <i class="fa-solid fa-arrow-left" id="prev"></i>
+                      <h2 class="months_year"></h2>
+                      <i class="fa-solid fa-arrow-right" id="next"></i>
                     </div>
+                    <div class="current_datetime">
+                      <p class="daytxt">Today</p>
+                      <p class="datetxt">Tue, 10, Oct 2023</p>
+                    </div>
+                    <div class="days_date">
+                      <ul class="days">
+                        <li>Sun</li>
+                        <li>Mon</li>
+                        <li>Tue</li>
+                        <li>Wed</li>
+                        <li>Thu</li>
+                        <li>Fri</li>
+                        <li>Sat</li>
+                      </ul>
+                      <ul class="dates">
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div class="calendar-body">
-                    <div class="calendar-week-day">
-                        <div>Sun</div>
-                        <div>Mon</div>
-                        <div>Tue</div>
-                        <div>Wed</div>
-                        <div>Thu</div>
-                        <div>Fri</div>
-                        <div>Sat</div>
-                    </div>
-                    <div class="calendar-days">
-                    </div>
-                </div>
-               
-                <div class="month-list"></div>
-            </div>
+              </div>
         </div>
         <div class="attendance">
             <h3>ATTENDANCE</h3>

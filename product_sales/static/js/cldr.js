@@ -1,125 +1,82 @@
-let calendar = document.querySelector('.calendar')
+"use strict";
 
-const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
-isLeapYear = (year) => {
-    return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 ===0)
-}
-
-getFebDays = (year) => {
-    return isLeapYear(year) ? 29 : 28
-}
-
-
-generateCalendar = (month, year) => {
-
-    let calendar_days = calendar.querySelector('.calendar-days')
-    let calendar_header_year = calendar.querySelector('#year')
-
-    let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-    calendar_days.innerHTML = ''
-
-    let currDate = new Date()
-    if (month > 11 || month < 0) month = currDate.getMonth()
-    if (!year) year = currDate.getFullYear()
-
-    let curr_month = `${month_names[month]}`
-    month_picker.innerHTML = curr_month
-    calendar_header_year.innerHTML = year
-
-    // get first day of month
-    
-    let first_day = new Date(year, month, 1)
-
-    for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-        let day = document.createElement('div')
-        if (i >= first_day.getDay()) {
-            day.classList.add('calendar-day-hover')
-            day.innerHTML = i - first_day.getDay() + 1
-            day.innerHTML += `<span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>`
-            if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) 
-            {
-             day.classList.add('curr-date')
-            }
-        }
-        calendar_days.appendChild(day)
+const datetxtEl = document.querySelector(".datetxt");
+const datesEl = document.querySelector(".dates");
+const btnEl = document.querySelectorAll(".calendar_headings .fa-solid");
+const monthYearEl = document.querySelector(".month_year");
+let dmObj = {
+  days: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
+  months: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+};
+// date object
+let dateObj = new Date();
+let dayName = dmObj.days[dateObj.getDay()]; // day
+let month = dateObj.getMonth(); // month
+let year = dateObj.getFullYear(); // year
+let date = dateObj.getDate(); // dates;
+// today date
+datetxtEl.innerHTML = `${dayName},${date}, ${dmObj.months[month]}, ${year}`;
+const displayCalendar = () => {
+  let firtDayOfMonth = new Date(year, month, 1).getDay(); // first day of the month
+  let lastDateofMonth = new Date(year, month + 1, 0).getDate(); // last date of the month
+  let lastDayofMonth = new Date(year, month, lastDateofMonth).getDay(); // last day of month
+  let lastDateofLastMonth = new Date(year, month, 0).getDate(); // last date of previous month
+  let days = "";
+  // previous month last days
+  for (let i = firtDayOfMonth; i > 0; i--) {
+    days += `<li class="dummy">${lastDateofLastMonth - i + 1}</li>`;
+  }
+  for (let i = 1; i <= lastDateofMonth; i++) {
+    let checkToday =
+      i === dateObj.getDate() &&
+      month === new Date().getMonth() &&
+      year === new Date().getFullYear()
+        ? "active"
+        : "";
+    days += `<li class="${checkToday}">${i}</li>`;
+  }
+  //next month first days
+  for (let i = lastDayofMonth; i < 6; i++) {
+    days += `<li class="dummy">${i - lastDayofMonth + 1}</li>`;
+  }
+  // display all days inside the HTML file
+  datesEl.innerHTML = days;
+  // display current month & year
+  monthYearEl.innerHTML = `${dmObj.months[month]}, ${year}`;
+};
+displayCalendar();
+// previous and next month
+btnEl.forEach((btns) => {
+  btns.addEventListener("click", () => {
+    month = btns.id === "prev" ? month - 1 : month + 1;
+    if (month < 0 || month > 11) {
+      date = new Date(year, month, new Date().getDate());
+      year = date.getFullYear();
+      month = date.getMonth();
+    } else {
+      date = new Date();
     }
-}
-
-
-import { createConnection } from 'mysql'
-
-var con = createConnection({
-host: "localhost",
-user: "root",
-password: "",
-database: "mydb"
-});
-
-con.connect(function(err) {
-    if (err) throw err;
-    con.query("SELECT service_date FROM offer", function (err, result, fields) {
-      if (err) throw err;
-      console.log(result);
-    });
+    displayCalendar();
   });
-
-// month_names.forEach((e, index) => {
-//     let month = document.createElement('div')
-//     month.innerHTML = `<div data-month="${index}">${e}</div>`
-//     month.querySelector('div').onclick = () => {
-//         month_list.classList.remove('show')
-//         curr_month.value = index
-//         generateCalendar(index, curr_year.value)
-//     }
-//     month_list.appendChild(month)
-// })
-
-let month_picker = calendar.querySelector('#month-picker')
-
-
-let currDate = new Date()
-
-let curr_month = {value: currDate.getMonth()}
-let curr_year = {value: currDate.getFullYear()}
-
-generateCalendar(curr_month.value, curr_year.value)
-
-// if (curr_month.value == 0) 
-// {
-//  document.querySelector('#prev-month').onclick = () =>
-//  {
-//   curr_month.value = 11
-//   --curr_year.value
-//   generateCalendar(curr_month.value, curr_year.value)
-//  }
-// }
-
-// else if (curr_month.value != 11) 
-// {
-//  document.querySelector('#next-month').onclick = () =>
-//  {
-//   --curr_month.value
-//   generateCalendar(curr_month.value, curr_year.value)
-//  }
-// }
-
-// else if (curr_month.value == 11) 
-// {
-//  document.querySelector('#next-month').onclick = () => 
-//  {    
-//   curr_month.value = 0  
-//   ++curr_year.value
-//   generateCalendar(curr_month.value, curr_year.value)
-//  }
-// }
-
-// else if (curr_month.value != 0)
-// {
- 
-// }
-
+});

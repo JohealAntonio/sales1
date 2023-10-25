@@ -101,6 +101,9 @@ def index(request):
     logout(request)
     return render(request, 'index.html')
 
+def calendar(request):
+    return render(request, 'calendar.html')
+
 def lgn(request):
     if request.method == 'POST':
         username = request.POST['username']
