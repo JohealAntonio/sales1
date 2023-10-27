@@ -14,66 +14,127 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
-    <!-- <link rel="stylesheet/less" href="{% static 'css/calendar.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!-- <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
     <script defer src="{% static 'js/cldr.js' %}"></script> -->
     <title>{{ request.user }}</title>
     <style>
+        .inactv
+        {
+        color: #856e53;
+        }
 
-     .insbdy
-     {
-      width: 100%;
-      display: flex;
-     }
+        .actv
+        {
+        color: black;
+        background-color: #c8a47e;
+        border-radius: 10px;
+        width: max-content;
+        }
 
-     .insbdy2
-     {
-      width: 100%;
-      display: flex;
-     }
+        .grid-container 
+        {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto;
+        width: 100%;
+        margin: auto;
+        }
 
-     .offer, .attendance
-     {
-      width: 50%;
-      border-radius: 20px;
-      height: 300px;
-      padding: 25px;
-      background-color: rgb(10, 10, 10);
-      margin: 20px 10px 0 10px;
-     }
+        .grid-item,.wkd {
+        font-size: 11px;
+        text-align: center;
+        width: 100%;
+        margin: auto;
+        padding: 20% 0 11% 0;
+        }
 
-     .offer
-     {
-      float: left;
-     }
+        .calendar
+        {
+        margin: auto;
+        width: 50%;
+        border: 1px solid #c8a47e;
+        border-radius:10px;
+        text-align: center;
+        }
 
-     .attendance
-     {
-      float: right;
-     }
+        .line
+        {
+        width: 100%;
+        border-bottom: 1px solid #c8a47e;
+        }
 
-     h3 
-     {
-      font-size: x-large;
-      font-weight: 700;
-     }
+        .mny
+        {
+        display:flex;
+        width: 70%;
+        margin: auto;
+        }
 
-     .calendar-body
-     {
-      padding: 0;
-     }
+        .week
+        {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto;
+        }
 
-     .calendar-week-day
-     {
-      margin-right: 10px;
-      margin-left: -5px;
-     }
 
-     .mth
-     {
-      display: none;
-     }
+        .month
+        {
+        margin-right: auto;
+        }
 
+        .insbdy
+        {
+        width: 100%;
+        display: flex;
+        }
+
+        .insbdy2
+        {
+        width: 100%;
+        display: flex;
+        }
+
+        .offer, .attendance
+        {
+        width: 50%;
+        border-radius: 20px;
+        height: 300px;
+        padding: 25px;
+        background-color: rgb(10, 10, 10);
+        margin: 20px 10px 0 10px;
+        }
+
+        .offer
+        {
+        float: left;
+        }
+
+        .attendance
+        {
+        float: right;
+        }
+
+        h3 
+        {
+        font-size: x-large;
+        font-weight: 700;
+        }
+
+        .calendar-body
+        {
+        padding: 0;
+        }
+
+        .calendar-week-day
+        {
+        margin-right: 10px;
+        margin-left: -5px;
+        }
+
+        .mth
+        {
+        display: none;
+        }
     </style>
 </head>
 <body style="background-color: black; color: #c8a47e;" id="body-pd">
@@ -114,33 +175,25 @@
     <div class="insbdy">
         <div class="offer">
             <h3>OFFERS THIS MONTH</h3>
-            <div class="calendar dark">
-                <div class="calendar_inner">
-                  <div class="calendar_controls">
-                    <div class="calendar_headings">
-                      <i class="fa-solid fa-arrow-left" id="prev"></i>
-                      <h2 class="months_year"></h2>
-                      <i class="fa-solid fa-arrow-right" id="next"></i>
-                    </div>
-                    <div class="current_datetime">
-                      <p class="daytxt">Today</p>
-                      <p class="datetxt">Tue, 10, Oct 2023</p>
-                    </div>
-                    <div class="days_date">
-                      <ul class="days">
-                        <li>Sun</li>
-                        <li>Mon</li>
-                        <li>Tue</li>
-                        <li>Wed</li>
-                        <li>Thu</li>
-                        <li>Fri</li>
-                        <li>Sat</li>
-                      </ul>
-                      <ul class="dates">
-                      </ul>
-                    </div>
-                  </div>
+            <div class="calendar">
+                <div class="mny">
+                  <div class="month" id="month"></div>
+                  <div class="yr" id="yr">2022</div>
                 </div>
+                <div class="line"></div>
+                <div class="week"> 
+                    <div class="wkd">Mon</div>
+                    <div class="wkd">Tues</div>
+                    <div class="wkd">Wed</div>  
+                    <div class="wkd">Thurs</div>
+                    <div class="wkd">Fri</div>
+                    <div class="wkd">Sat</div> 
+                    <div class="wkd">Sun</div>
+                </div>
+                <div class="line"></div>
+                <div class="grid-container"></div>
+              </div>
+              <div class="">
               </div>
         </div>
         <div class="attendance">
@@ -156,79 +209,115 @@
         </div>
     </div>
  <script>
-    
+
+    const days = document.querySelector(".grid-container")
+
+    // getting new date, current year and month
+    let date = new Date(),
+    currYear = date.getFullYear(),
+    currMonth = date.getMonth();
+
+    // storing full name of all months in array
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const renderCalendar = () => 
+    {
+        let firstDayofMonth = new Date(currYear, currMonth, 0).getDay(), // getting first day of month
+        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
+        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
+        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+        let divTag = "";
+        for (let i = firstDayofMonth; i > 0; i--) { // creating div of previous month last days
+            divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
+        }
+        for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+            // adding active class to li if the current day, month, and year matched
+            let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
+                            && currYear === new Date().getFullYear() ? "actv" : "";
+            divTag += `<div id="grditm" class="grid-item ${isToday}">${i}</div>`;
+        }
+        for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
+            divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
+        }
+        // passing current mon and yr as currentDate text
+        days.innerHTML = divTag;
+        document.getElementById("month").innerHTML = months[currMonth];
+        document.getElementById("yr").innerHTML = currYear
+    }
+
+    renderCalendar();
 
     function changec(a)
     {
         if(a.id == "n1")
         {
-         document.getElementById('n1').style.color = '#c8a47e';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n1').style.color = '#c8a47e';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n2")
         {
-         document.getElementById('n2').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n3")
         {
-         document.getElementById('n3').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n4")
         {
-         document.getElementById('n4').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n5")
         {
-         document.getElementById('n5').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n6")
         {
-         document.getElementById('n6').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#856e53';
         }
         else if(a.id == "n7")
         {
-         document.getElementById('n7').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
+        document.getElementById('n7').style.color = '#c8a47e';
+        document.getElementById('n1').style.color = '#856e53';
+        document.getElementById('n2').style.color = '#856e53';
+        document.getElementById('n3').style.color = '#856e53';
+        document.getElementById('n4').style.color = '#856e53';
+        document.getElementById('n5').style.color = '#856e53';
+        document.getElementById('n6').style.color = '#856e53';
         }
     }
 
@@ -269,7 +358,42 @@
     linkColor.forEach(l=> l.addEventListener('click', colorLink))
 
         // Your code to run since DOM is loaded and ready
-});
+    });
+
+    // prevNextIcon.forEach(icon => { // getting prev and next icons
+    //     icon.addEventListener("click", () => { // adding click event on both icons
+    //         // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
+    //         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+    //         if(currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+    //             // creating a new date of current year & month and pass it as date value
+    //             date = new Date(currYear, currMonth, new Date().getDate());
+    //             currYear = date.getFullYear(); // updating current year with new date year
+    //             currMonth = date.getMonth(); // updating current month with new date month
+    //         } else {
+    //             date = new Date(); // pass the current date as date value
+    //         }
+    //         renderCalendar(); // calling renderCalendar function
+    //     });
+    // });
+
+    const mysql = require('mysql');
+    const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'mydb',
+    });
+
+    connection.connect((error) => {
+    if(error){
+        console.log('Error connecting to the MySQL Database');
+        return;
+    }
+    console.log('Connection established sucessfully');
+    });
+    connection.end((error) => {
+    });
+
  </script>
 </body>
 </html>

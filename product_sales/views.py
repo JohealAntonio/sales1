@@ -7,6 +7,9 @@ from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_exempt,requires_csrf_token
 import cgi
 import mysql.connector
+import datetime
+import pandas as pd
+import bs4
 
 
 
@@ -72,7 +75,42 @@ def homesignin(request):
         form = AuthenticationForm()
         return render(request, 'homesignin.html', {'form': form})
     
+def getdates():
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT `service_date` FROM offer")
+    dates = cur.fetchone()
+
+    cur.close()
+    con.close()
+
+    return dates
+
+    
 def dashboard(request):
+    date = list(getdates())
+    f = open('employee_dashboard.html', 'w')
+
+    df = pd.DataFrame({'date': date})
+
+    # Convert the date column to a datetime object
+    for i in range(len(df)):
+        df['date'][i] = datetime.datetime.strptime(df['date'][i], '%Y-%m-%d')
+
+    # Extract the day, month, and year components from the datetime object
+    df['day'] = df['date'].dt.day
+
+    soup = bs4.BeautifulSoup('employee_dashboard.html', 'html.parser')
+
+    my_div = soup.find(id="grditm")
+
+
+    for j in df['day']:
+        if j == my_div.text:
+            f.write("<div id=grditm class='grid-item actv'>%s<div>",j)
+
+        
     return render(request, 'employee_dashboard.html')
 
 # def register_user(request):
@@ -100,9 +138,6 @@ def csrf_failure(request, reason=""):
 def index(request):
     logout(request)
     return render(request, 'index.html')
-
-def calendar(request):
-    return render(request, 'calendar.html')
 
 def lgn(request):
     if request.method == 'POST':
