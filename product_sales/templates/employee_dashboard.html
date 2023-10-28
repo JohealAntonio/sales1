@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700;800&family=Imbue:opsz,wght@10..100,100;10..100,600&family=Montserrat:wght@300&family=Nabla&family=Reem+Kufi+Fun:wght@500&display=swap" rel="stylesheet">
@@ -12,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    {% load static %}
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -191,7 +191,7 @@
                     <div class="wkd">Sun</div>
                 </div>
                 <div class="line"></div>
-                <div class="grid-container"></div>
+                <div class="grid-container">{{ function }}</div>
               </div>
               <div class="">
               </div>
@@ -230,11 +230,8 @@
         for (let i = firstDayofMonth; i > 0; i--) { // creating div of previous month last days
             divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
         }
-        for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
-            // adding active class to li if the current day, month, and year matched
-            let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
-                            && currYear === new Date().getFullYear() ? "actv" : "";
-            divTag += `<div id="grditm" class="grid-item ${isToday}">${i}</div>`;
+        for (let i = 1; i <= lastDateofMonth; i++) { 
+            divTag += `<div id="grditm" class="grid-item">${i}</div>`;
         }
         for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
             divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
@@ -375,25 +372,6 @@
     //         renderCalendar(); // calling renderCalendar function
     //     });
     // });
-
-    const mysql = require('mysql');
-    const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'mydb',
-    });
-
-    connection.connect((error) => {
-    if(error){
-        console.log('Error connecting to the MySQL Database');
-        return;
-    }
-    console.log('Connection established sucessfully');
-    });
-    connection.end((error) => {
-    });
-
  </script>
 </body>
 </html>

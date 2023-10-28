@@ -7,10 +7,11 @@ from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_exempt,requires_csrf_token
 import cgi
 import mysql.connector
-import datetime
 import pandas as pd
-import bs4
-
+from bs4 import BeautifulSoup
+from datetime import datetime as dt
+import pyautogui
+import selenium
 
 
 def signup(request):
@@ -87,31 +88,22 @@ def getdates():
 
     return dates
 
+def actv_dates():
+    date = getdates()
+    day_lists = [str(i for i in range(1,32))]
+
+    for j in date:
+        s = '{:%d}'.format(dt.strptime(j, '%Y-%m-%d'))
+        for k in day_lists:
+            if s == k:
+               return '''var d = document.getElementById("grditm"); d.className += " actv";'''
+
+
     
 def dashboard(request):
-    date = list(getdates())
-    f = open('employee_dashboard.html', 'w')
-
-    df = pd.DataFrame({'date': date})
-
-    # Convert the date column to a datetime object
-    for i in range(len(df)):
-        df['date'][i] = datetime.datetime.strptime(df['date'][i], '%Y-%m-%d')
-
-    # Extract the day, month, and year components from the datetime object
-    df['day'] = df['date'].dt.day
-
-    soup = bs4.BeautifulSoup('employee_dashboard.html', 'html.parser')
-
-    my_div = soup.find(id="grditm")
-
-
-    for j in df['day']:
-        if j == my_div.text:
-            f.write("<div id=grditm class='grid-item actv'>%s<div>",j)
-
-        
-    return render(request, 'employee_dashboard.html')
+    driver = webdriver.Chrome()
+    
+    return render(request, 'employee_dashboard.html', {'function': pyautogui.(actv_dates)})
 
 # def register_user(request):
 #     context = {}
