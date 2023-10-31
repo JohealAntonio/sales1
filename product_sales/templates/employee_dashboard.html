@@ -135,6 +135,12 @@
         {
         display: none;
         }
+
+        #js
+        {
+         font-size: 0;
+        }
+
     </style>
 </head>
 <body style="background-color: black; color: #c8a47e;" id="body-pd">
@@ -191,11 +197,12 @@
                     <div class="wkd">Sun</div>
                 </div>
                 <div class="line"></div>
-                <div class="grid-container">{{ function }}</div>
+                <div class="grid-container"></div>
               </div>
               <div class="">
               </div>
         </div>
+        <div id="js">{{ func }}</div>
         <div class="attendance">
             <h3>ATTENDANCE</h3>
         </div>
@@ -209,6 +216,8 @@
         </div>
     </div>
  <script>
+
+    "use strict";
 
     const days = document.querySelector(".grid-container")
 
@@ -231,7 +240,15 @@
             divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
         }
         for (let i = 1; i <= lastDateofMonth; i++) { 
-            divTag += `<div id="grditm" class="grid-item">${i}</div>`;
+            if (i==Number('{{dates}}'))
+            {
+             divTag += `<div id="grditm" class="grid-item actv">${i}</div>`;
+            }
+            else
+            {
+             divTag += `<div id="grditm" class="grid-item">${i}</div>`;
+            }
+        
         }
         for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
             divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
@@ -239,10 +256,13 @@
         // passing current mon and yr as currentDate text
         days.innerHTML = divTag;
         document.getElementById("month").innerHTML = months[currMonth];
-        document.getElementById("yr").innerHTML = currYear
+        document.getElementById("yr").innerHTML = currYear;
+
     }
 
     renderCalendar();
+    
+
 
     function changec(a)
     {

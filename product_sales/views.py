@@ -11,7 +11,10 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime as dt
 import pyautogui
-import selenium
+import js2py
+import json
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 
 def signup(request):
@@ -83,27 +86,33 @@ def getdates():
     cur.execute("SELECT `service_date` FROM offer")
     dates = cur.fetchone()
 
+    for j in dates:
+        s = "{:%d}".format(dt.strptime(j, '%Y-%m-%d'))
+
     cur.close()
     con.close()
 
-    return dates
+    return s
+        
+    
 
-def actv_dates():
-    date = getdates()
-    day_lists = [str(i for i in range(1,32))]
 
-    for j in date:
-        s = '{:%d}'.format(dt.strptime(j, '%Y-%m-%d'))
-        for k in day_lists:
-            if s == k:
-               return '''var d = document.getElementById("grditm"); d.className += " actv";'''
+# def actv_dates():
+#     date = getdates()
+#     day_lists = [str(i) for i in range(1,32)]
+
+#     for k in day_lists:
+#         for j in date:
+#             s = '{:%d}'.format(dt.strptime(j, '%Y-%m-%d'))
+#             if (k == s):
+#                 c = '''let day = document.getElementById("grditm").innerHTML;let con = document.querySelector(".grid-item");if (days==%s){con.className += " actv};'''% s 
+#                 return c
+      
 
 
     
 def dashboard(request):
-    driver = webdriver.Chrome()
-    
-    return render(request, 'employee_dashboard.html', {'function': pyautogui.(actv_dates)})
+    return render(request, 'employee_dashboard.html', {'dates':getdates()})
 
 # def register_user(request):
 #     context = {}
