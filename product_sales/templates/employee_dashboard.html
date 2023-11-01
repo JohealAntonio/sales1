@@ -135,11 +135,11 @@
         {
         display: none;
         }
-
-        #js
+/* 
+        .js
         {
          font-size: 0;
-        }
+        } */
 
     </style>
 </head>
@@ -199,10 +199,8 @@
                 <div class="line"></div>
                 <div class="grid-container"></div>
               </div>
-              <div class="">
-              </div>
+              <!-- <div class="js">{{days}}</div> -->
         </div>
-        <div id="js">{{ func }}</div>
         <div class="attendance">
             <h3>ATTENDANCE</h3>
         </div>
@@ -225,6 +223,8 @@
     let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
+    let ds = JSON.parse('{{days}}');
+    let ms = JSON.parse('{{months}}');
 
     // storing full name of all months in array
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -239,16 +239,17 @@
         for (let i = firstDayofMonth; i > 0; i--) { // creating div of previous month last days
             divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
         }
-        for (let i = 1; i <= lastDateofMonth; i++) { 
-            if (i==Number('{{dates}}'))
-            {
-             divTag += `<div id="grditm" class="grid-item actv">${i}</div>`;
-            }
-            else
-            {
-             divTag += `<div id="grditm" class="grid-item">${i}</div>`;
-            }
-        
+        for (let i = 1; i <= lastDateofMonth; i++) 
+        {
+         for (let h=0; h<ds.length; h++)
+         {
+          if (i == ds[h])
+          {
+            divTag += `<div id="grditm" class="grid-item actv">${i}</div>`;
+            break
+          }
+         } 
+         divTag += `<div id="grditm" class="grid-item">${i}</div>`;  
         }
         for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
             divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`

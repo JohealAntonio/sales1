@@ -79,23 +79,23 @@ def homesignin(request):
         form = AuthenticationForm()
         return render(request, 'homesignin.html', {'form': form})
     
-def getdates():
+def getdnm():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
     cur = con.cursor()
 
     cur.execute("SELECT `service_date` FROM offer")
-    dates = cur.fetchone()
-
+    dates = [row[0] for row in cur.fetchall()]
+    
+    s = []
+    m = []
     for j in dates:
-        s = "{:%d}".format(dt.strptime(j, '%Y-%m-%d'))
+        s.append(int('{:%d}'.format(dt.strptime(j, '%Y-%m-%d'))))
+        m.append(int('{:%m}'.format(dt.strptime(j, '%Y-%m-%d'))))
 
     cur.close()
     con.close()
 
-    return s
-        
-    
-
+    return s,m
 
 # def actv_dates():
 #     date = getdates()
@@ -107,12 +107,9 @@ def getdates():
 #             if (k == s):
 #                 c = '''let day = document.getElementById("grditm").innerHTML;let con = document.querySelector(".grid-item");if (days==%s){con.className += " actv};'''% s 
 #                 return c
-      
 
-
-    
 def dashboard(request):
-    return render(request, 'employee_dashboard.html', {'dates':getdates()})
+    return render(request, 'employee_dashboard.html', {'days':getdnm()[0], 'months':getdnm()[1]})
 
 # def register_user(request):
 #     context = {}
