@@ -28,8 +28,26 @@
         {
         color: black;
         background-color: #c8a47e;
-        border-radius: 10px;
-        width: max-content;
+        border-radius: 20px;
+        margin: auto;
+        text-align: center;
+        }
+
+        .actv:hover
+        {
+         background-color: #7c5b36;
+         color: white;   
+        }
+
+        .actv1 
+        {
+        color: black;
+        }
+
+        .actv1:hover
+        {
+         background-color: #7c5b36;
+         color: white;   
         }
 
         .grid-container 
@@ -43,7 +61,7 @@
         .grid-item,.wkd {
         font-size: 11px;
         text-align: center;
-        width: 100%;
+        width: 80%;
         margin: auto;
         padding: 20% 0 11% 0;
         }
@@ -241,15 +259,15 @@
         }
         for (let i = 1; i <= lastDateofMonth; i++) 
         {
-         for (let h=0; h<ds.length; h++)
+         const indxno = ds.indexOf(i);
+         if (ds.includes(i) && currMonth == ms[indxno]-1)
          {
-          if (i == ds[h])
-          {
-            divTag += `<div id="grditm" class="grid-item actv">${i}</div>`;
-            break
-          }
-         } 
-         divTag += `<div id="grditm" class="grid-item">${i}</div>`;  
+          divTag += `<div id="grditm" class="grid-item actv"><a class='actv1' href="http://127.0.0.1:8000/employee/offers/">${i}</a></div>`;
+         }
+         else
+         {
+          divTag += `<div id="grditm" class="grid-item">${i}</div>`;
+         }
         }
         for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
             divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`

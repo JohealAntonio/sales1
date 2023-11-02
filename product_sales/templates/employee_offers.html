@@ -16,7 +16,75 @@
     <link rel="icon" href="/static/img/logocs.png">
     <title>{{ request.user }}</title>
     <style>
-     
+    
+    h1 {
+        font-size: 24px;
+        margin: 10px 0 0 0;
+        font-weight: lighter;
+        text-transform: uppercase;
+        color: #eeeeee;
+    }
+
+    p {
+        font-size: 12px;
+        font-weight: light;
+        color: #333333;
+    }
+
+    span a {
+        font-size: 18px;
+        color: #cccccc;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: all 0.4s ease-in-out;
+        &:hover {
+            color: #ffffff;
+        }
+    }
+
+    @keyframes float {
+        0% {
+            box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+            transform: translatey(25px);
+        }
+        50% {
+            box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+            transform: translatey(50px);
+        }
+        100% {
+            box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+            transform: translatey(25px);
+        }
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .daysdiv {
+        width: 80%;
+        height: 500px;
+        border: .1px white solid;
+        border-radius: 50px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+        transform: translatey(0px);
+        animation: float 6s ease-in-out infinite;
+        img { width: 100%; height: auto; }
+    }
+
+    .whole-div
+    {
+     display: flex;
+     width: 100%;
+    }
+
+
     </style>
 </head>
 <body style="background-color: black;" id="body-pd">
@@ -53,6 +121,29 @@
                 </form>
             {% endif %}
         </nav>
+    </div>
+    <div class="whole-div">
+        <div class="container">
+            <div class="daysdiv">
+            </div>
+        </div>
+        <div class="container">
+            <div class="daysdiv">
+            </div>
+        </div>
+        <div class="container">
+            <div class="daysdiv">
+            </div>
+        </div>
+        <div class="container">
+            <div class="daysdiv">
+            </div>
+        </div>
+        <div class="container">
+            <div class="daysdiv">
+            </div>
+        </div>
+
     </div>
  <script>
     function changec(a)
