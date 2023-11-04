@@ -56,8 +56,6 @@ def msgs(request):
 def imptudts(request): 
     return render(request, 'employee_updates.html')
 
-def offers(request): 
-    return render(request, 'employee_offers.html')
 
 def home(request):
     logout(request)  
@@ -95,7 +93,10 @@ def getdnm():
     cur.close()
     con.close()
 
-    return s,m
+    return dates,s,m
+
+def offers(request): 
+    return render(request, 'employee_offers.html',{'dates':getdnm()[0]})
 
 # def actv_dates():
 #     date = getdates()
@@ -109,7 +110,7 @@ def getdnm():
 #                 return c
 
 def dashboard(request):
-    return render(request, 'employee_dashboard.html', {'days':getdnm()[0], 'months':getdnm()[1]})
+    return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
 
 # def register_user(request):
 #     context = {}

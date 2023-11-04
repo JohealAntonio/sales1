@@ -215,7 +215,7 @@
                     <div class="wkd">Sun</div>
                 </div>
                 <div class="line"></div>
-                <div class="grid-container"></div>
+                <div id="thebigd" class="grid-container"></div>
               </div>
               <!-- <div class="js">{{days}}</div> -->
         </div>
@@ -236,6 +236,7 @@
     "use strict";
 
     const days = document.querySelector(".grid-container")
+    const bigdiv = document.getElementById("thebigd")
 
     // getting new date, current year and month
     let date = new Date(),
@@ -254,8 +255,10 @@
         lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
         lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
         let divTag = "";
-        for (let i = firstDayofMonth; i > 0; i--) { // creating div of previous month last days
-            divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
+        
+        for (let i = firstDayofMonth; i > 0; i--) 
+        { // creating div of previous month last days
+         divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
         }
         for (let i = 1; i <= lastDateofMonth; i++) 
         {
@@ -269,8 +272,11 @@
           divTag += `<div id="grditm" class="grid-item">${i}</div>`;
          }
         }
-        for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
-            divTag += `<div id="grditm" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
+        if (lastDayofMonth!=0)
+        {
+            for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
+                divTag += `<div id="nxtmth" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
+            }
         }
         // passing current mon and yr as currentDate text
         days.innerHTML = divTag;
