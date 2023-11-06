@@ -1,242 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700;800&family=Imbue:opsz,wght@10..100,100;10..100,600&family=Montserrat:wght@300&family=Nabla&family=Reem+Kufi+Fun:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
-    <link rel="icon" href="/static/img/logocs.png">
-    <title>{{ request.user }}</title>
-    <style>
-        
-.container {
-  position: absolute;
-  width: auto;
-  top: 60px;
-  display: flex;
-}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700;800&family=Imbue:opsz,wght@10..100,100;10..100,600&family=Montserrat:wght@300&family=Nabla&family=Reem+Kufi+Fun:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+        <link href="/static/css/sidenav.css" rel="stylesheet"/>
+        <link rel="icon" href="/static/img/logocs.png">
+        <title>AnonymousUser</title>
+        <style>
+            .container {
+                position: absolute;
+                width: auto;
+                top: 60px;
+                display: flex;
+            }
 
-.card {
-  display: flex;
-  height: 500px;
-  width: 500px;
-  background-color: #141414;
-  border-radius: 10px;
-  box-shadow: -1rem 0 3rem #000;
-/*   margin-left: -50px; */
-  transition: 0.4s ease-out;
-  position: relative;
-  left: 0px;
-}
+            .card {
+                display: flex;
+                height: 500px;
+                width: 500px;
+                background-color: #141414;
+                border-radius: 10px;
+                box-shadow: 0rem 0 3rem #000;
+                /*   margin-left: -50px; */
+                transition: 0.4s ease-out;
+                position: relative;
+                left: 0px;
+            }
 
-.card:not(:first-child) {
-    margin-left: -50px;
-}
+            .card:not(:first-child) {
+                margin-left: -50px;
+            }
 
-.card:hover {
-  transform: translateX(10px);
-  z-index: 2;
-  transition: 0.4s ease-out;
-}
+            .card:hover {
+                z-index: 2;
+                transform: translateX(10px);
+                transition: 0.4s ease-out;
+            }
 
-.card:hover ~ .card {
-  position: relative;
-  left: 50px;
-  transition: 0.4s ease-out;
-}
+            .card:hover ~ .card {
+                position: relative;
+                left: 50px;
+                transition: 0.4s ease-out;
+            }
 
-.title {
-  color: white;
-  font-weight: 300;
-  position: absolute;
-  left: 20px;
-  top: 15px;
-}
+            .title {
+                color: white;
+                font-weight: 300;
+                position: absolute;
+                left: 20px;
+                top: 15px;
+            }
 
-.card:hover .filledbar {
-  width: 120px;
-  transition: 0.4s ease-out;
-}
+            .card:hover .filledbar {
+                width: 120px;
+                transition: 0.4s ease-out;
+            }
 
-.card:hover .stroke {
-  stroke-dashoffset: 100;
-  transition: 0.6s ease-out;
-}
-    </style>
-</head>
-<body style="background-color: black;" id="body-pd">
-    <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
-        <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
-        <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
-    </header>
-    <div style="background-color: rgb(10, 10, 10);" class="l-navbar" id="nav-bar">
-        <nav class="nav">
-            <div> <a style="color: #c8a47e;" href="#" class="nav_logo"><img style="height: 20px; width: 20px;" src="/static/img/logocs.png" alt=""><span style="font-family: 'Poppins', sans-serif; font-weight: 600; color:#c8a47e;" class="nav_logo-name">Charles Solutions</span> </a>
-                <div class="nav_list"> 
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/dashboard" id="n1" onclick="changec(this)" class="nav_link">
-                        <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span>
-                    </a> 
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages" id="n2" onclick="changec(this)" class="nav_link">
-                        <i class='bx bx-message-square-detail nav_icon'></i><span class="nav_name">Messages</span>
-                    </a> 
-                    <a style="color: #c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/offers" id="n3" onclick="changec(this)" class="nav_link active">
-                        <i class='bx bx-wrench'></i><span class="nav_name">Service offers</span>
+            .card:hover .stroke {
+                stroke-dashoffset: 100;
+                transition: 0.6s ease-out;
+            }
+        </style>
+    </head>
+    <body style="background-color: black;" id="body-pd">
+        <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
+            <div style="margin-left: -10px; " class="header_toggle">
+                <i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i>
+            </div>
+            <span style="display: flex; float: left; color: #c8a47e;">
+                <p>Hey AnonymousUser!</p>
+            </span>
+        </header>
+        <div style="background-color: rgb(10, 10, 10);" class="l-navbar" id="nav-bar">
+            <nav class="nav">
+                <div>
+                    <a style="color: #c8a47e;" href="#" class="nav_logo">
+                        <img style="height: 20px; width: 20px;" src="/static/img/logocs.png" alt="">
+                        <span style="font-family: 'Poppins', sans-serif; font-weight: 600; color:#c8a47e;" class="nav_logo-name">Charles Solutions</span>
                     </a>
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/updates" id="n4" onclick="changec(this)" class="nav_link">
-                        <i class='bx bx-info-circle'></i><span class="nav_name">Important updates</span>
-                    </a>
+                    <div class="nav_list">
+                        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/dashboard" id="n1" onclick="changec(this)" class="nav_link">
+                            <i class='bx bx-grid-alt nav_icon'></i>
+                            <span class="nav_name">Dashboard</span>
+                        </a>
+                        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages" id="n2" onclick="changec(this)" class="nav_link">
+                            <i class='bx bx-message-square-detail nav_icon'></i>
+                            <span class="nav_name">Messages</span>
+                        </a>
+                        <a style="color: #c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/offers" id="n3" onclick="changec(this)" class="nav_link active">
+                            <i class='bx bx-wrench'></i>
+                            <span class="nav_name">Service offers</span>
+                        </a>
+                        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/updates" id="n4" onclick="changec(this)" class="nav_link">
+                            <i class='bx bx-info-circle'></i>
+                            <span class="nav_name">Important updates</span>
+                        </a>
+                    </div>
                 </div>
-            </div> 
-            {% if user.is_authenticated %}
-                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/index/">
-                    {% csrf_token %} 
-                    <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
-                        <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
-                            <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
-                        </button>
-                    </a>
-                </form>
-            {% endif %}
-        </nav>
-    </div>
-    <div class="container">
-        <div class="card">
-          <h3 class="title">Card 1</h3>
+            </nav>
         </div>
-        <div class="card">
-          <h3 class="title">Card 2</h3>
+        <div class="container">
+            <div class="card">
+                <h3 class="title">Card 1</h3>
+            </div>
+            <div class="card">
+                <h3 class="title">Card 2</h3>
+            </div>
+            <div class="card">
+                <h3 class="title">Card 3</h3>
+            </div>
+            <div class="card">
+                <h3 class="title">Card 4</h3>
+            </div>
         </div>
-        <div class="card">
-          <h3 class="title">Card 3</h3>
-        </div>
-        <div class="card">
-          <h3 class="title">Card 4</h3>
-        </div>
-    </div>
-    
- <script>
+        <div id="info">{{info}}</div>
+        <script>
 
+            ds = document.getElementById('info').innerHTML
+            obj = JSON.stringify(ds)
+            console.log(obj)
 
-    function changec(a)
-    {
-        if(a.id == "n1")
-        {
-         document.getElementById('n1').style.color = '#c8a47e';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n2")
-        {
-         document.getElementById('n2').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n3")
-        {
-         document.getElementById('n3').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n4")
-        {
-         document.getElementById('n4').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n5")
-        {
-         document.getElementById('n5').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n6")
-        {
-         document.getElementById('n6').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n7")
-        {
-         document.getElementById('n7').style.color = '#c8a47e';
-         document.getElementById('n1').style.color = '#856e53';
-         document.getElementById('n2').style.color = '#856e53';
-         document.getElementById('n3').style.color = '#856e53';
-         document.getElementById('n4').style.color = '#856e53';
-         document.getElementById('n5').style.color = '#856e53';
-         document.getElementById('n6').style.color = '#856e53';
-        }
-    }
+            function changec(a) {
+                if (a.id == "n1") {
+                    document.getElementById('n1').style.color = '#c8a47e';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n2") {
+                    document.getElementById('n2').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n3") {
+                    document.getElementById('n3').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n4") {
+                    document.getElementById('n4').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n5") {
+                    document.getElementById('n5').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n6") {
+                    document.getElementById('n6').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n7').style.color = '#856e53';
+                } else if (a.id == "n7") {
+                    document.getElementById('n7').style.color = '#c8a47e';
+                    document.getElementById('n1').style.color = '#856e53';
+                    document.getElementById('n2').style.color = '#856e53';
+                    document.getElementById('n3').style.color = '#856e53';
+                    document.getElementById('n4').style.color = '#856e53';
+                    document.getElementById('n5').style.color = '#856e53';
+                    document.getElementById('n6').style.color = '#856e53';
+                }
+            }
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+            document.addEventListener("DOMContentLoaded", function(event) {
 
-    const showNavbar = (toggleId, navId, bodyId, headerId) =>{
-    const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId),
-    bodypd = document.getElementById(bodyId),
-    headerpd = document.getElementById(headerId)
+                const showNavbar = (toggleId,navId,bodyId,headerId)=>{
+                    const toggle = document.getElementById(toggleId)
+                      , nav = document.getElementById(navId)
+                      , bodypd = document.getElementById(bodyId)
+                      , headerpd = document.getElementById(headerId)
 
-    // Validate that all variables exist
-    if(toggle && nav && bodypd && headerpd){
-    toggle.addEventListener('click', ()=>{
-    // show navbar
-    nav.classList.toggle('show')
-    // change icon
-    toggle.classList.toggle('bx-x')
-    // add padding to body
-    bodypd.classList.toggle('body-pd')
-    // add padding to header
-    headerpd.classList.toggle('body-pd')
-    })
-    }
-    }
+                    // Validate that all variables exist
+                    if (toggle && nav && bodypd && headerpd) {
+                        toggle.addEventListener('click', ()=>{
+                            // show navbar
+                            nav.classList.toggle('show')
+                            // change icon
+                            toggle.classList.toggle('bx-x')
+                            // add padding to body
+                            bodypd.classList.toggle('body-pd')
+                            // add padding to header
+                            headerpd.classList.toggle('body-pd')
+                        }
+                        )
+                    }
+                }
 
-    showNavbar('header-toggle','nav-bar','body-pd','header')
+                showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
 
-    /*===== LINK ACTIVE =====*/
-    const linkColor = document.querySelectorAll('.nav_link')
+                /*===== LINK ACTIVE =====*/
+                const linkColor = document.querySelectorAll('.nav_link')
 
-    function colorLink(){
-    if(linkColor){
-    linkColor.forEach(l=> l.classList.remove('active'))
-    this.classList.add('active')
-    }
-    }
-    linkColor.forEach(l=> l.addEventListener('click', colorLink))
+                function colorLink() {
+                    if (linkColor) {
+                        linkColor.forEach(l=>l.classList.remove('active'))
+                        this.classList.add('active')
+                    }
+                }
+                linkColor.forEach(l=>l.addEventListener('click', colorLink))
 
-        // Your code to run since DOM is loaded and ready
-});
- </script>
-</body>
+                // Your code to run since DOM is loaded and ready
+            });
+        </script>
+    </body>
 </html>
