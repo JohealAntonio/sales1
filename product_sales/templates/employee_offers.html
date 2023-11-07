@@ -39,7 +39,7 @@
                 margin-left: -50px;
             }
 
-            .card:hover {
+            .card:hover, .cardclicked {
                 z-index: 2;
                 transform: translateX(10px);
                 transition: 0.4s ease-out;
@@ -52,7 +52,7 @@
             }
 
             .title {
-                color: white;
+                color: #c8a47e;
                 font-weight: 300;
                 position: absolute;
                 left: 20px;
@@ -68,6 +68,12 @@
                 stroke-dashoffset: 100;
                 transition: 0.6s ease-out;
             }
+
+            #info
+            {
+             font-size: 0;
+            }
+
         </style>
     </head>
     <body style="background-color: black;" id="body-pd">
@@ -107,26 +113,46 @@
                 </div>
             </nav>
         </div>
-        <div class="container">
-            <div class="card">
-                <h3 class="title">Card 1</h3>
-            </div>
-            <div class="card">
-                <h3 class="title">Card 2</h3>
-            </div>
-            <div class="card">
-                <h3 class="title">Card 3</h3>
-            </div>
-            <div class="card">
-                <h3 class="title">Card 4</h3>
-            </div>
-        </div>
+        <div class="container"></div>
         <div id="info">{{info}}</div>
         <script>
 
-            ds = document.getElementById('info').innerHTML
-            obj = JSON.stringify(ds)
-            console.log(obj)
+            const ds = JSON.stringify(document.getElementById('info').innerHTML);
+            const info = JSON.parse(ds);
+            const allinfo = JSON.parse(info);
+            let offers = document.querySelector(".container")
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            const renderoffrbox = () => 
+            {
+                let divTag = "";
+                
+                for (let i=0; i<allinfo.length; i++)
+                {
+                 let date = new Date(allinfo[i].service_date)
+                 let d = date.getDate()
+                 let m = date.getMonth()
+                 let yr = date.getFullYear()
+
+                 divTag += `<div id="crd${i+1}" class="card" onclick="clicked(${i+1})"><h3 class="title">${d} ${months[m]} ${yr}</h3></div>`;
+                }
+
+
+                // passing current mon and yr as currentDate text
+                offers.innerHTML = divTag;
+
+            }
+
+
+            renderoffrbox();
+
+            
+                
+            function clicked(i)
+            {
+             cls = "crd"+String(i)   
+             document.getElementById(cls).className += " cardclicked"
+            }
 
             function changec(a) {
                 if (a.id == "n1") {

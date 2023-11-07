@@ -100,15 +100,15 @@ def getofrinfo():
     cur = con.cursor()
 
     cur.execute("SELECT service_no,service_date,service_time,cstr_name,cstr_mobile_no,cstr_email,electronics_type,brand,model_no,reason_for_service,other_reason,address,city FROM offer ORDER BY `service_date`;")
-    columns = [col[0] for col in cur.description]
+    columns = [col for col in list(zip(*cur.description))[0]]
     allinfo = cur.fetchall()
     cur.close()
     con.close()
-    return [dict(zip(columns, row)) for row in allinfo]
+    return json.dumps([dict(zip(columns, row)) for row in allinfo])
     
 
 def offers(request): 
-    return render(request, 'employee_offers.html',{'info':getofrinfo()[0]})
+    return render(request, 'employee_offers.html',{'info':getofrinfo()})
 
 # def actv_dates():
 #     date = getdates()
