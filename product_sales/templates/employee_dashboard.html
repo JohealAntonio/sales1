@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
     <!-- <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
     <script defer src="{% static 'js/cldr.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
     <title>{{ request.user }}</title>
     <style>
         .inactv
@@ -158,6 +159,27 @@
         {
          font-size: 0;
         } */
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 5px;
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+            background:#856e53; 
+            border-radius: 5px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background:#c8a47e; 
+            }
 
     </style>
 </head>
@@ -221,6 +243,7 @@
         </div>
         <div class="attendance">
             <h3>ATTENDANCE</h3>
+            <canvas id="chart" width="600" height="250"></canvas>
         </div>
     </div>
     <div class="insbdy2">
@@ -232,6 +255,38 @@
         </div>
     </div>
  <script>
+
+    var ctx = document.getElementById('chart').getContext('2d');
+
+    var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, '#c8a47e');
+    gradient.addColorStop(1, 'black');
+
+    function getRndInt(min, max) 
+    {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
+        datasets: [{
+        backgroundColor: gradient,
+        label: 'Number of days',
+        fill: true,
+        data: [getRndInt(17,26),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31)],
+        }]
+    },
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        },
+        tension: 0.3
+    }
+    });
 
     "use strict";
 

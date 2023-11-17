@@ -403,9 +403,9 @@
         <br>
         <h2 style="margin-top: 20px;">Weekends</h2>
         <br>
-        <p id="sat">Saturday <span id="st">9am to 5pm</span></p>
+        <p id="sat">Saturday <span id="st">9am to 2pm</span></p>
         <br>
-        <p id="sun">Sunday <span id="sut">9am to 5pm</span></p>
+        <p id="sun">Sunday <span id="sut">Closed</span></p>
         <br>
       </div>
     </div>
@@ -420,38 +420,42 @@
     <div style="margin-bottom: 5%; width: auto;"></div>
     <div style="text-align: center;">
       <h1>Get in touch</h1>
-      <div style="width: max-content; margin: auto;">
-        <div style="display: flex;">
-          <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
-            <label for="" style="display: block; text-align: left;">First Name</label>
-            <input  type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Rick">
+      <form action="http://127.0.0.1:8000/index/" method="POST" name="frm">
+        {% csrf_token %} 
+        <div style="width: max-content; margin: auto;">
+          <div style="display: flex;">
+            <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
+              <label for="" style="display: block; text-align: left;">First Name</label>
+              <input name="fname" type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Rick">
+            </div>
+            <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
+              <label for="" style="display: block; text-align: left;">Last Name</label>
+              <input name="lname" type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Astley">
+            </div>
           </div>
-          <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
-            <label for="" style="display: block; text-align: left;">Last Name</label>
-            <input type="text" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="Astley">
+          <br>
+          <div style="display: flex;">
+            <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
+              <label for="" style="display: block; text-align: left;">Email</label>
+              <input name="email" type="email" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="nggyu@gmail.com">
+            </div>
+            <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
+              <label for="" style="display: block; text-align: left;">Phone Number</label>
+              <input name="phone_no" type="tel" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="+1234567890">
+            </div>
+          </div>
+          <br>
+          <div style="width: max-content;">
+            <label for="" style="display: block; text-align: left;">Message</label>
+            <textarea name="msg" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" id="" cols="50" rows="10" placeholder="Type what you want to tell us here..."></textarea>
+          </div>
+          <input type="text" name="msg_from" value="website query" hidden>
+          <br>
+          <div style="float: left">
+            <input class="bn" type="submit" value="submit">
           </div>
         </div>
-        <br>
-        <div style="display: flex;">
-          <div style="margin: auto 1% auto auto; width: max-content; float: inline-start;">
-            <label for="" style="display: block; text-align: left;">Email</label>
-            <input  type="email" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="nggyu@gmail.com">
-          </div>
-          <div style="margin: auto auto auto 1%; width: max-content;  float: inline-end;">
-            <label for="" style="display: block; text-align: left;">Phone Number</label>
-            <input type="tel" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" placeholder="+1234567890">
-          </div>
-        </div>
-        <br>
-        <div style="width: max-content;">
-          <label for="" style="display: block; text-align: left;">Message</label>
-          <textarea name="msg" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" id="" cols="50" rows="10" placeholder="Type what you want to tell us here..."></textarea>
-        </div>
-        <br>
-        <div style="float: left">
-          <input class="bn" type="submit">
-        </div>
-      </div>
+      </form>
     </div>
     <script>
 

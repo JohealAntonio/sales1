@@ -148,7 +148,27 @@ def csrf_failure(request, reason=""):
 
 def index(request):
     logout(request)
-    return render(request, 'index.html')
+    if request.method == 'POST':
+
+        fname=request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        phone_no = request.POST['phone_no']
+        msg_from = request.POST['msg_from']
+        msg = request.POST['msg']
+
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`) VALUES (%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return render(request, 'index.html')
+    else:
+        return render(request, 'index.html')
 
 def lgn(request):
     if request.method == 'POST':

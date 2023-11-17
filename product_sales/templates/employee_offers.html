@@ -13,36 +13,39 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <link href="/static/css/sidenav.css" rel="stylesheet"/>
         <link rel="icon" href="/static/img/logocs.png">
-        <title>AnonymousUser</title>
+        <title>{{request.user}}</title>
         <style>
             .container {
                 position: absolute;
-                width: auto;
-                top: 60px;
-                display: flex;
+                top: 40px;
+                display:-webkit-inline-box;
             }
 
             .card {
-                display: flex;
                 height: 500px;
-                width: 500px;
-                background-color: #141414;
+                width: 350px;
+                background-color: #0c0c0c;
                 border-radius: 10px;
                 box-shadow: 0rem 0 3rem #000;
-                /*   margin-left: -50px; */
                 transition: 0.4s ease-out;
-                position: relative;
                 left: 0px;
+                text-align: center;
+                color: #c8a47e5a;
             }
 
             .card:not(:first-child) {
                 margin-left: -50px;
             }
 
-            .card:hover, .cardclicked {
-                z-index: 2;
+            .card:hover{
+                color : #c8a47ea8;
+                background-color : #131313;
                 transform: translateX(10px);
                 transition: 0.4s ease-out;
+                .title
+                {
+                 color: #c8a47e;
+                }
             }
 
             .card:hover ~ .card {
@@ -52,10 +55,10 @@
             }
 
             .title {
-                color: #c8a47e;
+                color: #c8a47ea8;
                 font-weight: 300;
                 position: absolute;
-                left: 20px;
+                left: 15%;
                 top: 15px;
             }
 
@@ -74,6 +77,33 @@
              font-size: 0;
             }
 
+            ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 5px;
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+            background:#856e53; 
+            border-radius: 5px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background:#c8a47e; 
+            }
+
+            .ttl
+            {
+             margin-top: 15px;
+            }
+
         </style>
     </head>
     <body style="background-color: black;" id="body-pd">
@@ -82,7 +112,7 @@
                 <i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i>
             </div>
             <span style="display: flex; float: left; color: #c8a47e;">
-                <p>Hey AnonymousUser!</p>
+                <p>Hey {{ request.user }}!</p>
             </span>
         </header>
         <div style="background-color: rgb(10, 10, 10);" class="l-navbar" id="nav-bar">
@@ -111,9 +141,19 @@
                         </a>
                     </div>
                 </div>
+                {% if user.is_authenticated %}
+                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/index/">
+                    {% csrf_token %} 
+                    <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
+                        <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
+                            <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
             </nav>
         </div>
-        <div class="container"></div>
+        <div class="container" id="ctr"></div>
         <div id="info">{{info}}</div>
         <script>
 
@@ -133,8 +173,17 @@
                  let d = date.getDate()
                  let m = date.getMonth()
                  let yr = date.getFullYear()
+                 let sno = allinfo[i].service_no
+                 let stime = allinfo[i].service_time
+                 let crnm = allinfo[i].cstr_name
+                 let etyp = allinfo[i].electronics_type
+                 let brd = allinfo[i].brand
+                 let mdl = allinfo[i].model_no
+                 let ror = allinfo[i].reason_for_service
+                 let addr = allinfo[i].address
+                 let cty = allinfo[i].city
 
-                 divTag += `<div id="crd${i+1}" class="card" onclick="clicked(${i+1})"><h3 class="title">${d} ${months[m]} ${yr}</h3></div>`;
+                 divTag += `<div id="crd${i+1}" class="card" onclick="clicked(${i+1})"><h3 class="title" id="ttl${i+1}">${d} ${months[m]} ${yr}</h3><br><br><br><p class='ttl'>Type of electronics: ${etyp}</p><p class='ttl'>Service No.: ${sno}</p><p class='ttl'>Service Time: ${stime}</p><p class='ttl'>Customer Name: ${crnm}</p><p class='ttl'>Brand and Model: ${brd} ${mdl}</p><p class='ttl'>Reason for the service: ${ror}</p><p class='ttl'>Address: ${addr} ${cty}</p></div>`;
                 }
 
 
@@ -149,9 +198,11 @@
             
                 
             function clicked(i)
-            {
-             cls = "crd"+String(i)   
-             document.getElementById(cls).className += " cardclicked"
+            {   
+             document.getElementById("crd"+String(i)).style.zIndex += 1
+             document.getElementById("crd"+String(i)).style.color = '#c8a47ea8'
+             document.getElementById("ttl"+String(i)).style.color = "#c8a47e"
+             document.getElementById("crd"+String(i)).style.backgroundColor = '#131313'
             }
 
             function changec(a) {
