@@ -181,12 +181,14 @@
             background:#c8a47e; 
             }
 
+
     </style>
 </head>
 <body style="background-color: black; color: #c8a47e;" id="body-pd">
     <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
+        <input type="text" name="usr" value="{{request.user}}" hidden>
     </header>
     <div style="background-color: rgb(10, 10, 10);" class="l-navbar" id="nav-bar">
         <nav class="nav">
@@ -207,7 +209,7 @@
                 </div>
             </div> 
             {% if user.is_authenticated %}
-                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/index/">
+                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/login">
                     {% csrf_token %} 
                     <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
                         <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
@@ -256,26 +258,55 @@
     </div>
  <script>
 
+    let date = new Date(),
+    currYear = date.getFullYear(),
+    currMonth = date.getMonth();
+
     var ctx = document.getElementById('chart').getContext('2d');
 
     var gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, '#c8a47e');
-    gradient.addColorStop(1, 'black');
+    gradient.addColorStop(1, '#572e00');
+    gradient.addColorStop(0.2, '#c8a47e');
+    gradient.addColorStop(0, '#572e00');
 
     function getRndInt(min, max) 
     {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    const randayslst = [getRndInt(20,31),getRndInt(20,28),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31)] 
+    const mth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const actmth = []
+    const actdays = []
+
+    function getmths()
+    {
+     for (let i = 0; i <= currMonth; i++)
+     {
+      actmth.push(mth[i]) 
+     }
+     return actmth
+    }
+
+    function getdays()
+    {
+     for (let i = 0; i <= currMonth; i++)
+     {
+      actdays.push(randayslst[i]) 
+     }
+     return actdays
+    }
+
 
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
+        labels: getmths().slice(0),
         datasets: [{
         backgroundColor: gradient,
         label: 'Number of days',
         fill: true,
-        data: [getRndInt(17,26),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31),getRndInt(15,31)],
+        data: getdays().slice(0),
         }]
     },
     options: {
@@ -294,9 +325,6 @@
     const bigdiv = document.getElementById("thebigd")
 
     // getting new date, current year and month
-    let date = new Date(),
-    currYear = date.getFullYear(),
-    currMonth = date.getMonth();
     let ds = JSON.parse('{{days}}');
     let ms = JSON.parse('{{months}}');
 

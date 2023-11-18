@@ -122,7 +122,10 @@ def offers(request):
 #                 return c
 
 def dashboard(request):
-    return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+    if request.user.is_authenticated:
+        return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
 
 # def register_user(request):
 #     context = {}
@@ -147,10 +150,9 @@ def csrf_failure(request, reason=""):
     return render('403_csrf.html')
 
 def index(request):
-    logout(request)
     if request.method == 'POST':
 
-        fname=request.POST['fname']
+        fname = request.POST['fname']
         lname = request.POST['lname']
         email = request.POST['email']
         phone_no = request.POST['phone_no']
@@ -185,6 +187,10 @@ def lgn(request):
     else:
         form = AuthenticationForm()
         return render(request, 'index1.html', {'form': form})
+    
+def lgtpg(request):
+    logout(request)
+    return render(request, 'logoutpg.html')
     
 def scspg(request):
     return render(request, 'scspage.html')
