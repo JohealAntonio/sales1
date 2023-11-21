@@ -12,14 +12,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
     <title>{{ request.user }}</title>
     <style>
-     
+
+        .nav_list1
+        {
+         margin-left: -32px;
+         width: 205px;
+         height: 575px;
+         background-color: black;
+        }
+
+        h3
+        {
+         color: #c8a47e;
+         margin: auto;
+         width: fit-content;
+         margin-top: -150px;
+        }
+
     </style>
 </head>
-<body style="background-color: black;" id="body-pd">
+<body style="background-color: rgb(16, 16, 16);" id="body-pd">
     <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
@@ -28,16 +46,16 @@
         <nav class="nav">
             <div> <a style="color: #c8a47e;" href="#" class="nav_logo"><img style="height: 20px; width: 20px;" src="/static/img/logocs.png" alt=""><span style="font-family: 'Poppins', sans-serif; font-weight: 600; color:#c8a47e;" class="nav_logo-name">Charles Solutions</span> </a>
                 <div class="nav_list"> 
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/dashboard" id="n1" onclick="changec(this)" class="nav_link">
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/dashboard" id="n1" class="nav_link">
                         <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span>
                     </a> 
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages" id="n2" onclick="changec(this)" class="nav_link">
+                    <a style="color: #c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages" id="n2" class="nav_link active">
                         <i class='bx bx-message-square-detail nav_icon'></i><span class="nav_name">Messages</span>
                     </a> 
-                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/offers" id="n3" onclick="changec(this)" class="nav_link">
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/offers" id="n3" class="nav_link">
                         <i class='bx bx-wrench'></i><span class="nav_name">Service offers</span>
                     </a>
-                    <a style="color: #c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/updates" id="n4" onclick="changec(this)" class="nav_link active">
+                    <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/updates" id="n4" class="nav_link">
                         <i class='bx bx-info-circle'></i><span class="nav_name">Important updates</span>
                     </a>
                 </div>
@@ -45,7 +63,7 @@
             {% if user.is_authenticated %}
                 <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/logout">
                     {% csrf_token %} 
-                    <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
+                    <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" class="nav_link">
                         <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
                             <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
                         </button>
@@ -54,7 +72,19 @@
             {% endif %}
         </nav>
     </div>
+    <div class="nav_list1"> 
+        <a style="color:#856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/websitequery" id="n6" class="nav_link">
+            <i id="wq" class="fi fi-rr-browser"></i><span class="nav_name">Website Query</span>
+        </a> 
+        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/colleague" id="n7"  class="nav_link">
+            <i id="cg" class="fi fi-rr-user"></i><span class="nav_name">Colleague</span>
+        </a> 
+        <a style="color:#c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/boss" id="n8" class="nav_link active">
+            <i id="bs" class="fi fi-sr-briefcase"></i><span class="nav_name">Boss</span>
+        </a>
+    </div>
  <script>
+
     document.addEventListener("DOMContentLoaded", function(event) {
 
     const showNavbar = (toggleId, navId, bodyId, headerId) =>{

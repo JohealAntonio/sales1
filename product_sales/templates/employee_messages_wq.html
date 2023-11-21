@@ -19,10 +19,20 @@
     <title>{{ request.user }}</title>
     <style>
 
+        .msg_bdy
+        {
+         display: flex;
+         width: 100%;
+        }
+
         .nav_list1
         {
          margin-left: -32px;
-         max-width: fit-content;
+         margin-right: 15px;
+         width: 205px;
+         height: 575px;
+         background-color: black;
+         float: left;
         }
 
         h3
@@ -33,9 +43,48 @@
          margin-top: -150px;
         }
 
+        #msg_list
+        {
+         width: 90%;
+        }
+
+        .ml
+        {
+         background-color: rgb(21, 21, 21);
+         height: fit-content;
+         margin-top: 10px;
+         padding-left: 15px;
+         width: 100%;
+         border-radius: 10px;
+         color: #c8a47e9f;
+        }
+
+        @keyframes mlhover
+        {
+         from
+         {
+         color: #c8a47e9f;
+         background-color: rgb(21, 21, 21);
+         }
+         to
+         {
+         color: #c8a47e;
+         background-color: rgb(5, 5, 5);
+         cursor: pointer;
+         }
+        }
+
+        .ml:hover
+        {
+         animation: mlhover 1s;
+         color: #c8a47e;
+         background-color: rgb(5, 5, 5);
+         cursor: pointer;
+        }
+
     </style>
 </head>
-<body style="background-color: black;" id="body-pd">
+<body style="background-color: rgb(16, 16, 16);" id="body-pd">
     <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
@@ -70,19 +119,62 @@
             {% endif %}
         </nav>
     </div>
-    <div class="nav_list1"> 
-        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/websitequery" id="n6" class="nav_link">
-            <i id="wq" class="fi fi-rr-browser"></i><span class="nav_name">Website Query</span>
-        </a> 
-        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/colleague" id="n7"  class="nav_link">
-            <i id="cg" class="fi fi-rr-user"></i><span class="nav_name">Colleague</span>
-        </a> 
-        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/boss" id="n8" class="nav_link">
-            <i id="bs" class="fi fi-rr-briefcase"></i><span class="nav_name">Boss</span>
-        </a>
+    <div class="msg_bdy">
+        <div class="nav_list1"> 
+            <a style="color:#c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/websitequery" id="n6" class="nav_link active">
+                <i id="wq" class="fi fi-sr-browser"></i><span class="nav_name">Website Query</span>
+            </a> 
+            <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/colleague" id="n7"  class="nav_link">
+                <i id="cg" class="fi fi-rr-user"></i><span class="nav_name">Colleague</span>
+            </a> 
+            <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/boss" id="n8" class="nav_link">
+                <i id="bs" class="fi fi-rr-briefcase"></i><span class="nav_name">Boss</span>
+            </a>
+        </div>
+        <div id="msg_list">
+            <div class="ml">hello</div>
+        </div>
     </div>
-    <h3>Select who you want to message</h3>
  <script>
+
+    const renderCalendar = () => 
+    {
+        // let firstDayofMonth = new Date(currYear, currMonth, 0).getDay(), // getting first day of month
+        // lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
+        // lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
+        // lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+        // let divTag = "";
+        
+        // for (let i = firstDayofMonth; i > 0; i--) 
+        // { // creating div of previous month last days
+        //  divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
+        // }
+        // for (let i = 1; i <= lastDateofMonth; i++) 
+        // {
+        //  const indxno = ds.indexOf(i);
+        //  if (ds.includes(i) && currMonth == ms[indxno]-1)
+        //  {
+        //   divTag += `<div id="grditm" class="grid-item actv"><a class='actv1' href="http://127.0.0.1:8000/employee/offers/">${i}</a></div>`;
+        //  }
+        //  else
+        //  {
+        //   divTag += `<div id="grditm" class="grid-item">${i}</div>`;
+        //  }
+        // }
+        // if (lastDayofMonth!=0)
+        // {
+        //     for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
+        //         divTag += `<div id="nxtmth" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
+        //     }
+        // }
+        // // passing current mon and yr as currentDate text
+        // days.innerHTML = divTag;
+        // document.getElementById("month").innerHTML = months[currMonth];
+        // document.getElementById("yr").innerHTML = currYear;
+
+    }
+
+    renderCalendar();
 
     document.addEventListener("DOMContentLoaded", function(event) {
 

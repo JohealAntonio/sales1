@@ -183,11 +183,31 @@ def lgn(request):
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
-            return render(request, 'index1.html', {'form':form, 'msg':msg})
+            return render(request, 'employee_login.html', {'form':form, 'msg':msg})
     else:
         form = AuthenticationForm()
-        return render(request, 'index1.html', {'form': form})
+        return render(request, 'employee_login.html', {'form': form})
     
+def getmsgs():
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT service_no,service_date,service_time,cstr_name,cstr_mobile_no,cstr_email,electronics_type,brand,model_no,reason_for_service,other_reason,address,city FROM offer ORDER BY `service_date`;")
+    columns = [col for col in list(zip(*cur.description))[0]]
+    allinfo = cur.fetchall()
+    cur.close()
+    con.close()
+    return json.dumps([dict(zip(columns, row)) for row in allinfo])
+
+def msgs_wq(request):
+    return render(request, 'employee_messages_wq.html')
+      
+def msgs_cg(request):
+    return render(request, 'employee_messages_cg.html')
+  
+def msgs_bs(request):
+    return render(request, 'employee_messages_bs.html')
+
 def lgtpg(request):
     logout(request)
     return render(request, 'logoutpg.html')

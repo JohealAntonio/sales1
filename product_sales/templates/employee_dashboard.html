@@ -209,7 +209,7 @@
                 </div>
             </div> 
             {% if user.is_authenticated %}
-                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/login">
+                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/logout">
                     {% csrf_token %} 
                     <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
                         <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
@@ -226,7 +226,7 @@
             <div class="calendar">
                 <div class="mny">
                   <div class="month" id="month"></div>
-                  <div class="yr" id="yr">2022</div>
+                  <div class="yr" id="yr"></div>
                 </div>
                 <div class="line"></div>
                 <div class="week"> 
@@ -281,7 +281,7 @@
 
     function getmths()
     {
-     for (let i = 0; i <= currMonth; i++)
+     for (let i = 0; i < currMonth; i++)
      {
       actmth.push(mth[i]) 
      }
@@ -290,7 +290,7 @@
 
     function getdays()
     {
-     for (let i = 0; i <= currMonth; i++)
+     for (let i = 0; i < currMonth; i++)
      {
       actdays.push(randayslst[i]) 
      }
@@ -369,83 +369,6 @@
     }
 
     renderCalendar();
-    
-
-
-    function changec(a)
-    {
-        if(a.id == "n1")
-        {
-        document.getElementById('n1').style.color = '#c8a47e';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n2")
-        {
-        document.getElementById('n2').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n3")
-        {
-        document.getElementById('n3').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n4")
-        {
-        document.getElementById('n4').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n5")
-        {
-        document.getElementById('n5').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n6")
-        {
-        document.getElementById('n6').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n7').style.color = '#856e53';
-        }
-        else if(a.id == "n7")
-        {
-        document.getElementById('n7').style.color = '#c8a47e';
-        document.getElementById('n1').style.color = '#856e53';
-        document.getElementById('n2').style.color = '#856e53';
-        document.getElementById('n3').style.color = '#856e53';
-        document.getElementById('n4').style.color = '#856e53';
-        document.getElementById('n5').style.color = '#856e53';
-        document.getElementById('n6').style.color = '#856e53';
-        }
-    }
-
     document.addEventListener("DOMContentLoaded", function(event) {
 
     const showNavbar = (toggleId, navId, bodyId, headerId) =>{
