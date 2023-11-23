@@ -82,6 +82,11 @@
          cursor: pointer;
         }
 
+        #msginfo
+        {
+         font-size: 0;
+        }
+
     </style>
 </head>
 <body style="background-color: rgb(16, 16, 16);" id="body-pd">
@@ -131,50 +136,43 @@
                 <i id="bs" class="fi fi-rr-briefcase"></i><span class="nav_name">Boss</span>
             </a>
         </div>
-        <div id="msg_list">
-            <div class="ml">hello</div>
-        </div>
+        <div id="msg_list"></div>
     </div>
+    <div id="msginfo">{{msginfo}}</div>
  <script>
 
-    const renderCalendar = () => 
-    {
-        // let firstDayofMonth = new Date(currYear, currMonth, 0).getDay(), // getting first day of month
-        // lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
-        // lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
-        // lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
-        // let divTag = "";
-        
-        // for (let i = firstDayofMonth; i > 0; i--) 
-        // { // creating div of previous month last days
-        //  divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
-        // }
-        // for (let i = 1; i <= lastDateofMonth; i++) 
-        // {
-        //  const indxno = ds.indexOf(i);
-        //  if (ds.includes(i) && currMonth == ms[indxno]-1)
-        //  {
-        //   divTag += `<div id="grditm" class="grid-item actv"><a class='actv1' href="http://127.0.0.1:8000/employee/offers/">${i}</a></div>`;
-        //  }
-        //  else
-        //  {
-        //   divTag += `<div id="grditm" class="grid-item">${i}</div>`;
-        //  }
-        // }
-        // if (lastDayofMonth!=0)
-        // {
-        //     for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
-        //         divTag += `<div id="nxtmth" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
-        //     }
-        // }
-        // // passing current mon and yr as currentDate text
-        // days.innerHTML = divTag;
-        // document.getElementById("month").innerHTML = months[currMonth];
-        // document.getElementById("yr").innerHTML = currYear;
+    
+    const ds = JSON.stringify(document.getElementById('msginfo').innerHTML);
+    const info = JSON.parse(ds);
+    const msginfo = JSON.parse(info);
+    let message_list = document.querySelector("#msg_list")
+    console.log(msginfo)
 
+    const rendermsg = () => 
+    {
+        let divTag = "";
+                
+        for (let i=0; i<msginfo.length; i++)
+        {
+            let fname = msginfo[i].first_name
+            let lname = msginfo[i].last_name
+            let email = msginfo[i].email
+            let phno = msginfo[i].phone_no
+            let msg = msginfo[i].message
+            let msgfrom = msginfo[i].msg_from
+
+            if (msgfrom=='website query')
+            {
+                divTag += `<div id="msg${i+1}" class="ml" onclick="clicked(${i+1})">Message from ${fname} ${lname}</div>`;
+            }
+        }
+
+
+        // passing current mon and yr as currentDate text
+        message_list.innerHTML = divTag;
     }
 
-    renderCalendar();
+    rendermsg();
 
     document.addEventListener("DOMContentLoaded", function(event) {
 

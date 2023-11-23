@@ -192,7 +192,7 @@ def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
     cur = con.cursor()
 
-    cur.execute("SELECT service_no,service_date,service_time,cstr_name,cstr_mobile_no,cstr_email,electronics_type,brand,model_no,reason_for_service,other_reason,address,city FROM offer ORDER BY `service_date`;")
+    cur.execute("SELECT first_name,last_name,email,phone_no,msg_from,message FROM messages;")
     columns = [col for col in list(zip(*cur.description))[0]]
     allinfo = cur.fetchall()
     cur.close()
@@ -200,7 +200,7 @@ def getmsgs():
     return json.dumps([dict(zip(columns, row)) for row in allinfo])
 
 def msgs_wq(request):
-    return render(request, 'employee_messages_wq.html')
+    return render(request, 'employee_messages_wq.html', {'msginfo':getmsgs()})
       
 def msgs_cg(request):
     return render(request, 'employee_messages_cg.html')
