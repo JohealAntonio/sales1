@@ -158,11 +158,13 @@ def index(request):
         phone_no = request.POST['phone_no']
         msg_from = request.POST['msg_from']
         msg = request.POST['msg']
+        date = request.POST['dt']
+        time = request.POST['tm']
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`) VALUES (%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg))
+        cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`,`date`,`time`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg,date,time))
         con.commit()
         
         cur.close()
@@ -223,6 +225,15 @@ def cost(b):
         c = '₹500' 
         return c
     
+def pccost(b):
+    if b == 'Macbook' or b == 'iMac' or b=='Mac':
+        c = '₹5500' 
+        return c 
+    else:
+        c = '₹2500' 
+        return c
+
+    
 def msbkg(request):
     if request.method == 'POST':
 
@@ -254,6 +265,38 @@ def msbkg(request):
         return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'msbooking.html')
+    
+def oasbkg(request):
+    if request.method == 'POST':
+
+        sno=request.POST['service_no']
+        sdate=request.POST['service_date']
+        stime=request.POST['service_time']
+        cname=request.POST['cstr_name']
+        cmno=request.POST['cstr_mobile_no']
+        cemail=request.POST['cstr_email']
+        dtype=request.POST['device_type']
+        dbrd=request.POST['device_brand']
+        dmdl=request.POST['device_model']
+        ror=request.POST['reason_of_repair']
+        otr=request.POST['other_reason']
+        addr=request.POST['address']
+        cty=request.POST['city']
+
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        
+
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':'Amount will be discussed on the day of service.', 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+    else:
+        return render(request, 'oasbooking.html')
 
 def paymt(request):
     return render(request, 'payment.html')
@@ -277,27 +320,25 @@ def csbkg(request):
         dbrd=request.POST['device_brand']
         dmdl=request.POST['device_model']
         ror=request.POST['reason_of_repair']
+        otr=request.POST['other_reason']
         addr=request.POST['address']
         cty=request.POST['city']
-        pm = request.POST['payment_method']
 
-        if pm == 'credit' or pm == 'debit':
-            return redirect('http://127.0.0.1:8000/booking/payment')
-        elif pm == 'cash':
-            con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
-            cur = con.cursor()
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
 
-            cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `address`, `city`, `payment_method`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,addr,cty,pm))
-            con.commit()
-            
-            cur.close()
-            con.close()
-            return redirect('http://127.0.0.1:8000/booking/successpage')
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
+        con.commit()
+        
+        cur.close()
+        con.close()
 
         
 
+        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':pccost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'csbooking.html')
+        
 
 def invoice(request):
     return render(request, 'invoice.html')

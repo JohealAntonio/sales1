@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Booking | Computer Service</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/img/logocs.png">
     <style>
 
     body
@@ -35,10 +37,9 @@
 
     .hdr
     {
-     position: fixed;
      background-color: black;
      height: max-content;
-     width: 100%;
+     display: flex;
     }
 
     input, select
@@ -56,6 +57,7 @@
     select
     {
      margin-top: 12px;
+     text-align: center;
     }
 
     input:focus, select:focus
@@ -111,16 +113,62 @@
      cursor: pointer;
     }
 
+    #wrtni
+    {
+     display: none;
+    }
+
+    .fiaf
+    {
+     text-align: center;
+     width: 20%;
+     border: 0.1px solid rgb(48, 48, 48);
+     padding: 10px 0 10px 0;
+     border-radius: 20px;
+     z-index: 3;
+     background-color: black;
+     margin: 15% auto 0 auto;
+     display:none;
+    }
+
+
+    .bd
+    {
+     height: max-content;
+    }
+
+
+    .aldiv
+    {
+     width: 100%;
+     height: 250px;
+     position: absolute;
+    }
+
+    
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background:none; 
+    }
+
+
     </style>
 </head>
 <body>
-    <center class="hdr">
-        <h1 style="font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
-    </center>
-    <br><br><br>
-    <div style="width: 100%; margin-top: 50px;">
-        <h2 style="font-weight: 400; text-align: center;">Book for a computer-related gadget service here</h2>
+    <div class="aldiv">
+            <div class="fiaf" id="faf" >
+                <h2>ALERT</h2>
+                <h4>Fill all fields.</h4>
+                <button onclick="ok()" class="bn">Ok</button>
+            </div>
     </div>
+    
+   
     <!-- <div style="width: fit-content; border: none; border-radius: 20px; background-color: rgb(23, 23, 23); margin: auto; text-align: center;">
         <span style="width: 50%; float: left;">
             <br>
@@ -153,11 +201,16 @@
             <input type="text" placeholder="Anna Nagar" id=""><br><br>
         </span>
     </div> -->
-    <form action="http://127.0.0.1:8000/booking/computerservice" method="POST">
+    <form action="http://127.0.0.1:8000/booking/computerservice" method="POST" name="frm" onsubmit="return validateForm()">
+        <div class="hdr">
+            <h1 style="margin:0 auto 0 auto; font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
+        </div>
+        <div style="width: 100%; margin: 50px 0 50px 0;">
+            <h2 style="font-weight: 400; text-align: center;">Book for a pc-related service here</h2>
+        </div>
         {% csrf_token %} 
-        <div style="width: 60%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
+        <div style="z-index: 2; width: 65%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
             <br>
-            <input type="number" name="id" hidden>
             <div style="margin: auto;">
                 <div style="display: flex;">
                     <div class="fmitm" style="float: left;">
@@ -166,26 +219,26 @@
                     </div>
                     <div class="fmitm" style="float: left;">
                         <label>Service date</label>
-                        <input name="service_date" type="date">
+                        <input id="sdate" name="service_date" type="date">
                     </div>
                     <div class="fmitm" style="float: right;">
                         <label>Service time</label>
-                        <input name="service_time" type="time">
+                        <input id="stime" name="service_time" type="time">
                     </div>
                 </div>
                 <br>
                 <div style="display: flex;">
                     <div class="fmitm" style="float: inline-start;">
                         <label>Name</label>
-                        <input name="cstr_name" type="text" placeholder="Rick Astley">
+                        <input id="cnm" name="cstr_name" type="text" placeholder="Rick Astley">
                     </div>
                     <div class="fmitm" style="float: inline-start;">
                         <label>Phone Number</label>
-                        <input name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
+                        <input id="cmn" name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
                     </div>
                     <div class="fmitm" style="float: inline-end;">
                         <label>Email</label>
-                        <input  name="cstr_email" type="text" placeholder="nggyu@gmail.com">
+                        <input id="ce" name="cstr_email" type="text" placeholder="nggyu@gmail.com">
                     </div>
                 </div>
                 <br>
@@ -207,7 +260,8 @@
                 <div style="display: flex;">
                     <div class="fmitm" style="float:inline-start">
                         <label>Cause for a repair</label>
-                        <select name="reason_of_repair">
+                        <select name="reason_of_repair" id="slt">
+                            <option>--Select option--</option>
                             <option value="Hardware Repairs and Upgrades">Hardware Repairs and Upgrades</option>
                             <option value="Operating System Troubleshooting">Operating System Troubleshooting</option>
                             <option value="Virus and Malware Removal">Virus and Malware Removal</option>
@@ -216,25 +270,40 @@
                             <option value="Network and Internet Troubleshooting">Network and Internet Troubleshooting</option>
                             <option value="Computer Cleaning and Maintenance">Computer Cleaning and Maintenance</option>
                             <option value="Custom PC Builds">Custom PC Builds</option>
+                            <option id="otr" value="Other">Other Services (Type here)</option>
                         </select>
+                        <input name="other_reason" type="text" id="wrtni" value="NIL">
                     </div>
                     <div class="fmitm" style="float:inline-start">
                         <label>Address</label>
-                        <input name="address" type="text" placeholder="1A, 123 St">
+                        <input id="ad" name="address" type="text" placeholder="1A, 123 St">
                     </div>
                     <div class="fmitm" style="float:inline-end">
                         <label>City</label>
-                        <input name="city" type="text" placeholder="Anna Nagar, Chennai">
+                        <input id="ct" name="city" type="text" placeholder="Anna Nagar, Chennai">
                     </div>
                 </div>
                 <br>
                 <div class="fmitm">
-                    <button type="submit" value="submit" class="bn">Submit</button> 
+                    <button id="sbt" type="submit" value="submit" class="bn">Submit</button> 
                 </div>
             </div>
         </div>
     </form>
     <script>
+
+    const input = $('#wrtni');
+    const select = $('#slt');
+
+    select.on('change', 
+     function() 
+     {
+     const selectedOptionText = $(this).find('option:selected').text();
+
+     selectedOptionText === 'Other Services (Type here)' ? input.show() : input.hide();
+     selectedOptionText === 'Other Services (Type here)' ? select.hide() : select.show(); 
+     }
+    )
     
     'use strict';
     var chars = '1234567890',
@@ -250,8 +319,33 @@
     }
     
     document.getElementById('sno').value = randomSerial;
+    
+    function validateForm() 
+    {
+     var sdt = document.forms["frm"]["service_date"].value;
+     var stm = document.forms["frm"]["service_time"].value;
+     var cnm = document.forms["frm"]["cstr_name"].value;
+     var cmn = document.forms["frm"]["cstr_mobile_no"].value;
+     var ce = document.forms["frm"]["cstr_email"].value;
+     var dt = document.forms["frm"]["device_type"].value;
+     var db = document.forms["frm"]["device_brand"].value;
+     var dm = document.forms["frm"]["device_model"].value;
+     var ror = document.forms["frm"]["reason_of_repair"].value;
+     var ad = document.forms["frm"]["address"].value;
+     var ct = document.forms["frm"]["city"].value;
 
 
+     if (sdt == "" || stm == "" || cnm == "" || cmn == "" || ce == "" || dt == "" || db == "" || dm == "" || ror == "" || ad == "" || ct == "") 
+     {
+      document.getElementById('faf').style.display = 'block';
+      return false
+     }
+    }
+
+    function ok()
+    {
+     document.getElementById('faf').style.display = 'none';
+    }
 
     </script>
 </body>

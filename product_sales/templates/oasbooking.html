@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking | Other Appliance Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/img/logocs.png">
+    <style>
+
+    body
+    {
+    background-color: rgb(0, 0, 0); 
+    font-family: 'Poppins', sans-serif; 
+    color: #c8a47e;
+    }
+
+    .lg
+    {
+    margin-top: 17px; 
+    height: 35px; 
+    width: 35px;
+    }
+
+    .logo
+    {
+    text-decoration: none;
+    }
+
+    .logo:hover
+    {
+    color:#c8a47e;
+    }
+
+    .hdr
+    {
+     background-color: black;
+     height: max-content;
+     display: flex;
+    }
+
+    input, select
+    {
+     border: 0;
+     border-radius: 5px;
+     background-color: rgb(15, 15, 15);
+     color: #c8a47e;
+     font-family: 'Poppins', sans-serif; 
+     font-size: large;
+     margin: auto;
+     width: 100%;
+    }
+
+    select
+    {
+     margin-top: 12px;
+     text-align: center;
+    }
+
+    input:focus, select:focus
+    {
+     outline: none;
+    }
+
+    label
+    {
+     display: block; 
+     text-align: left; 
+     font-size: medium; 
+     font-weight: 600;
+    }
+
+    input
+    {
+     margin-top: 5%;
+    }
+
+    .fmitm
+    {
+     width: max-content;
+     margin-left: 20px;
+    }
+
+    .bn 
+    {
+     margin-bottom: 5%;
+     border-radius: 10px;
+     border: 0px;
+     height: auto;
+     width: auto;
+     background-color: #c8a47e;
+     color: black;
+     font-size: medium;
+     font-family: 'Poppins',sans-serif;
+     font-weight: 600;
+    }
+
+    @keyframes hov 
+    {
+     from {background-color: #c8a47e; color: black;}
+     to {background-color:#ad846c; color: white; }
+    }
+
+
+    .bn:hover
+    {
+     animation: hov 0.5s;
+     background-color:#ad846c; 
+     color: white;
+     cursor: pointer;
+    }
+
+    #wrtni
+    {
+     display: none;
+    }
+
+    .fiaf
+    {
+     text-align: center;
+     width: 20%;
+     border: 0.1px solid rgb(48, 48, 48);
+     padding: 10px 0 10px 0;
+     border-radius: 20px;
+     z-index: 3;
+     background-color: black;
+     margin: 15% auto 0 auto;
+     display:none;
+    }
+
+
+    .bd
+    {
+     height: max-content;
+    }
+
+
+    .aldiv
+    {
+     width: 100%;
+     height: 250px;
+     position: absolute;
+    }
+
+    
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background:none; 
+    }
+
+
+    </style>
+</head>
+<body>
+    <div class="aldiv">
+            <div class="fiaf" id="faf" >
+                <h2>ALERT</h2>
+                <h4>Fill all fields.</h4>
+                <button onclick="ok()" class="bn">Ok</button>
+            </div>
+    </div>
+    
+   
+    <!-- <div style="width: fit-content; border: none; border-radius: 20px; background-color: rgb(23, 23, 23); margin: auto; text-align: center;">
+        <span style="width: 50%; float: left;">
+            <br>
+            <label>Service No.</label><br><br>
+            <label>Service Date</label><br><br>
+            <label>Service Time</label><br><br>
+            <label class="gp">Name</label><br><br>
+            <label class="gp">Phone no.</label><br><br>
+            <label class="gp">Email</label><br><br>
+            <label class="gp">Device type</label><br><br>
+            <label class="gp">Device brand</label><br><br>
+            <label class="gp">Device model</label><br><br>
+            <label class="gp">Cause for repair</label><br><br>
+            <label class="gp">Address</label><br><br>
+            <label class="gp">City</label><br><br>
+        </span>
+        <span style="width: 50%;  float: left;">
+            <br>
+            <input type="text" id="sno" readonly><br><br>
+            <input type="date" name="" id=""><br><br>
+            <input type="time" name="" id=""><br><br>
+            <input type="text" placeholder="Rick Astley" id=""><br><br>
+            <input type="text" placeholder="+1 234567890" id=""><br><br>
+            <input type="email" placeholder="nggyu@gmail.com" id=""><br><br>
+            <input type="text" value="Mobile" readonly id=""><br><br>
+            <input type="text" placeholder="Iphone" id=""><br><br>
+            <input type="text" placeholder="Xr" id=""><br><br>
+            <input type="text" placeholder="Screen damage" id=""><br><br>
+            <input type="text" placeholder="1D,123 St" id=""><br><br>
+            <input type="text" placeholder="Anna Nagar" id=""><br><br>
+        </span>
+    </div> -->
+    <form action="http://127.0.0.1:8000/booking/otherapplianceservice" method="POST" name="frm" onsubmit="return validateForm()">
+        <div class="hdr">
+            <h1 style="margin:0 auto 0 auto; font-size: xx-large; font-family: 'Poppins', sans-serif; color: #c8a47e; font-weight: 600;">Charles Solutions</h1>
+        </div>
+        <div style="width: 100%; margin: 50px 0 50px 0;">
+            <h2 style="font-weight: 400; text-align: center;">Book for a service for other appliances here</h2>
+        </div>
+        {% csrf_token %} 
+        <div style="z-index: 2; width: 65%; margin: auto; background-color: rgb(5, 5, 5); border-radius: 20px;">
+            <br>
+            <div style="margin: auto;">
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: left;">
+                        <label>Service No.</label>
+                        <input name="service_no" type="text" id="sno" readonly>
+                    </div>
+                    <div class="fmitm" style="float: left;">
+                        <label>Service date</label>
+                        <input id="sdate" name="service_date" type="date">
+                    </div>
+                    <div class="fmitm" style="float: right;">
+                        <label>Service time</label>
+                        <input id="stime" name="service_time" type="time">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Name</label>
+                        <input id="cnm" name="cstr_name" type="text" placeholder="Rick Astley">
+                    </div>
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Phone Number</label>
+                        <input id="cmn" name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
+                    </div>
+                    <div class="fmitm" style="float: inline-end;">
+                        <label>Email</label>
+                        <input id="ce" name="cstr_email" type="text" placeholder="nggyu@gmail.com">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Electronics type</label>
+                        <input name="device_type" type="text" placeholder="Air-conditioner">
+                    </div>
+                    <div class="fmitm" style="float: inline-start;">
+                        <label>Brand</label>
+                        <input name="device_brand" type="text" placeholder="Samsung">
+                    </div>
+                    <div class="fmitm" style="float: inline-end;">
+                        <label>Model No.</label>
+                        <input name="device_model" type="text" placeholder="CY3ARWK">
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div class="fmitm" style="float:inline-start">
+                        <label>Cause for a repair</label>
+                        <select name="reason_of_repair" id="slt">
+                            <option>--Select option--</option>
+                            <option value="Refrigerator Repair">Refrigerator Repair</option>
+                            <option value="Washing Machine and Dryer Repair">Washing Machine and Dryer Repair</option>
+                            <option value="Oven and Stove Repair">Oven and Stove Repair</option>
+                            <option value="Dishwasher Repair">Dishwasher Repair</option>
+                            <option value="Software Installation and Configuration">Software Installation and Configuration</option>
+                            <option value="Air Conditioner Repair">Air Conditioner Repair</option>
+                            <option value="Microwave and Small Appliance Repair">Microwave and Small Appliance Repair</option>
+                            <option value="Replacement Parts">Replacement Parts</option>
+                            <option id="otr" value="Other">Other Services (Type here)</option>
+                        </select>
+                        <input name="other_reason" type="text" id="wrtni" value="NIL">
+                    </div>
+                    <div class="fmitm" style="float:inline-start">
+                        <label>Address</label>
+                        <input id="ad" name="address" type="text" placeholder="1A, 123 St">
+                    </div>
+                    <div class="fmitm" style="float:inline-end">
+                        <label>City</label>
+                        <input id="ct" name="city" type="text" placeholder="Anna Nagar, Chennai">
+                    </div>
+                </div>
+                <br>
+                <div class="fmitm">
+                    <button id="sbt" type="submit" value="submit" class="bn">Submit</button> 
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+
+    const input = $('#wrtni');
+    const select = $('#slt');
+
+    select.on('change', 
+     function() 
+     {
+     const selectedOptionText = $(this).find('option:selected').text();
+
+     selectedOptionText === 'Other Services (Type here)' ? input.show() : input.hide();
+     selectedOptionText === 'Other Services (Type here)' ? select.hide() : select.show(); 
+     }
+    )
+    
+    'use strict';
+    var chars = '1234567890',
+    serialLength = 10,
+    randomSerial = "CSOS-",
+    i,
+    randomNumber;
+    
+    for (i = 0; i < serialLength; i = i + 1) 
+    {
+    randomNumber = Math.floor(Math.random() * chars.length);
+    randomSerial += chars.substring(randomNumber, randomNumber + 1);
+    }
+    
+    document.getElementById('sno').value = randomSerial;
+    
+    function validateForm() 
+    {
+     var sdt = document.forms["frm"]["service_date"].value;
+     var stm = document.forms["frm"]["service_time"].value;
+     var cnm = document.forms["frm"]["cstr_name"].value;
+     var cmn = document.forms["frm"]["cstr_mobile_no"].value;
+     var ce = document.forms["frm"]["cstr_email"].value;
+     var dt = document.forms["frm"]["device_type"].value;
+     var db = document.forms["frm"]["device_brand"].value;
+     var dm = document.forms["frm"]["device_model"].value;
+     var ror = document.forms["frm"]["reason_of_repair"].value;
+     var ad = document.forms["frm"]["address"].value;
+     var ct = document.forms["frm"]["city"].value;
+
+
+     if (sdt == "" || stm == "" || cnm == "" || cmn == "" || ce == "" || dt == "" || db == "" || dm == "" || ror == "" || ad == "" || ct == "") 
+     {
+      document.getElementById('faf').style.display = 'block';
+      return false
+     }
+    }
+
+    function ok()
+    {
+     document.getElementById('faf').style.display = 'none';
+    }
+
+    </script>
+</body>
+</html>

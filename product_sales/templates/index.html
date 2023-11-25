@@ -397,14 +397,13 @@
             <li>Software Installation and Configuration</li>
             <li>Air Conditioner Repair</li>
             <li>Microwave and Small Appliance Repair</li>
-            <li>Commercial Appliance Repair</li>
             <li>Replacement Parts</li>
             <li>Preventive Maintenance</li>
             <li>Customer Satisfaction</li>
           </ul>
           <p style="margin-bottom: 6.5%; font-size: small;">Whether you're a homeowner or a business owner, Charles Solutions is your trusted partner for reliable, efficient, and affordable electronic appliance repair services. We understand the importance of these appliances in your daily operations and lifestyle, and we're committed to keeping them running smoothly. Trust us to bring your electronic appliances back to life and provide you with peace of mind.</p>
         </p>
-        <button class="bn">Book now</button>
+        <a href="http://127.0.0.1:8000/booking/otherapplianceservice"><button class="bn">Book now</button></a>
       </div>
     </div>
     <div id="opening_hours" style="height: 60px; width: max-content;"></div>
@@ -473,6 +472,8 @@
             <textarea name="msg" style="background-color: rgb(16, 16, 16); border: 0; border-radius: 5px; color: #c8a47e;" id="" cols="50" rows="10" placeholder="Type what you want to tell us here..."></textarea>
           </div>
           <input type="text" name="msg_from" value="website query" hidden>
+          <input id="tm" type="text" name="tm" hidden>
+          <input id="dt" type="text" name="dt" hidden>
           <br>
           <div style="float: left">
             <input class="bn" type="submit" value="submit">
@@ -481,6 +482,12 @@
       </form>
     </div>
     <script>
+
+      let crdt = new Date().toLocaleDateString();
+      let crtm = new Date().toLocaleTimeString();
+
+      document.getElementById('dt').value = crdt;
+      document.getElementById('tm').value = crtm;
 
       function cl()
       {
