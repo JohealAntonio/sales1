@@ -15,6 +15,8 @@ import js2py
 import json
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.urls import reverse
+import product_sales
 
 
 def signup(request):
@@ -54,7 +56,11 @@ def msgs(request):
     return render(request, 'employee_messages.html')
 
 def imptudts(request): 
-    return render(request, 'employee_updates.html')
+    
+    if request.user.is_authenticated:
+        return render(request, 'employee_updates.html')
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
 
 
 def home(request):
@@ -108,7 +114,10 @@ def getofrinfo():
     
 
 def offers(request): 
-    return render(request, 'employee_offers.html',{'info':getofrinfo()})
+    if request.user.is_authenticated:
+        return render(request, 'employee_offers.html',{'info':getofrinfo()})
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
 
 # def actv_dates():
 #     date = getdates()
@@ -202,13 +211,22 @@ def getmsgs():
     return json.dumps([dict(zip(columns, row)) for row in allinfo])
 
 def msgs_wq(request):
-    return render(request, 'employee_messages_wq.html', {'msginfo':getmsgs()})
+    if request.user.is_authenticated:
+        return render(request, 'employee_messages_wq.html', {'msginfo':getmsgs()})
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
       
 def msgs_cg(request):
-    return render(request, 'employee_messages_cg.html')
+    if request.user.is_authenticated:
+        return render(request, 'employee_messages_cg.html')
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
   
 def msgs_bs(request):
-    return render(request, 'employee_messages_bs.html')
+    if request.user.is_authenticated:
+        return render(request, 'employee_messages_bs.html')
+    else:
+        return redirect('http://127.0.0.1:8000/employee/login/')
 
 def lgtpg(request):
     logout(request)
@@ -233,6 +251,30 @@ def pccost(b):
         c = '₹2500' 
         return c
 
+def invoice(request):
+    cname = request.GET.get('cname')
+    cmno = request.GET.get('cmno')
+    addr = request.GET.get('addr')
+    cty = request.GET.get('cty')
+    ror = request.GET.get('ror')
+    cst = request.GET.get('cst')
+    etype = request.GET.get('etype')
+    brand = request.GET.get('brand')
+    model = request.GET.get('model')
+    date = request.GET.get('date')
+
+    return render(request, 'invoice.html', {
+        'cname': cname,
+        'cmno': cmno,
+        'addr': addr,
+        'cty': cty,
+        'ror': ror,
+        'cst': cst,
+        'etype': etype,
+        'brand': brand,
+        'model': model,
+        'date': date,
+    })
     
 def msbkg(request):
     if request.method == 'POST':
@@ -261,8 +303,22 @@ def msbkg(request):
         con.close()
 
         
+        destination_url = reverse('invoice')
+ 
+        # list = [(k, v) for k, v in dict.items()]
+        redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}'
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return redirect(redirect_url)
+        # return redirect('http://127.0.0.1:8000/invoice', kwargs={'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
     else:
         return render(request, 'msbooking.html')
     
@@ -340,5 +396,3 @@ def csbkg(request):
         return render(request, 'csbooking.html')
         
 
-def invoice(request):
-    return render(request, 'invoice.html')

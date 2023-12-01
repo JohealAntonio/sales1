@@ -17,6 +17,8 @@ Including another URLconf
 from django.urls import path
 from product_sales import views
 
+app_name = 'sales'
+
 urlpatterns = [
 path('',views.home,name="home"),
 path('signin/',views.signin, name='signin'),
