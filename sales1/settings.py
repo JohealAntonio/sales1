@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_mysql',
     'product_sales.apps.ProductSalesConfig'
 ]
 
