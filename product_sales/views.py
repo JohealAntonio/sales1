@@ -16,8 +16,8 @@ import json
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
-import product_sales
-
+from flask import Flask, request, url_for
+import random
 
 def signup(request):
     if request.user.is_authenticated:
@@ -251,6 +251,13 @@ def pccost(b):
         c = '₹2500' 
         return c
 
+def raninvno():
+    r1 = random.randint(10000000,100000000)
+    s1 = "#"+str(r1)
+    return s1
+
+ino = raninvno()
+
 def invoice(request):
     cname = request.GET.get('cname')
     cmno = request.GET.get('cmno')
@@ -274,8 +281,10 @@ def invoice(request):
         'brand': brand,
         'model': model,
         'date': date,
+        'ino':ino,
     })
     
+
 def msbkg(request):
     if request.method == 'POST':
 
@@ -296,7 +305,7 @@ def msbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
         cur.close()
@@ -306,7 +315,7 @@ def msbkg(request):
         destination_url = reverse('invoice')
  
         # list = [(k, v) for k, v in dict.items()]
-        redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}'
+        redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}&ino={ino}'
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
