@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="icon" href="/static/img/logocs.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <style>
 
     body
@@ -125,7 +127,7 @@
      border: 0.1px solid rgb(48, 48, 48);
      padding: 10px 0 10px 0;
      border-radius: 20px;
-     z-index: 3;
+     z-index: 5;
      background-color: black;
      margin: 15% auto 0 auto;
      display:none;
@@ -156,6 +158,48 @@
     background:none; 
     }
 
+    #cmn
+    {
+     margin-top: 4% !important; 
+     z-index: 0;
+    }
+
+    .iti
+    {
+     z-index: 1;
+    }
+
+    .iti__selected-flag
+    {
+     margin-top: 11%;
+    }
+
+    .iti__country-list
+    {
+     background-color: rgb(15, 15, 15);
+     color: #c8a47e8a;
+     border: 0;
+     border-radius: 20px;
+    }
+
+    .iti__dial-code
+    {
+     color: rgba(128, 128, 128, 0.568);
+    }
+
+    .iti__highlight:hover, .iti__active
+    {
+     color: #c8a47e;
+     .iti__dial-code
+     {
+      color: grey;
+     }
+    }
+
+    .iti__highlight:hover
+    {
+     background-color: rgb(6, 6, 6);
+    }
 
     </style>
 </head>
@@ -167,7 +211,6 @@
                 <button onclick="ok()" class="bn">Ok</button>
             </div>
     </div>
-    
    
     <!-- <div style="width: fit-content; border: none; border-radius: 20px; background-color: rgb(23, 23, 23); margin: auto; text-align: center;">
         <span style="width: 50%; float: left;">
@@ -234,7 +277,7 @@
                     </div>
                     <div class="fmitm" style="float: inline-start;">
                         <label>Phone Number</label>
-                        <input id="cmn" name="cstr_mobile_no" type="tel" placeholder="+1 234567890">
+                        <input id="cmn" name="cstr_mobile_no" type="tel">
                     </div>
                     <div class="fmitm" style="float: inline-end;">
                         <label>Email</label>
@@ -290,6 +333,9 @@
         </div>
     </form>
     <script>
+
+    const phoneInputField = document.querySelector("#cmn");
+    const phoneInput = window.intlTelInput(phoneInputField, {preferredCountries: ["in", "ca"], utilsScript:"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",});
 
     const input = $('#wrtni');
     const select = $('#slt');
