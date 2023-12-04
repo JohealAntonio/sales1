@@ -170,16 +170,19 @@ def index(request):
         date = request.POST['dt']
         time = request.POST['tm']
 
-        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
-        cur = con.cursor()
+        if (fname != '' and lname != '' and email != '' and phone_no != '' and msg != ''):
+            con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+            cur = con.cursor()
 
-        cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`,`date`,`time`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg,date,time))
-        con.commit()
-        
-        cur.close()
-        con.close()
+            cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`,`date`,`time`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg,date,time))
+            con.commit()
+            
+            cur.close()
+            con.close()
 
-        return render(request, 'index.html')
+            return render(request, 'index.html')
+        else:
+            return render(request, 'index.html')
     else:
         return render(request, 'index.html')
 
@@ -351,15 +354,30 @@ def oasbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
         cur.close()
         con.close()
 
         
+        destination_url = reverse('invoice')
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':'Amount will be discussed on the day of service.', 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        cst = 'Amount will be discussed on the day of service.'
+ 
+        # list = [(k, v) for k, v in dict.items()]
+        redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cst}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}&ino={ino}'
+
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return redirect(redirect_url)
     else:
         return render(request, 'oasbooking.html')
 
@@ -392,15 +410,28 @@ def csbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty))
+        cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
         cur.close()
         con.close()
 
         
+        destination_url = reverse('invoice')
+ 
+        # list = [(k, v) for k, v in dict.items()]
+        redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={pccost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}&ino={ino}'
 
-        return render(request, 'invoice.html', {'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':pccost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
+        con.commit()
+        
+        cur.close()
+        con.close()
+
+        return redirect(redirect_url)
     else:
         return render(request, 'csbooking.html')
         

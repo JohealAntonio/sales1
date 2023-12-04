@@ -41,6 +41,5 @@ path('booking/otherapplianceservice',views.oasbkg, name='oasbkg'),
 path('booking/successpage', views.scspg, name='scspage'),
 path('booking/payment', views.paymt, name='bkgpaymt'),
 path('invoice', views.invoice, name='invoice'),
-path('invoice/clean', views.clean_invoice, name='clean_invoice'),
 path('employee/logout', views.lgtpg, name='logout')
 ]
