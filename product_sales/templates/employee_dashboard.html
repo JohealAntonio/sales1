@@ -299,12 +299,12 @@
 
 
     var myChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
         labels: getmths().slice(0),
         datasets: [{
         backgroundColor: gradient,
-        label: 'Number of days',
+        label: 'Days attended',
         fill: true,
         data: getdays().slice(0),
         }]

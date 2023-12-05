@@ -24,9 +24,8 @@
             .card {
                 height: 500px;
                 width: 350px;
-                background-color: #0c0c0c;
+                background-color: #111111;
                 border-radius: 10px;
-                box-shadow: 0rem 0 3rem #000;
                 transition: 0.4s ease-out;
                 left: 0px;
                 text-align: center;
@@ -39,14 +38,16 @@
 
             .card:hover{
                 color : #c8a47ea8;
-                background-color : #131313;
+                background-color : #0c0c0c;
                 transform: translateX(10px);
+                box-shadow: 0rem 0 3rem #c8a47e79;
                 transition: 0.4s ease-out;
                 .title
                 {
                  color: #c8a47e;
                 }
             }
+
 
             .card:hover ~ .card {
                 position: relative;
@@ -202,7 +203,7 @@
              document.getElementById("crd"+String(i)).style.zIndex += 1
              document.getElementById("crd"+String(i)).style.color = '#c8a47ea8'
              document.getElementById("ttl"+String(i)).style.color = "#c8a47e"
-             document.getElementById("crd"+String(i)).style.backgroundColor = '#131313'
+             document.getElementById("crd"+String(i)).style.backgroundColor = '#0c0c0c'
             }
             
             document.addEventListener("DOMContentLoaded", function(event) {

@@ -1,0 +1,19 @@
+{% extends 'base2.html' %}
+{% load crispy_forms_tags %}
+  
+{% block content %}
+  <h2>Create an account</h2>
+  <div data-bs-theme="dark">
+    <form id="loginfrm" method="post" class="form-container2">
+    {% csrf_token %}
+      {{form|crispy}}
+      <div id="div_id_email" class="mb-3"> <label class="form-label">Position assigned</label> 
+        <select name="psn">
+            <option value="Employee">Employee</option>
+            <option value="Managing Director">Managing Director</option>
+        </select>
+      </div>
+      <button class="btn btn-success">Sign up</button>
+    </form>
+  </div>
+{% endblock %}
