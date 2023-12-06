@@ -19,6 +19,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from flask import Flask, request, url_for
 import random
+from django.db import IntegrityError
 
 # def signup(request):
 #     ttl = 'Create a user account'
@@ -36,68 +37,44 @@ import random
 #         return render(request, 'create_acc.html', {'form': form, 'ttl':ttl})
     
 def signup(request):
+    form = CustomUserCreationForm()
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        position = request.POST['psn']
 
-        # Your permission assignment code
-        if (position == 'Managing Director') and form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            
-            user = User.objects.create_user(username=username, password=password)
-
-            all_permissions = Permission.objects.all()
-            user.user_permissions.set(all_permissions)
-
-            # Save the user
-            user.save()
-            form.save()
-
-            form = AuthenticationForm()
-            ttl = 'Login here'
-            return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
         
-        elif (position == 'Employee') and form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password1']
+
+        if form.is_valid():
+            try:
+                position = request.POST['psn']
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password1']
+                fname = form.cleaned_data['first_name']
+                lname = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+
+
+                if position == 'Managing Director':
+                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_superuser = 1)
+                    all_permissions = Permission.objects.all()
+                    user.user_permissions.set(all_permissions)
+
+                elif position == 'Employee':
+                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_staff = 1)
+                    permissions = Permission.objects.filter(codename__in=['view_session', 'delete_session', 'change_session', 'add_session', 'view_contenttype', 'delete_contenttype', 'change_contenttype', 'add_contenttype'])
+                    user.user_permissions.set(permissions)
+
+                # Save the user
+                user.save()
+                form.save()
+                    
+                return redirect('http://127.0.0.1:8000/loginpage/')
             
-            user = User.objects.create_user(username=username, password=password)
-
-            permissions = Permission.objects.filter(codename__in=['view_session','delete_session','change_session','add_session','view_contenttype','delete_contenttype','change_contenttype','add_contenttype'])
-            user.user_permissions.set(permissions)
-
-            # Save the user
-            user.save()
-            form.save()
-
-            form = AuthenticationForm()
-            ttl = 'Login here'
-            return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
-    else:
-        form = CustomUserCreationForm()
-        ttl = 'Create a user account'
-        return render(request, 'create_acc.html', {'form': form, 'ttl':ttl})
-
-
-def signin(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/profile')
-        else:
-            msg = 'Error Login'
-            form = AuthenticationForm(request.POST)
-            return render(request, 'signin.html', {'form':form, 'msg':msg})
-    else:
-        form = AuthenticationForm()
-        return render(request, 'signin.html', {'form': form})
-
-def profile(request): 
-    return render(request, 'profile.html')
+            except IntegrityError as e:
+                return redirect('http://127.0.0.1:8000/loginpage')
+    
+    title = 'Create a user account'
+    return render(request, 'create_acc.html', {'form': form, 'ttl': title})
 
 def msgs(request): 
     return render(request, 'employee_messages.html')
@@ -107,28 +84,7 @@ def imptudts(request):
     if request.user.is_authenticated:
         return render(request, 'employee_updates.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
-
-
-def home(request):
-    logout(request)  
-    return render(request, 'home.html')
-
-def homesignin(request): 
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/profile')
-        else:
-            msg = 'Error Login'
-            form = AuthenticationForm(request.POST)
-            return render(request, 'homesignin.html', {'form':form, 'msg':msg})
-    else:
-        form = AuthenticationForm()
-        return render(request, 'homesignin.html', {'form': form})
+        return redirect('http://127.0.0.1:8000/loginpage/')
     
 def getdnm():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
@@ -164,7 +120,7 @@ def offers(request):
     if request.user.is_authenticated:
         return render(request, 'employee_offers.html',{'info':getofrinfo()})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
 
 # def actv_dates():
 #     date = getdates()
@@ -181,7 +137,7 @@ def dashboard(request):
     if request.user.is_authenticated:
         return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
 
 # def register_user(request):
 #     context = {}
@@ -266,26 +222,23 @@ def msgs_wq(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_wq.html', {'msginfo':getmsgs()})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
       
 def msgs_cg(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_cg.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
   
 def msgs_bs(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_bs.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
 
 def lgtpg(request):
     logout(request)
     return render(request, 'logoutpg.html')
-    
-def scspg(request):
-    return render(request, 'scspage.html')
 
 def cost(b):
     if b == 'Iphone' or b == 'iphone':
@@ -429,9 +382,6 @@ def oasbkg(request):
         return redirect(redirect_url)
     else:
         return render(request, 'oasbooking.html')
-
-def paymt(request):
-    return render(request, 'payment.html')
 
 def othr(r,o):
     if (r=='Other'):
