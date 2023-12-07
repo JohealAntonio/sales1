@@ -139,6 +139,12 @@ def dashboard(request):
     else:
         return redirect('http://127.0.0.1:8000/loginpage/')
 
+def md_dashboard(request):
+    # if request.user.is_authenticated:
+        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+    # else:
+    #     return redirect('http://127.0.0.1:8000/loginpage/')    
+
 # def register_user(request):
 #     context = {}
 #     if request.method == 'POST':
@@ -201,11 +207,11 @@ def lgn(request):
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
-            return render(request, 'employee_login.html', {'form':form, 'msg':msg, 'ttl':ttl})
+            return render(request, 'login.html', {'form':form, 'msg':msg, 'ttl':ttl})
     else:
         form = AuthenticationForm()
         ttl = 'Login here'
-        return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
+        return render(request, 'login.html', {'form': form, 'ttl':ttl})
     
 def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
