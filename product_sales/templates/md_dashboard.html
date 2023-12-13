@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Joheal Antonio -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -230,6 +231,7 @@
                 <div class="mny">
                   <div class="month" id="month"></div>
                   <div class="yr" id="yr"></div>
+                  <!-- Joheal Antonio -->
                 </div>
                 <div class="line"></div>
                 <div class="week"> 
@@ -405,60 +407,44 @@
     }
 
     renderCalendar();
-    document.addEventListener("DOMContentLoaded", function(event) {
+    
+    // document.addEventListener("DOMContentLoaded", function(event) {
 
-    const showNavbar = (toggleId, navId, bodyId, headerId) =>{
-    const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId),
-    bodypd = document.getElementById(bodyId),
-    headerpd = document.getElementById(headerId)
+    // const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+    // const toggle = document.getElementById(toggleId),
+    // nav = document.getElementById(navId),
+    // bodypd = document.getElementById(bodyId),
+    // headerpd = document.getElementById(headerId)
 
-    // Validate that all variables exist
-    if(toggle && nav && bodypd && headerpd){
-    toggle.addEventListener('click', ()=>{
-    // show navbar
-    nav.classList.toggle('show')
-    // change icon
-    toggle.classList.toggle('bx-x')
-    // add padding to body
-    bodypd.classList.toggle('body-pd')
-    // add padding to header
-    headerpd.classList.toggle('body-pd')
-    })
-    }
-    }
+    // // Validate that all variables exist
+    // if(toggle && nav && bodypd && headerpd){
+    // toggle.addEventListener('click', ()=>{
+    // // show navbar
+    // nav.classList.toggle('show')
+    // // change icon
+    // toggle.classList.toggle('bx-x')
+    // // add padding to body
+    // bodypd.classList.toggle('body-pd')
+    // // add padding to header
+    // headerpd.classList.toggle('body-pd')
+    // })
+    // }
+    // }
 
-    showNavbar('header-toggle','nav-bar','body-pd','header')
+    // showNavbar('header-toggle','nav-bar','body-pd','header')
 
-    /*===== LINK ACTIVE =====*/
-    const linkColor = document.querySelectorAll('.nav_link')
+    // /*===== LINK ACTIVE =====*/
+    // const linkColor = document.querySelectorAll('.nav_link')
 
-    function colorLink(){
-    if(linkColor){
-    linkColor.forEach(l=> l.classList.remove('active'))
-    this.classList.add('active')
-    }
-    }
-    linkColor.forEach(l=> l.addEventListener('click', colorLink))
-
-        // Your code to run since DOM is loaded and ready
-    });
-
-    // prevNextIcon.forEach(icon => { // getting prev and next icons
-    //     icon.addEventListener("click", () => { // adding click event on both icons
-    //         // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
-    //         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-    //         if(currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
-    //             // creating a new date of current year & month and pass it as date value
-    //             date = new Date(currYear, currMonth, new Date().getDate());
-    //             currYear = date.getFullYear(); // updating current year with new date year
-    //             currMonth = date.getMonth(); // updating current month with new date month
-    //         } else {
-    //             date = new Date(); // pass the current date as date value
-    //         }
-    //         renderCalendar(); // calling renderCalendar function
-    //     });
+    // function colorLink(){
+    // if(linkColor){
+    // linkColor.forEach(l=> l.classList.remove('active'))
+    // this.classList.add('active')
+    // }
+    // }
+    // linkColor.forEach(l=> l.addEventListener('click', colorLink))
     // });
  </script>
 </body>
+<!-- Joheal Antonio -->
 </html>
