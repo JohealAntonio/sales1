@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Joheal Antonio -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
@@ -46,6 +47,7 @@
                 <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/logout">
                     {% csrf_token %} 
                     <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
+                        <!-- Joheal Antonio -->
                         <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
                             <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
                         </button>
@@ -94,5 +96,6 @@
         // Your code to run since DOM is loaded and ready
 });
  </script>
+ <!-- Joheal Antonio -->
 </body>
 </html>

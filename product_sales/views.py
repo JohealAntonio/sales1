@@ -20,6 +20,7 @@ from django.urls import reverse
 from flask import Flask, request, url_for
 import random
 from django.db import IntegrityError
+from django.db import ProgrammingError
 
 # def signup(request):
 #     ttl = 'Create a user account'
@@ -139,6 +140,12 @@ def dashboard(request):
     else:
         return redirect('http://127.0.0.1:8000/loginpage/')
 
+def md_dashboard(request):
+    # if request.user.is_authenticated:
+        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+    # else:
+    #     return redirect('http://127.0.0.1:8000/loginpage/')    
+
 # def register_user(request):
 #     context = {}
 #     if request.method == 'POST':
@@ -177,6 +184,9 @@ def index(request):
             con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
             cur = con.cursor()
 
+            
+            cur.execute("CREATE TABLE IF NOT EXISTS messages(id int NOT NULL AUTO_INCREMENT, first_name varchar(255), last_name varchar(255), email varchar(255), phone_no varchar(255), msg_from varchar(255),  message text,  date varchar(255),  time varchar(255), PRIMARY KEY (id));")
+            con.commit()
             cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`,`date`,`time`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg,date,time))
             con.commit()
             
@@ -201,11 +211,11 @@ def lgn(request):
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
-            return render(request, 'employee_login.html', {'form':form, 'msg':msg, 'ttl':ttl})
+            return render(request, 'login.html', {'form':form, 'msg':msg, 'ttl':ttl})
     else:
         form = AuthenticationForm()
         ttl = 'Login here'
-        return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
+        return render(request, 'login.html', {'form': form, 'ttl':ttl})
     
 def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
@@ -292,7 +302,6 @@ def invoice(request):
 
 def msbkg(request):
     if request.method == 'POST':
-
         sno=request.POST['service_no']
         sdate=request.POST['service_date']
         stime=request.POST['service_time']
@@ -310,32 +319,40 @@ def msbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
+        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
+         
         
         cur.close()
         con.close()
 
+                    
+
         
         destination_url = reverse('invoice')
- 
+
         # list = [(k, v) for k, v in dict.items()]
         redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}&ino={ino}'
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
+        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
+        
         
         cur.close()
         con.close()
 
         return redirect(redirect_url)
-        # return redirect('http://127.0.0.1:8000/invoice', kwargs={'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        # return redirect('http://127.0.0.1:8000/invoice', kwargs={'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})      
     else:
         return render(request, 'msbooking.html')
-    
+
 def oasbkg(request):
     if request.method == 'POST':
 
@@ -355,7 +372,9 @@ def oasbkg(request):
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
-
+        
+        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
@@ -373,6 +392,8 @@ def oasbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
+        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
@@ -408,7 +429,9 @@ def csbkg(request):
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
-
+        
+        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
@@ -424,6 +447,8 @@ def csbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
+        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
+        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
