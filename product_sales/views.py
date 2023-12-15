@@ -56,27 +56,6 @@ def signup(request):
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-
-<<<<<<< HEAD
-        # Your permission assignment code
-        if (position == 'Managing Director') and form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password1']
-            
-            user = User.objects.create_user(username=username, password=password)
-
-            all_permissions = Permission.objects.all()
-            user.user_permissions.set(all_permissions)
-
-            # Save the user
-            user.save()
-            form.save()
-
-            form = AuthenticationForm()
-            ttl = 'Login here'
-            return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
-=======
->>>>>>> 993392c302719894f7b6e2796dba124fef9dde0a
         
 
         if form.is_valid():
