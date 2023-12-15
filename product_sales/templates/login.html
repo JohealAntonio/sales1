@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!-- Joheal Antonio -->
+
+{% block content %} 
+    <div data-bs-theme="dark">
+        {% load crispy_forms_tags %}
+        <form id="loginfrm" method="post" class="form-container"> 
+            <h1>Login</h1> 
+            <!-- Joheal Antonio -->
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn">Login</button> 
+        </form> 
+    </div>        
+{% endblock %}
+<!-- Joheal Antonio -->

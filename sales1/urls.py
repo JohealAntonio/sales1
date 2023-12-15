@@ -20,14 +20,9 @@ from product_sales import views
 app_name = 'sales'
 
 urlpatterns = [
-path('',views.home,name="home"),
-path('signin/',views.signin, name='signin'),
 path('create_account/',views.signup, name='signup'),
-path('profile/',views.profile, name='profile'),
-path('home/',views.home, name='home'),
-path('homesignin', views.homesignin, name='homesignin'),
 path('index/', views.index, name='index'),
-path('employee/login/', views.lgn, name='index_login'),
+path('loginpage/', views.lgn, name='index_login'),
 path('employee/dashboard/',views.dashboard, name='dashboard'),
 path('employee/messages/',views.msgs, name='messages'),
 path('employee/messages/websitequery',views.msgs_wq, name='webiste_query'),
@@ -35,11 +30,10 @@ path('employee/messages/colleague',views.msgs_cg, name='webiste_query'),
 path('employee/messages/boss',views.msgs_bs, name='webiste_query'),
 path('employee/updates/',views.imptudts, name='updates'),
 path('employee/offers/',views.offers, name='offers'),
+path('manager/dashboard/',views.md_dashboard, name='dashboard'),
 path('booking/mobileservice',views.msbkg, name='msbkg'),
 path('booking/computerservice',views.csbkg, name='csbkg'),
 path('booking/otherapplianceservice',views.oasbkg, name='oasbkg'),
-path('booking/successpage', views.scspg, name='scspage'),
-path('booking/payment', views.paymt, name='bkgpaymt'),
 path('invoice', views.invoice, name='invoice'),
 path('employee/logout', views.lgtpg, name='logout')
 ]

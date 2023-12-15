@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 #from django.middleware.csrf import _get_new_csrf_token
@@ -19,6 +20,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from flask import Flask, request, url_for
 import random
+from django.db import IntegrityError
+from django.db import ProgrammingError
 
 # def signup(request):
 #     ttl = 'Create a user account'
@@ -34,12 +37,27 @@ import random
 #     else:
 #         form = CustomUserCreationForm()
 #         return render(request, 'create_acc.html', {'form': form, 'ttl':ttl})
+
+con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+cur = con.cursor()
+
+cur.execute("CREATE TABLE IF NOT EXISTS messages(id int NOT NULL AUTO_INCREMENT, first_name varchar(255), last_name varchar(255), email varchar(255), phone_no varchar(255), msg_from varchar(255),  message text,  date varchar(255),  time varchar(255), PRIMARY KEY (id));")
+con.commit()
+cur.execute("CREATE TABLE IF NOT EXISTS offer(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
+con.commit()
+cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
+con.commit()
+
+cur.close()
+con.close()
     
 def signup(request):
+    form = CustomUserCreationForm()
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        position = request.POST['psn']
 
+<<<<<<< HEAD
         # Your permission assignment code
         if (position == 'Managing Director') and form.is_valid():
             username = request.POST['username']
@@ -57,47 +75,42 @@ def signup(request):
             form = AuthenticationForm()
             ttl = 'Login here'
             return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
+=======
+>>>>>>> 993392c302719894f7b6e2796dba124fef9dde0a
         
-        elif (position == 'Employee') and form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password1']
+
+        if form.is_valid():
+            try:
+                position = request.POST['psn']
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password1']
+                fname = form.cleaned_data['first_name']
+                lname = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+                codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission',]
+
+
+                if position == 'Managing Director':
+                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_superuser = 1)
+                    all_permissions = Permission.objects.filter(name=all)
+                    user.user_permissions.set(all_permissions)
+
+                elif position == 'Employee':
+                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_staff = 1)
+                    permissions = Permission.objects.filter(codename__in=['view_session', 'delete_session', 'change_session', 'add_session', 'view_contenttype', 'delete_contenttype', 'change_contenttype', 'add_contenttype'])
+                    user.user_permissions.set(permissions)
+
+                # Save the user
+                user.save()
+                form.save()
+                    
+                return redirect('http://127.0.0.1:8000/loginpage/')
             
-            user = User.objects.create_user(username=username, password=password)
-
-            permissions = Permission.objects.filter(codename__in=['view_session','delete_session','change_session','add_session','view_contenttype','delete_contenttype','change_contenttype','add_contenttype'])
-            user.user_permissions.set(permissions)
-
-            # Save the user
-            user.save()
-            form.save()
-
-            form = AuthenticationForm()
-            ttl = 'Login here'
-            return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
-    else:
-        form = CustomUserCreationForm()
-        ttl = 'Create a user account'
-        return render(request, 'create_acc.html', {'form': form, 'ttl':ttl})
-
-
-def signin(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/profile')
-        else:
-            msg = 'Error Login'
-            form = AuthenticationForm(request.POST)
-            return render(request, 'signin.html', {'form':form, 'msg':msg})
-    else:
-        form = AuthenticationForm()
-        return render(request, 'signin.html', {'form': form})
-
-def profile(request): 
-    return render(request, 'profile.html')
+            except IntegrityError as e:
+                return redirect('http://127.0.0.1:8000/loginpage')
+    
+    title = 'Create a user account'
+    return render(request, 'create_acc.html', {'form': form, 'ttl': title})
 
 def msgs(request): 
     return render(request, 'employee_messages.html')
@@ -107,28 +120,7 @@ def imptudts(request):
     if request.user.is_authenticated:
         return render(request, 'employee_updates.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
-
-
-def home(request):
-    logout(request)  
-    return render(request, 'home.html')
-
-def homesignin(request): 
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/profile')
-        else:
-            msg = 'Error Login'
-            form = AuthenticationForm(request.POST)
-            return render(request, 'homesignin.html', {'form':form, 'msg':msg})
-    else:
-        form = AuthenticationForm()
-        return render(request, 'homesignin.html', {'form': form})
+        return redirect('http://127.0.0.1:8000/loginpage/')
     
 def getdnm():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
@@ -164,7 +156,7 @@ def offers(request):
     if request.user.is_authenticated:
         return render(request, 'employee_offers.html',{'info':getofrinfo()})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
 
 # def actv_dates():
 #     date = getdates()
@@ -181,7 +173,13 @@ def dashboard(request):
     if request.user.is_authenticated:
         return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
+
+def md_dashboard(request):
+    # if request.user.is_authenticated:
+        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+    # else:
+    #     return redirect('http://127.0.0.1:8000/loginpage/')    
 
 # def register_user(request):
 #     context = {}
@@ -245,17 +243,17 @@ def lgn(request):
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
-            return render(request, 'employee_login.html', {'form':form, 'msg':msg, 'ttl':ttl})
+            return render(request, 'login.html', {'form':form, 'msg':msg, 'ttl':ttl})
     else:
         form = AuthenticationForm()
         ttl = 'Login here'
-        return render(request, 'employee_login.html', {'form': form, 'ttl':ttl})
+        return render(request, 'login.html', {'form': form, 'ttl':ttl})
     
 def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
     cur = con.cursor()
 
-    cur.execute("SELECT first_name,last_name,email,phone_no,msg_from,message FROM messages;")
+    cur.execute("SELECT * FROM messages;")
     columns = [col for col in list(zip(*cur.description))[0]]
     allinfo = cur.fetchall()
     cur.close()
@@ -266,26 +264,23 @@ def msgs_wq(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_wq.html', {'msginfo':getmsgs()})
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
       
 def msgs_cg(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_cg.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
   
 def msgs_bs(request):
     if request.user.is_authenticated:
         return render(request, 'employee_messages_bs.html')
     else:
-        return redirect('http://127.0.0.1:8000/employee/login/')
+        return redirect('http://127.0.0.1:8000/loginpage/')
 
 def lgtpg(request):
     logout(request)
     return render(request, 'logoutpg.html')
-    
-def scspg(request):
-    return render(request, 'scspage.html')
 
 def cost(b):
     if b == 'Iphone' or b == 'iphone':
@@ -339,7 +334,6 @@ def invoice(request):
 
 def msbkg(request):
     if request.method == 'POST':
-
         sno=request.POST['service_no']
         sdate=request.POST['service_date']
         stime=request.POST['service_time']
@@ -359,13 +353,16 @@ def msbkg(request):
 
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
+         
         
         cur.close()
         con.close()
 
+                    
+
         
         destination_url = reverse('invoice')
- 
+
         # list = [(k, v) for k, v in dict.items()]
         redirect_url = f'{destination_url}?cname={cname}&cmno={cmno}&addr={addr}&cty={cty}&ror={othr(ror,otr)}&cst={cost(dbrd)}&etype={dtype}&brand={dbrd}&model={dmdl}&date={sdate}&ino={ino}'
 
@@ -375,14 +372,15 @@ def msbkg(request):
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
+        
         cur.close()
         con.close()
 
         return redirect(redirect_url)
-        # return redirect('http://127.0.0.1:8000/invoice', kwargs={'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})
+        # return redirect('http://127.0.0.1:8000/invoice', kwargs={'cname':cname, 'cmno':cmno, 'addr':addr, 'cty':cty, 'ror':othr(ror,otr), 'cst':cost(dbrd), 'etype':dtype, 'brand':dbrd, 'model':dmdl, 'date':sdate})      
     else:
         return render(request, 'msbooking.html')
-    
+
 def oasbkg(request):
     if request.method == 'POST':
 
@@ -402,7 +400,7 @@ def oasbkg(request):
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
-
+        
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
@@ -430,9 +428,6 @@ def oasbkg(request):
     else:
         return render(request, 'oasbooking.html')
 
-def paymt(request):
-    return render(request, 'payment.html')
-
 def othr(r,o):
     if (r=='Other'):
         return o
@@ -458,7 +453,7 @@ def csbkg(request):
 
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
-
+        
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         

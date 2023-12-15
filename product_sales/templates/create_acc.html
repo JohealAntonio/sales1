@@ -1,5 +1,6 @@
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
+<!-- Joheal Antonio -->
   
 {% block content %}
   <h2>Create an account</h2>
@@ -9,11 +10,13 @@
       {{form|crispy}}
       <div id="div_id_email" class="mb-3"> <label class="form-label">Position assigned</label> 
         <select name="psn">
+          <!-- Joheal Antonio -->
             <option value="Employee">Employee</option>
             <option value="Managing Director">Managing Director</option>
         </select>
       </div>
       <button class="btn btn-success">Sign up</button>
     </form>
+    <!-- Joheal Antonio -->
   </div>
 {% endblock %}
