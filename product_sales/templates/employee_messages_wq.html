@@ -165,7 +165,7 @@
          display: none;
         }
 
-        .fi-rr-circle-user
+        .fi-rr-circle-user, .fi-sr-circle-user
         {
          font-size: 50px;
          margin-bottom: 10px;
@@ -321,41 +321,14 @@
                 <span><i class="fas fa-cog"></i></span>
               </div>
             </header>
-          
             <main class="msger-chat">
                 <div class="msg left-msg">
                     <div
                      class="msg-img"
                     ><i class="fi fi-rr-circle-user"></i></div>
               
-                    <div class="msg-bubble">
-                      <div class="msg-info">
-                        <div class="msg-info-name">BOT</div>
-                        <div class="msg-info-time">12:45</div>
-                      </div>
-              
-                      <div class="msg-text">
-                        Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
-                      </div>
-                    </div>
-                  </div>
-          
-              <div class="msg right-msg">
-                <div
-                 class="msg-img"
-                ><i class="fi fi-rr-circle-user"></i></div>
-          
-                <div class="msg-bubble">
-                  <div class="msg-info">
-                    <div class="msg-info-name">{{request.user}}</div>
-                    <div class="msg-info-time">{{Time}}</div>
-                  </div>
-          
-                  <div class="msg-text">
-                    You can change your name in JS section!
-                  </div>
+                    <div class="msg-bubble" id="wqmsg"></div>
                 </div>
-              </div>
             </main>
           
             <form class="msger-inputarea">
@@ -366,7 +339,6 @@
     </div>
     <div id="msginfo">{{msginfo}}</div>
  <script>
-
     const msgerForm = get(".msger-inputarea");
     const msgerInput = get(".msger-input");
     const msgerChat = get(".msger-chat");
@@ -393,7 +365,7 @@
     //   Simple solution for small apps
     const msgHTML = `
         <div class="msg ${side}-msg">
-        <div class="msg-img" style="background-image: url(${img})"></div>
+        <div class="msg-img" style="background-image: url(${img})"><i class="fi fi-sr-circle-user"></i></div>
 
         <div class="msg-bubble">
             <div class="msg-info">
@@ -427,12 +399,17 @@
     const ds = JSON.stringify(document.getElementById('msginfo').innerHTML);
     const info = JSON.parse(ds);
     const msginfo = JSON.parse(info);
-    let message_list = document.querySelector("#msg_list")
     console.log(msginfo)
+    let message_list = document.querySelector("#msg_list")
+    let wqmsg = document.querySelector("#wqmsg")
+    let tm = document.querySelector("#tm")
 
     const rendermsg = () => 
     {
         let divTag = "";
+        let divtag1 = "";
+        let id = "";
+        let time = "";
                 
         for (let i=0; i<msginfo.length; i++)
         {
@@ -442,16 +419,28 @@
             let phno = msginfo[i].phone_no
             let msg = msginfo[i].message
             let msgfrom = msginfo[i].msg_from
+            let tme = msginfo[i].time
+            let dte = msginfo[i].date
 
             if (msgfrom=='website query')
             {
-                divTag += `<div id="msg${i+1}" class="ml" onclick="clicked(${i+1})">Message from ${fname} ${lname}</div>`;
+             divTag += `<div id="msg${i+1}" class="ml" onclick="clicked(${i+1})">Message from ${fname} ${lname}<p>${dte}</p></div>`;
+             divtag1 +=`<div class="msg-info">
+                            <div class="msg-info-name wqmsg">${fname} ${lname}</div>
+                            <div class="msg-info-time wqmsg">${tme}</div>
+                        </div>
+                
+                        <div class="msg-text">
+                            ${msg}
+                        </div>`;
+             wqmsg.id+=i+1;        
             }      
         }
 
 
         // passing current mon and yr as currentDate text
         message_list.innerHTML = divTag;
+        wqmsg.innerHTML = divtag1;
     }
 
     rendermsg();

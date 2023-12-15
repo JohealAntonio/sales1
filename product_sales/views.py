@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 #from django.middleware.csrf import _get_new_csrf_token
@@ -36,6 +37,19 @@ from django.db import ProgrammingError
 #     else:
 #         form = CustomUserCreationForm()
 #         return render(request, 'create_acc.html', {'form': form, 'ttl':ttl})
+
+con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+cur = con.cursor()
+
+cur.execute("CREATE TABLE IF NOT EXISTS messages(id int NOT NULL AUTO_INCREMENT, first_name varchar(255), last_name varchar(255), email varchar(255), phone_no varchar(255), msg_from varchar(255),  message text,  date varchar(255),  time varchar(255), PRIMARY KEY (id));")
+con.commit()
+cur.execute("CREATE TABLE IF NOT EXISTS offer(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
+con.commit()
+cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
+con.commit()
+
+cur.close()
+con.close()
     
 def signup(request):
     form = CustomUserCreationForm()
@@ -53,11 +67,12 @@ def signup(request):
                 fname = form.cleaned_data['first_name']
                 lname = form.cleaned_data['last_name']
                 email = form.cleaned_data['email']
+                codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission',]
 
 
                 if position == 'Managing Director':
                     user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_superuser = 1)
-                    all_permissions = Permission.objects.all()
+                    all_permissions = Permission.objects.filter(name=all)
                     user.user_permissions.set(all_permissions)
 
                 elif position == 'Employee':
@@ -184,9 +199,6 @@ def index(request):
             con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
             cur = con.cursor()
 
-            
-            cur.execute("CREATE TABLE IF NOT EXISTS messages(id int NOT NULL AUTO_INCREMENT, first_name varchar(255), last_name varchar(255), email varchar(255), phone_no varchar(255), msg_from varchar(255),  message text,  date varchar(255),  time varchar(255), PRIMARY KEY (id));")
-            con.commit()
             cur.execute("INSERT INTO messages (`first_name`,`last_name`,`email`,`phone_no`,`msg_from`,`message`,`date`,`time`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(fname,lname,email,phone_no,msg_from,msg,date,time))
             con.commit()
             
@@ -221,7 +233,7 @@ def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
     cur = con.cursor()
 
-    cur.execute("SELECT first_name,last_name,email,phone_no,msg_from,message FROM messages;")
+    cur.execute("SELECT * FROM messages;")
     columns = [col for col in list(zip(*cur.description))[0]]
     allinfo = cur.fetchall()
     cur.close()
@@ -319,8 +331,6 @@ def msbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
          
@@ -339,8 +349,6 @@ def msbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
@@ -373,8 +381,6 @@ def oasbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
         
-        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
@@ -392,8 +398,6 @@ def oasbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
@@ -430,8 +434,6 @@ def csbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
         
-        cur.execute("CREATE TABLE IF NOT EXISTS offer (id int NOT NULL AUTO_INCREMENT, service_no varchar(255), service_date varchar(255), service_time varchar(255), cstr_name varchar(255), cstr_mobile_no varchar(255), cstr_email varchar(255), electronics_type varchar(255), brand varchar(255), model_no varchar(255), reason_for_service varchar(255), other_reason varchar(255), address varchar(255), city varchar(255), invoice_no varchar(255),  PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO offer (`service_no`, `service_date`, `service_time`, `cstr_name`, `cstr_mobile_no`, `cstr_email`, `electronics_type`, `brand`, `model_no`, `reason_for_service`, `other_reason`, `address`, `city`,`invoice_no`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(sno,sdate,stime,cname,cmno,cemail,dtype,dbrd,dmdl,ror,otr,addr,cty,ino))
         con.commit()
         
@@ -447,8 +449,6 @@ def csbkg(request):
         con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
         cur = con.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
-        con.commit()
         cur.execute("INSERT INTO cstr_invoices(`service_no`, `invoice`) VALUES (%s,%s)",(sno,'http://127.0.0.1:8000'+redirect_url))
         con.commit()
         
