@@ -43,7 +43,7 @@ def signup(request):
         # Your permission assignment code
         if (position == 'Managing Director') and form.is_valid():
             username = request.POST['username']
-            password = request.POST['password']
+            password = request.POST['password1']
             
             user = User.objects.create_user(username=username, password=password)
 
