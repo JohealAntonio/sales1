@@ -50,14 +50,26 @@ con.commit()
 
 cur.close()
 con.close()
+
+def emp(uname,pword,fname,lname,eml):
+    codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission','delete_permission','view_permission','add_group','change_group','delete_group','view_group','add_user','change_user','delete_user','view_user','add_contenttype','change_contenttype','delete_contenttype','view_contenttype','add_session','change_session','delete_session','view_session']
+    user = User.objects.create_user(username=uname, password=pword, first_name=fname, last_name=lname, email=eml, is_staff = 1)
+    permissions = Permission.objects.filter(codename__in=codename[-8:])
+    user.user_permissions.set(permissions)
+    user.save()
+
+def md(uname,pword,fname,lname,eml):
+    codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission','delete_permission','view_permission','add_group','change_group','delete_group','view_group','add_user','change_user','delete_user','view_user','add_contenttype','change_contenttype','delete_contenttype','view_contenttype','add_session','change_session','delete_session','view_session']
+    user = User.objects.create_user(username=uname, password=pword, first_name=fname, last_name=lname, email=eml, is_staff = 1)
+    all_permissions = Permission.objects.filter(codename__in=codename)
+    user.user_permissions.set(all_permissions)
+    user.save()
     
 def signup(request):
     form = CustomUserCreationForm()
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        
-
         if form.is_valid():
             try:
                 position = request.POST['psn']
@@ -66,21 +78,15 @@ def signup(request):
                 fname = form.cleaned_data['first_name']
                 lname = form.cleaned_data['last_name']
                 email = form.cleaned_data['email']
-                codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission',]
+                codename = ['add_logentry','change_logentry','delete_logentry','view_logentry','add_permission','change_permission','delete_permission','view_permission','add_group','change_group','delete_group','view_group','add_user','change_user','delete_user','view_user','add_contenttype','change_contenttype','delete_contenttype','view_contenttype','add_session','change_session','delete_session','view_session']
 
+                if position == 'Employee':
+                    emp(username,password,fname,lname,email)
 
-                if position == 'Managing Director':
-                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_superuser = 1)
-                    all_permissions = Permission.objects.filter(name=all)
-                    user.user_permissions.set(all_permissions)
-
-                elif position == 'Employee':
-                    user = User.objects.create_user(username=username, password=password, first_name=fname, last_name=lname, email=email, is_staff = 1)
-                    permissions = Permission.objects.filter(codename__in=['view_session', 'delete_session', 'change_session', 'add_session', 'view_contenttype', 'delete_contenttype', 'change_contenttype', 'add_contenttype'])
-                    user.user_permissions.set(permissions)
+                elif position == 'Managing Director':
+                    md(username,password,fname,lname,email)
 
                 # Save the user
-                user.save()
                 form.save()
                     
                 return redirect('http://127.0.0.1:8000/loginpage/')
