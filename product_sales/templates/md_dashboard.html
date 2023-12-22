@@ -192,10 +192,10 @@
          font-family:'Poppins',sans-serif;
         }
 
-        table {
+        #tbl {
         border-collapse: collapse;
         width: 100%;
-        font-size: 11px;
+        font-size: x-small;
         }
 
         tr:nth-child(even) {
@@ -252,116 +252,22 @@
         </nav>
     </div>
     <div class="insbdy">
-        <div class="offer">
-            <h2>TOTAL OFFERS</h2>
-            <table id="tbl">
-                <!-- <tr>
-                  <th>Months</th>
-                  <th>Last year</th>
-                  <th>This year</th>
-                  <th>Increase</th>
-                </tr>
-                <tr>
-                  <td>January</td>
-                  <td>a</td>
-                  <td>b</td>
-                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                  <td>February</td>
-                  <td>c</td>
-                  <td>d</td>
-                  <td>d% <i class='bx bx-down-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                  <td>March</td>
-                  <td>e</td>
-                  <td>f</td>
-                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                  <td>April</td>
-                  <td>g</td>
-                  <td>h</td>
-                  <td>d% <i class='bx bx-down-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                  <td>May</td>
-                  <td>i</td>
-                  <td>j</td>
-                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                  <td>June</td>
-                  <td>k</td>
-                  <td>l</td>
-                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>m</td>
-                    <td>n</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr>
-                  <tr>
-                    <td>August</td>
-                    <td>o</td>
-                    <td>p</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr>
-                  <tr>
-                    <td>September</td>
-                    <td>q</td>
-                    <td>r</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr>
-                  <tr>
-                    <td>October</td>
-                    <td>s</td>
-                    <td>t</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr>
-                  <tr>
-                    <td>November</td>
-                    <td>u</td>
-                    <td>v</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr>
-                  <tr>
-                    <td>December</td>
-                    <td>w</td>
-                    <td>x</td>
-                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
-                  </tr> -->
-              </table>
+      <div class="offer">
+          <h2>TOTAL OFFERS</h2>
+          <table id="tbl"></table>
+      </div>
+                <!-- Joheal Antonio -->
+      <div class="offer">
+        <div style="width: 50%">
+          <canvas id="canvas1" height="450" width="600"></canvas>
         </div>
-            <!-- <h3>OFFERS THIS MONTH</h3>
-            <div class="calendar">
-                <div class="mny">
-                  <div class="month" id="month"></div>
-                  <div class="yr" id="yr"></div> -->
-                  <!-- Joheal Antonio -->
-                <!-- </div>
-                <div class="line"></div>
-                <div class="week"> 
-                    <div class="wkd">Mon</div>
-                    <div class="wkd">Tues</div>
-                    <div class="wkd">Wed</div>  
-                    <div class="wkd">Thurs</div>
-                    <div class="wkd">Fri</div>
-                    <div class="wkd">Sat</div> 
-                    <div class="wkd">Sun</div>
-                </div>
-                <div class="line"></div>
-                <div id="thebigd" class="grid-container"></div>
-              </div> -->
-              <!-- <div class="js">{{days}}</div> -->
-              <div class="offer"></div>
-        <div class="attendance">
-            <!-- <h3>ATTENDANCE</h3>
-            <canvas id="chart" width="300" height="125"></canvas> -->
+    
+        <div style="width: 50%">
+          <canvas id="canvas2" height="450" width="600"></canvas>
         </div>
-        <div class="attendance"></div>
+      </div>
+      <div class="attendance"></div>
+      <div class="attendance"></div>
     </div>
     <div class="insbdy2">
         <div class="offer">
@@ -372,10 +278,63 @@
         </div>
     </div>
  <script>
-
     let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const actmth = []
+
+    function getRndInt(min, max) 
+    {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function getmths()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actmth.push(months[i]) 
+     }
+     return actmth
+    }
+
+    var options = {
+      type: 'doughnut',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [
+            {
+              data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+            }
+            ]
+      },
+    hoverOffset: 4
+    }
+    var options2 = {
+      type: 'doughnut',
+      data: {
+        labels: getmths(),
+        datasets: [
+            {
+              data: [getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000)],
+            borderWidth: 1
+            }
+            ]
+      },
+  options: {
+    plugins: {
+      datalabels: false 
+    }
+      }
+    }
+
+
+    var ctx = document.getElementById('canvas1').getContext('2d');
+    new Chart(ctx, options);
+    var ctx2 = document.getElementById('canvas2').getContext('2d');
+    new Chart(ctx2, options2);
 
 //     var ctx = document.getElementById('chart1').getContext('2d');
 
@@ -384,10 +343,6 @@
 //     gradient.addColorStop(0.1, '#c27847');
 //     gradient.addColorStop(0, '#c2784746');
 
-    function getRndInt(min, max) 
-    {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
 
 //     const randayslst = [getRndInt(20,31),getRndInt(20,28),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31)] 
 //     const mth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -476,23 +431,13 @@
     let ms = JSON.parse('{{months}}');
 
     // storing full name of all months in array
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
     const lyrofr = [getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200)]
     const tyrofr = [getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500)]
-    const actmth = []
     const actlyofr = []
     const acttyofr = []
 
-    function getmths()
-    {
-     for (let i = 0; i < currMonth; i++)
-     {
-      actmth.push(months[i]) 
-     }
-     return actmth
-    }
-
-    console.log(currMonth)
+    
 
     function getlyofrs()
     {
