@@ -139,6 +139,12 @@
         font-weight: 700;
         }
 
+        h2
+        {
+        font-weight: 700;
+        font-size: large;
+        }
+
         .calendar-body
         {
         padding: 0;
@@ -186,6 +192,27 @@
          font-family:'Poppins',sans-serif;
         }
 
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 11px;
+        }
+
+        tr:nth-child(even) {
+        background-color:#c278472e;
+        }
+
+        .bx-down-arrow-circle
+        {
+         color: red;
+        }
+
+        
+        .bxs-up-arrow-circle
+        {
+         color: green;
+        }
+
     </style>
 </head>
 <body style="background-color: rgb(238, 238, 238); color: #c27847;" id="body-pd">
@@ -201,7 +228,7 @@
                     <a style="color: #c27847; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/dashboard" id="n1" onclick="changec(this)" class="nav_link active">
                         <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span>
                     </a> 
-                    <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages" id="n2" onclick="changec(this)" class="nav_link">
+                    <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/messages" id="n2" onclick="changec(this)" class="nav_link">
                         <i class='bx bx-message-square-detail nav_icon'></i><span class="nav_name">Messages</span>
                     </a> 
                     <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/offers" id="n3" onclick="changec(this)" class="nav_link">
@@ -226,13 +253,95 @@
     </div>
     <div class="insbdy">
         <div class="offer">
-            <h3>OFFERS THIS MONTH</h3>
+            <h2>TOTAL OFFERS</h2>
+            <table id="tbl">
+                <!-- <tr>
+                  <th>Months</th>
+                  <th>Last year</th>
+                  <th>This year</th>
+                  <th>Increase</th>
+                </tr>
+                <tr>
+                  <td>January</td>
+                  <td>a</td>
+                  <td>b</td>
+                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                  <td>February</td>
+                  <td>c</td>
+                  <td>d</td>
+                  <td>d% <i class='bx bx-down-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                  <td>March</td>
+                  <td>e</td>
+                  <td>f</td>
+                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                  <td>April</td>
+                  <td>g</td>
+                  <td>h</td>
+                  <td>d% <i class='bx bx-down-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                  <td>May</td>
+                  <td>i</td>
+                  <td>j</td>
+                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                  <td>June</td>
+                  <td>k</td>
+                  <td>l</td>
+                  <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>m</td>
+                    <td>n</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr>
+                  <tr>
+                    <td>August</td>
+                    <td>o</td>
+                    <td>p</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr>
+                  <tr>
+                    <td>September</td>
+                    <td>q</td>
+                    <td>r</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr>
+                  <tr>
+                    <td>October</td>
+                    <td>s</td>
+                    <td>t</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr>
+                  <tr>
+                    <td>November</td>
+                    <td>u</td>
+                    <td>v</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr>
+                  <tr>
+                    <td>December</td>
+                    <td>w</td>
+                    <td>x</td>
+                    <td>b% <i class='bx bxs-up-arrow-circle'></i></td>
+                  </tr> -->
+              </table>
+        </div>
+            <!-- <h3>OFFERS THIS MONTH</h3>
             <div class="calendar">
                 <div class="mny">
                   <div class="month" id="month"></div>
-                  <div class="yr" id="yr"></div>
+                  <div class="yr" id="yr"></div> -->
                   <!-- Joheal Antonio -->
-                </div>
+                <!-- </div>
                 <div class="line"></div>
                 <div class="week"> 
                     <div class="wkd">Mon</div>
@@ -245,13 +354,14 @@
                 </div>
                 <div class="line"></div>
                 <div id="thebigd" class="grid-container"></div>
-              </div>
+              </div> -->
               <!-- <div class="js">{{days}}</div> -->
-        </div>
+              <div class="offer"></div>
         <div class="attendance">
-            <h3>ATTENDANCE</h3>
-            <canvas id="chart" width="300" height="125"></canvas>
+            <!-- <h3>ATTENDANCE</h3>
+            <canvas id="chart" width="300" height="125"></canvas> -->
         </div>
+        <div class="attendance"></div>
     </div>
     <div class="insbdy2">
         <div class="offer">
@@ -267,100 +377,99 @@
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
 
-    var ctx = document.getElementById('chart').getContext('2d');
+//     var ctx = document.getElementById('chart1').getContext('2d');
 
-    var gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(1, '#c2784746');
-    gradient.addColorStop(0.1, '#c27847');
-    gradient.addColorStop(0, '#c2784746');
+//     var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+//     gradient.addColorStop(1, '#c2784746');
+//     gradient.addColorStop(0.1, '#c27847');
+//     gradient.addColorStop(0, '#c2784746');
 
     function getRndInt(min, max) 
     {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const randayslst = [getRndInt(20,31),getRndInt(20,28),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31)] 
-    const mth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    const actmth = []
-    const actdays = []
+//     const randayslst = [getRndInt(20,31),getRndInt(20,28),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31),getRndInt(20,30),getRndInt(20,31)] 
+//     const mth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+//     const actmth = []
+//     const actdays = []
 
-    function getmths()
-    {
-     for (let i = 0; i < currMonth; i++)
-     {
-      actmth.push(mth[i]) 
-     }
-     return actmth
-    }
+//     function getmths()
+//     {
+//      for (let i = 0; i < currMonth; i++)
+//      {
+//       actmth.push(mth[i]) 
+//      }
+//      return actmth
+//     }
 
-    function getdays()
-    {
-     for (let i = 0; i < currMonth; i++)
-     {
-      actdays.push(randayslst[i]) 
-     }
-     return actdays
-    }
+//     function getdays()
+//     {
+//      for (let i = 0; i < currMonth; i++)
+//      {
+//       actdays.push(randayslst[i]) 
+//      }
+//      return actdays
+//     }
+   
+// var myChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: getmths().slice(0),
+//         datasets: [{
+//         backgroundColor: gradient,
+//         label: 'Days attended',
+//         fill: true,
+//         data: getdays().slice(0),
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             y: {
+//                 beginAtZero: true,
+//                 title: {
+//                     display: true,
+//                     font: {
+//                         family: '"Poppins", sans-serif',
+//                         size: 16
+//                     }
+//                 },
+//                 ticks: {
+//                     font: {
+//                         family: '"Poppins", sans-serif',
+//                         size: 12
+//                     }
+//                 }
+//             },
+//             x: {
+//                 ticks: {
+//                     font: {
+//                         family: '"Poppins", sans-serif',
+//                         size: 12
+//                     }
+//                 }
+//             }
+//         },
+//         plugins: {
+//             legend: {
+//                 display: true,
+//                 position: 'top',
+//                 labels: {
+//                     font: {
+//                         family: '"Poppins", sans-serif',
+//                         size: 14
+//                     }
+//                 }
+//             }
+//         },
+//         tension: 0.3
+//     }
+// });
 
+//     "use strict";
 
-    var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: getmths().slice(0),
-        datasets: [{
-        backgroundColor: gradient,
-        label: 'Days attended',
-        fill: true,
-        data: getdays().slice(0),
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    font: {
-                        family: '"Poppins", sans-serif',
-                        size: 16
-                    }
-                },
-                ticks: {
-                    font: {
-                        family: '"Poppins", sans-serif',
-                        size: 12
-                    }
-                }
-            },
-            x: {
-                ticks: {
-                    font: {
-                        family: '"Poppins", sans-serif',
-                        size: 12
-                    }
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    font: {
-                        family: '"Poppins", sans-serif',
-                        size: 14
-                    }
-                }
-            }
-        },
-        tension: 0.3
-    }
-});
-
-    "use strict";
-
-    const days = document.querySelector(".grid-container")
-    const bigdiv = document.getElementById("thebigd")
+//     const days = document.querySelector(".grid-container")
+//     const bigdiv = document.getElementById("thebigd")
 
     // getting new date, current year and month
     let ds = JSON.parse('{{days}}');
@@ -368,6 +477,81 @@
 
     // storing full name of all months in array
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const lyrofr = [getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200)]
+    const tyrofr = [getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500)]
+    const actmth = []
+    const actlyofr = []
+    const acttyofr = []
+
+    function getmths()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actmth.push(months[i]) 
+     }
+     return actmth
+    }
+
+    console.log(currMonth)
+
+    function getlyofrs()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actlyofr.push(lyrofr[i])
+     }
+     return actlyofr
+    }
+
+    function gettyofrs()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      acttyofr.push(tyrofr[i])
+     }
+     return acttyofr
+    }
+
+
+    const rendertable = () =>
+    {
+     let table = document.getElementById('tbl')
+     let divtag1 = `<tr>
+                  <th>Months</th>
+                  <th>Last year</th>
+                  <th>This year</th>
+                  <th>Increase</th>
+                </tr>`
+     for (let i = 0; i<currMonth; i++)
+     {
+      mth = getmths()[i]
+      lyoffr = getlyofrs()[i]
+      tyoffr = gettyofrs()[i]
+      perc =  ((tyoffr/lyoffr)*100).toFixed(2)
+
+      if (lyoffr<tyoffr)
+      {
+        divtag1 += `<tr>
+                  <td>${mth}</td>
+                  <td>${lyoffr}</td>
+                  <td>${tyoffr}</td>
+                  <td>${perc}% <i class='bx bxs-up-arrow-circle'></i></td>
+                </tr>`
+      }
+      else
+      {
+        divtag1 += `<tr>
+                  <td>${mth}</td>
+                  <td>${lyoffr}</td>
+                  <td>${tyoffr}</td>
+                  <td>${perc}% <i class='bx bx-down-arrow-circle'></i></td>
+                </tr>`
+      }
+     }
+     table.innerHTML = divtag1;
+    }
+
+    rendertable();
 
     const renderCalendar = () => 
     {
@@ -408,42 +592,42 @@
 
     renderCalendar();
     
-    // document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function(event) {
 
-    // const showNavbar = (toggleId, navId, bodyId, headerId) =>{
-    // const toggle = document.getElementById(toggleId),
-    // nav = document.getElementById(navId),
-    // bodypd = document.getElementById(bodyId),
-    // headerpd = document.getElementById(headerId)
+    const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+    const toggle = document.getElementById(toggleId),
+    nav = document.getElementById(navId),
+    bodypd = document.getElementById(bodyId),
+    headerpd = document.getElementById(headerId)
 
-    // // Validate that all variables exist
-    // if(toggle && nav && bodypd && headerpd){
-    // toggle.addEventListener('click', ()=>{
-    // // show navbar
-    // nav.classList.toggle('show')
-    // // change icon
-    // toggle.classList.toggle('bx-x')
-    // // add padding to body
-    // bodypd.classList.toggle('body-pd')
-    // // add padding to header
-    // headerpd.classList.toggle('body-pd')
-    // })
-    // }
-    // }
+    // Validate that all variables exist
+    if(toggle && nav && bodypd && headerpd){
+    toggle.addEventListener('click', ()=>{
+    // show navbar
+    nav.classList.toggle('show')
+    // change icon
+    toggle.classList.toggle('bx-x')
+    // add padding to body
+    bodypd.classList.toggle('body-pd')
+    // add padding to header
+    headerpd.classList.toggle('body-pd')
+    })
+    }
+    }
 
-    // showNavbar('header-toggle','nav-bar','body-pd','header')
+    showNavbar('header-toggle','nav-bar','body-pd','header')
 
-    // /*===== LINK ACTIVE =====*/
-    // const linkColor = document.querySelectorAll('.nav_link')
+    /*===== LINK ACTIVE =====*/
+    const linkColor = document.querySelectorAll('.nav_link')
 
-    // function colorLink(){
-    // if(linkColor){
-    // linkColor.forEach(l=> l.classList.remove('active'))
-    // this.classList.add('active')
-    // }
-    // }
-    // linkColor.forEach(l=> l.addEventListener('click', colorLink))
-    // });
+    function colorLink(){
+    if(linkColor){
+    linkColor.forEach(l=> l.classList.remove('active'))
+    this.classList.add('active')
+    }
+    }
+    linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    });
  </script>
 </body>
 <!-- Joheal Antonio -->

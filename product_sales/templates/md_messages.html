@@ -23,9 +23,7 @@
         .nav_list1
         {
          margin-left: -32px;
-         width: 205px;
-         height: 575px;
-         background-color: black;
+         max-width: fit-content;
         }
 
         h3
@@ -38,7 +36,7 @@
 
     </style>
 </head>
-<body style="background-color: rgb(16, 16, 16);" id="body-pd">
+<body style="background-color: black;" id="body-pd">
     <header style="background-color: rgb(27, 27, 27);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c8a47e;"><p>Hey {{ request.user }}!</p></span>
@@ -59,13 +57,13 @@
                     <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/updates" id="n4" class="nav_link">
                         <i class='bx bx-info-circle'></i><span class="nav_name">Important updates</span>
                     </a>
-                    <!-- Joheal Antonio -->
                 </div>
             </div> 
             {% if user.is_authenticated %}
                 <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/logout">
                     {% csrf_token %} 
                     <a style="padding-left: 15px; margin: 0; color: #856e53; font-family: 'Poppins', sans-serif;" href="#" id="n5" class="nav_link">
+                        <!-- Joheal Antonio -->
                         <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
                             <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
                         </button>
@@ -75,16 +73,17 @@
         </nav>
     </div>
     <div class="nav_list1"> 
-        <a style="color:#856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/websitequery" id="n6" class="nav_link">
+        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/websitequery" id="n6" class="nav_link">
             <i id="wq" class="fi fi-rr-browser"></i><span class="nav_name">Website Query</span>
         </a> 
-        <a style="color: #c8a47e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/colleague" id="n7"  class="nav_link active">
-            <i id="cg" class="fi fi-sr-users"></i><span class="nav_name">Colleague</span>
+        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/colleague" id="n7"  class="nav_link">
+            <i id="cg" class="fi fi-rr-users"></i><span class="nav_name">Colleague</span>
         </a> 
-        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/head-office" id="n8" class="nav_link">
+        <a style="color: #856e53; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/employee/messages/boss" id="n8" class="nav_link">
             <i id="bs" class="fi fi-rr-briefcase"></i><span class="nav_name">Boss</span>
         </a>
     </div>
+    <h3>Select who you want to message</h3>
  <script>
 
     document.addEventListener("DOMContentLoaded", function(event) {
