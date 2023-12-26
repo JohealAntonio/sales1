@@ -18,8 +18,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
     <!-- <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
     <script defer src="{% static 'js/cldr.js' %}"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>{{ request.user }}</title>
+    
     <style>
         .inactv
         {
@@ -195,7 +197,7 @@
         #tbl {
         border-collapse: collapse;
         width: 100%;
-        font-size: x-small;
+        font-size: 60%;
         }
 
         tr:nth-child(even) {
@@ -206,11 +208,39 @@
         {
          color: red;
         }
-
         
         .bxs-up-arrow-circle
         {
          color: green;
+        }
+        
+        .l-navbar show {
+            #tbl
+            {
+             font-size: xx-small;
+            };
+            #doubleDonutChart
+            {
+             width: 50%;
+            }
+        }
+        
+        #doubleDonutChart
+        {
+            width: 80%;
+        }
+
+        .l-navbar show 
+        {
+            canvas
+            {
+            width: 60%;
+            }
+        }
+
+        #six-items-section
+        {
+         margin-top: -100px;
         }
 
     </style>
@@ -257,14 +287,9 @@
           <table id="tbl"></table>
       </div>
                 <!-- Joheal Antonio -->
-      <div class="offer">
-        <div style="width: 50%">
-          <canvas id="canvas1" height="450" width="600"></canvas>
-        </div>
-    
-        <div style="width: 50%">
-          <canvas id="canvas2" height="450" width="600"></canvas>
-        </div>
+      <div class="offer"> 
+        <h2>TOTAL REVENUE</h2>
+        <canvas id="doubleDonutChart"></canvas>
       </div>
       <div class="attendance"></div>
       <div class="attendance"></div>
@@ -284,6 +309,31 @@
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const actmth = []
+    
+    const lyrofr = [getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200)]
+    const tyrofr = [getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500)]
+    const actlyofr = []
+    const acttyofr = []
+
+    
+
+    function getlyofrs()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actlyofr.push(lyrofr[i])
+     }
+     return actlyofr
+    }
+
+    function gettyofrs()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      acttyofr.push(tyrofr[i])
+     }
+     return acttyofr
+    }
 
     function getRndInt(min, max) 
     {
@@ -298,43 +348,147 @@
      }
      return actmth
     }
+    
+    // am4core.useTheme(am4themes_animated);
+    // // Themes end
 
-    var options = {
-      type: 'doughnut',
-      data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-            {
-              data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-            }
-            ]
-      },
-    hoverOffset: 4
-    }
-    var options2 = {
-      type: 'doughnut',
-      data: {
-        labels: getmths(),
-        datasets: [
-            {
-              data: [getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000)],
-            borderWidth: 1
-            }
-            ]
-      },
-  options: {
-    plugins: {
-      datalabels: false 
-    }
+    // // Create chart instance
+    // var chart = am4core.create("chartdiv", am4charts.PieChart);
+
+    // // Let's cut a hole in our Pie chart the size of 40% the radius
+    // chart.innerRadius = am4core.percent(20);
+
+
+    function getrev()
+    {
+      const rev = []
+      for (let j = 0; j < currMonth; j++)
+      {
+        const obj = {"month":`${getmths()[j]}`}; 
+        const lyr = "lastyearrevenue";
+        const tyr = "thisyearrevenue";
+        obj[lyr] = `${getlyofrs()[j]*999}`;
+        obj[tyr] = `${gettyofrs()[j]*999}`;
+        
+        rev.push(obj)
       }
+      return rev
     }
 
+    console.log(getrev())
 
-    var ctx = document.getElementById('canvas1').getContext('2d');
-    new Chart(ctx, options);
-    var ctx2 = document.getElementById('canvas2').getContext('2d');
-    new Chart(ctx2, options2);
+    var labels = getrev().map(entry => entry.month);
+    var lastYearRevenue = getrev().map(entry => entry.lastyearrevenue);
+    var thisYearRevenue = getrev().map(entry => entry.thisyearrevenue);
+
+    document.addEventListener('DOMContentLoaded', function () {
+            // Sample data
+            var data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'This Year Revenue',
+                        data: thisYearRevenue,
+                        backgroundColor: "#c278479e",
+                        hoverBackgroundColor: "#c278479e",
+                        borderColor: "white", // Set the border color
+                        borderWidth: 0.5 
+                    },
+                    {
+                        label: 'Last Year Revenue',
+                        data: lastYearRevenue,
+                        backgroundColor: "#c27847c2",
+                        hoverBackgroundColor: "#c27847c2",
+                        borderColor: "white", // Set the border color
+                        borderWidth: 0.5 
+                    }
+                ],
+                
+            };
+
+            // Configuration
+            var options = {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            };
+
+            // Get the canvas element
+            var ctx = document.getElementById('doubleDonutChart').getContext('2d');
+
+            // Create the double donut chart
+            var doubleDonutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: options,
+            });
+        });
+        
+    // Add data
+    // // Add and configure Series
+    // var pieSeries = chart.series.push(new am4charts.PieSeries());
+    // pieSeries.dataFields.value = "last year revenue";
+    // pieSeries.dataFields.category = "month";
+    // pieSeries.slices.template.stroke = am4core.color("#fff");
+    // pieSeries.slices.template.strokeWidth = 0.5;
+    // pieSeries.slices.template.strokeOpacity = 1;
+
+    // // Disabling labels and ticks on inner circle
+    // pieSeries.labels.template.disabled = true;
+    // pieSeries.ticks.template.disabled = true;
+
+    // // Disable sliding out of slices
+    // pieSeries.slices.template.states.getKey("hover").properties.shiftRadius = 0;
+    // pieSeries.slices.template.states.getKey("hover").properties.scale = 0.9;
+
+    // // Add second series
+    // var pieSeries2 = chart.series.push(new am4charts.PieSeries());
+    // pieSeries2.dataFields.value = "this year revenue";
+    // pieSeries2.dataFields.category = "month";
+    // pieSeries2.slices.template.stroke = am4core.color("#fff");
+    // pieSeries2.slices.template.strokeWidth = 0.5;
+    // pieSeries2.slices.template.strokeOpacity = 1;
+    // pieSeries2.slices.template.states.getKey("hover").properties.shiftRadius = 0;
+    // pieSeries2.slices.template.states.getKey("hover").properties.scale = 1.1;
+
+    // var options = {
+    //   type: 'doughnut',
+    //   data: {
+    //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    //     datasets: [
+    //         {
+    //           data: [12, 19, 3, 5, 2, 3],
+    //         borderWidth: 1
+    //         }
+    //         ]
+    //   },
+    // hoverOffset: 4
+    // }
+  //   var options2 = {
+  //     type: 'doughnut',
+  //     data: {
+  //       labels: getmths(),
+  //       datasets: [
+  //           {
+  //             data: [getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000),getRndInt(10000,100000)],
+  //           borderWidth: 1
+  //           }
+  //           ]
+  //     },
+  // options: {
+  //   plugins: {
+  //     datalabels: false 
+  //   }
+  //     }
+  //   }
+
+
+    // var ctx = document.getElementById('canvas1').getContext('2d');
+    // new Chart(ctx, options);
+    // var ctx2 = document.getElementById('canvas2').getContext('2d');
+    // new Chart(ctx2, options2);
 
 //     var ctx = document.getElementById('chart1').getContext('2d');
 
@@ -431,32 +585,6 @@
     let ms = JSON.parse('{{months}}');
 
     // storing full name of all months in array
-    
-    const lyrofr = [getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200),getRndInt(50,200)]
-    const tyrofr = [getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500)]
-    const actlyofr = []
-    const acttyofr = []
-
-    
-
-    function getlyofrs()
-    {
-     for (let i = 0; i < currMonth; i++)
-     {
-      actlyofr.push(lyrofr[i])
-     }
-     return actlyofr
-    }
-
-    function gettyofrs()
-    {
-     for (let i = 0; i < currMonth; i++)
-     {
-      acttyofr.push(tyrofr[i])
-     }
-     return acttyofr
-    }
-
 
     const rendertable = () =>
     {
@@ -498,44 +626,44 @@
 
     rendertable();
 
-    const renderCalendar = () => 
-    {
-        let firstDayofMonth = new Date(currYear, currMonth, 0).getDay(), // getting first day of month
-        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
-        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
-        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
-        let divTag = "";
+    // const renderCalendar = () => 
+    // {
+    //     let firstDayofMonth = new Date(currYear, currMonth, 0).getDay(), // getting first day of month
+    //     lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
+    //     lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
+    //     lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+    //     let divTag = "";
         
-        for (let i = firstDayofMonth; i > 0; i--) 
-        { // creating div of previous month last days
-         divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
-        }
-        for (let i = 1; i <= lastDateofMonth; i++) 
-        {
-         const indxno = ds.indexOf(i);
-         if (ds.includes(i) && currMonth == ms[indxno]-1)
-         {
-          divTag += `<div id="grditm" class="grid-item actv"><a class='actv1' href="http://127.0.0.1:8000/employee/offers/">${i}</a></div>`;
-         }
-         else
-         {
-          divTag += `<div id="grditm" class="grid-item">${i}</div>`;
-         }
-        }
-        if (lastDayofMonth!=0)
-        {
-            for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
-                divTag += `<div id="nxtmth" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
-            }
-        }
-        // passing current mon and yr as currentDate text
-        days.innerHTML = divTag;
-        document.getElementById("month").innerHTML = months[currMonth];
-        document.getElementById("yr").innerHTML = currYear;
+    //     for (let i = firstDayofMonth; i > 0; i--) 
+    //     { // creating div of previous month last days
+    //      divTag += `<div id="grditm" class="grid-item inactv">${lastDateofLastMonth - i + 1}</div>`;
+    //     }
+    //     for (let i = 1; i <= lastDateofMonth; i++) 
+    //     {
+    //      const indxno = ds.indexOf(i);
+    //      if (ds.includes(i) && currMonth == ms[indxno]-1)
+    //      {
+    //       divTag += `<div id="grditm" class="grid-item actv"><a class='actv1' href="http://127.0.0.1:8000/employee/offers/">${i}</a></div>`;
+    //      }
+    //      else
+    //      {
+    //       divTag += `<div id="grditm" class="grid-item">${i}</div>`;
+    //      }
+    //     }
+    //     if (lastDayofMonth!=0)
+    //     {
+    //         for (let i = lastDayofMonth; i < 7; i++) { // creating li of next month first days
+    //             divTag += `<div id="nxtmth" class="grid-item inactv">${i - lastDayofMonth + 1}</div>`
+    //         }
+    //     }
+    //     // passing current mon and yr as currentDate text
+    //     days.innerHTML = divTag;
+    //     document.getElementById("month").innerHTML = months[currMonth];
+    //     document.getElementById("yr").innerHTML = currYear;
 
-    }
+    // }
 
-    renderCalendar();
+    // renderCalendar();
     
     document.addEventListener("DOMContentLoaded", function(event) {
 
