@@ -19,10 +19,13 @@
     <!-- <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
     <script defer src="{% static 'js/cldr.js' %}"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 
     <title>{{ request.user }}</title>
     
     <style>
+
         .inactv
         {
         color: #c278479e;
@@ -197,7 +200,7 @@
         #tbl {
         border-collapse: collapse;
         width: 100%;
-        font-size: 60%;
+        font-size: 70%;
         }
 
         tr:nth-child(even) {
@@ -214,33 +217,49 @@
          color: green;
         }
         
-        .l-navbar show {
-            #tbl
-            {
-             font-size: xx-small;
-            };
-            #doubleDonutChart
-            {
-             width: 50%;
-            }
-        }
-        
-        #doubleDonutChart
+        canvas
         {
-            width: 80%;
-        }
-
-        .l-navbar show 
-        {
-            canvas
-            {
-            width: 60%;
-            }
+          margin: 0 auto 0 auto;
+          width: 200px !important;
+          height: 200px !important;
         }
 
         #six-items-section
         {
          margin-top: -100px;
+        }
+        .meter-container {
+          width: 300px;
+          text-align: center;
+        }
+
+        .meter {
+          position: relative;
+          height: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .progress {
+          height: 100%;
+          width: 0;
+          background: linear-gradient(135deg, #c27847 0%, #ebded7 100%);
+          animation: fillMeter 1s ease-out;
+        }
+
+        @keyframes fillMeter {
+          from {
+            width: 0;
+          }
+        }
+
+        .percentage {
+          font-size: 15px;
+          color: #333;
+          font-weight: bold;
+          text-align: left;
+          margin-top: 5%;
         }
 
     </style>
@@ -291,8 +310,19 @@
         <h2>TOTAL REVENUE</h2>
         <canvas id="doubleDonutChart"></canvas>
       </div>
-      <div class="attendance"></div>
-      <div class="attendance"></div>
+      <div class="attendance">
+        <h2>EMPLOYEES' ATTENDANCE</h2>
+        <div class="meter-container" id="empatn">
+          <div class="percentage">hello (273/365 days)</div>
+          <div class="meter">
+            <div class="progress" style="width: 75%;"></div>
+          </div>
+          <div class="percentage">hello (273/365 days)</div>
+          <div class="meter">
+            <div class="progress" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="insbdy2">
         <div class="offer">
@@ -348,6 +378,8 @@
      }
      return actmth
     }
+
+
     
     // am4core.useTheme(am4themes_animated);
     // // Themes end
@@ -411,7 +443,16 @@
                 plugins: {
                     legend: {
                         display: false
-                    }
+                    },
+                    datalabels: {
+                      color: 'white', // Set the color of the data labels
+                      display: function (context) {
+                          return context.dataset.data[context.dataIndex] > 0; // Display only if the value is greater than 0
+                      },
+                      formatter: function (value, context) {
+                          return value; // Format the data label value (you can customize this as needed)
+                      }
+                  }
                 }
             };
 
@@ -425,6 +466,16 @@
                 options: options,
             });
         });
+
+    const renderempattn = () =>
+    {
+     let atndiv = document.getElementById('empatn')
+     let divtag2 = ``
+
+
+    }
+
+    renderempattn();
         
     // Add data
     // // Add and configure Series

@@ -218,16 +218,46 @@ def index(request):
             return render(request, 'index.html')
     else:
         return render(request, 'index.html')
+    
+def isstaff(usrnm):
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT is_staff FROM auth_user WHERE username=%s", [usrnm])
+    con.commit()
+    isstaff = cur.fetchone()
+    
+    cur.close()
+    con.close()
+    return isstaff
+
+def issuperuser(usrnm):
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT is_superuser FROM auth_user WHERE username=%s", [usrnm])
+    con.commit()
+    issuperuser = cur.fetchone()
+    
+    cur.close()
+    con.close()
+    return issuperuser
 
 def lgn(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        istf = isstaff(username)
+        isprusr = issuperuser(username)
         user = authenticate(request, username=username, password=password)
         ttl = 'Login here'
         if user is not None:
-            login(request, user)
-            return redirect('/employee/dashboard/')
+            if istf == 1 and isprusr == 0:
+                login(request, user)
+                return redirect('/employee/dashboard/')
+            elif istf == 0 and isprusr == 1:
+                login(request, user)
+                return redirect('/manager/dashboard/')
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
