@@ -165,7 +165,7 @@ def dashboard(request):
 
 def md_dashboard(request):
     # if request.user.is_authenticated:
-        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2], 'users':getnames()})
     # else:
     #     return redirect('http://127.0.0.1:8000/loginpage/')    
 
@@ -224,8 +224,8 @@ def isstaff(usrnm):
     cur = con.cursor()
 
     cur.execute("SELECT is_staff FROM auth_user WHERE username=%s", [usrnm])
+    isstaff = cur.fetchone()[0]
     con.commit()
-    isstaff = cur.fetchone()
     
     cur.close()
     con.close()
@@ -236,12 +236,23 @@ def issuperuser(usrnm):
     cur = con.cursor()
 
     cur.execute("SELECT is_superuser FROM auth_user WHERE username=%s", [usrnm])
+    issuperuser = cur.fetchone()[0]
     con.commit()
-    issuperuser = cur.fetchone()
     
     cur.close()
     con.close()
     return issuperuser
+
+def getnames():
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT username FROM auth_user where is_staff = 1")
+    columns = [col for col in list(zip(*cur.description))[0]]
+    users = cur.fetchall()
+    cur.close()
+    con.close()
+    return json.dumps([dict(zip(columns, row)) for row in users])
 
 def lgn(request):
     if request.method == 'POST':
@@ -251,6 +262,7 @@ def lgn(request):
         isprusr = issuperuser(username)
         user = authenticate(request, username=username, password=password)
         ttl = 'Login here'
+
         if user is not None:
             if istf == 1 and isprusr == 0:
                 login(request, user)
@@ -258,14 +270,17 @@ def lgn(request):
             elif istf == 0 and isprusr == 1:
                 login(request, user)
                 return redirect('/manager/dashboard/')
+            else:
+                # Handle other cases if needed
+                return HttpResponse("Unauthorized Access"+str(isprusr)+str(istf))
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
-            return render(request, 'login.html', {'form':form, 'msg':msg, 'ttl':ttl})
+            return render(request, 'login.html', {'form': form, 'msg': msg, 'ttl': ttl})
     else:
         form = AuthenticationForm()
         ttl = 'Login here'
-        return render(request, 'login.html', {'form': form, 'ttl':ttl})
+        return render(request, 'login.html', {'form': form, 'ttl': ttl})
     
 def getmsgs():
     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')

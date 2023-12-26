@@ -262,6 +262,11 @@
           margin-top: 5%;
         }
 
+        #name
+        {
+         display: none;
+        }
+
     </style>
 </head>
 <body style="background-color: rgb(238, 238, 238); color: #c27847;" id="body-pd">
@@ -313,16 +318,10 @@
       <div class="attendance">
         <h2>EMPLOYEES' ATTENDANCE</h2>
         <div class="meter-container" id="empatn">
-          <div class="percentage">hello (273/365 days)</div>
-          <div class="meter">
-            <div class="progress" style="width: 75%;"></div>
-          </div>
-          <div class="percentage">hello (273/365 days)</div>
-          <div class="meter">
-            <div class="progress" style="width: 75%;"></div>
-          </div>
+          
         </div>
       </div>
+      <div id="name">{{ users }}</div>
     </div>
     <div class="insbdy2">
         <div class="offer">
@@ -333,6 +332,7 @@
         </div>
     </div>
  <script>
+
     let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
@@ -467,12 +467,28 @@
             });
         });
 
+    const names = JSON.stringify(document.getElementById('name').innerHTML);
+    const n1 = JSON.parse(names);
+    const n2 = JSON.parse(n1);
+    console.log(n2[0].username)
+     
     const renderempattn = () =>
     {
      let atndiv = document.getElementById('empatn')
      let divtag2 = ``
+     let rndays = getRndInt(200,365)
+     let rndper = (rndays/365)*100
+     
+     for (let j = 0; j<n2.length; j++)
+     {
+      divtag2 += `
+          <div class="percentage">${n2[j].username} (${rndays}/365 days)</div>
+          <div class="meter">
+            <div class="progress" style="width: ${rndper}%;"></div>
+          </div>`
+     }
 
-
+     atndiv.innerHTML = divtag2
     }
 
     renderempattn();
