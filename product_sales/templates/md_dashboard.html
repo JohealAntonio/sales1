@@ -26,246 +26,251 @@
     
     <style>
 
-        .inactv
-        {
-        color: #c278479e;
-        }
+      .inactv
+      {
+      color: #c278479e;
+      }
 
-        .actv
-        {
-        color: black;
-        background-color:#c27847a7;
-        border-radius: 20px;
-        margin: auto;
+      .actv
+      {
+      color: black;
+      background-color:#c27847a7;
+      border-radius: 20px;
+      margin: auto;
+      text-align: center;
+      }
+
+      .actv:hover
+      {
+        background-color: #c27847;
+        color: white;   
+      }
+
+      .actv1 
+      {
+      color: black;
+      }
+
+      .actv1:hover
+      {
+        color: white;   
+      }
+
+      .grid-container 
+      {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      width: 100%;
+      margin: auto;
+      }
+
+      .grid-item,.wkd {
+      font-size: 11px;
+      text-align: center;
+      width: 80%;
+      margin: auto;
+      padding: 20% 0 11% 0;
+      }
+
+      .calendar
+      {
+      margin: auto;
+      width: 50%;
+      border: 1px solid #c27847;
+      border-radius:10px;
+      text-align: center;
+      }
+
+      .line
+      {
+      width: 100%;
+      border-bottom: 1px solid #c8a47e;
+      }
+
+      .mny
+      {
+      display:flex;
+      width: 70%;
+      margin: auto;
+      }
+
+      .week
+      {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      }
+
+
+      .month
+      {
+      margin-right: auto;
+      }
+
+      .insbdy
+      {
+      width: 100%;
+      display: flex;
+      }
+
+      .insbdy2
+      {
+      width: 100%;
+      display: flex;
+      }
+
+      .offer, .attendance
+      {
+      width: 50%;
+      border-radius: 20px;
+      height: 300px;
+      padding: 25px;
+      background-color: #ebded7;
+      margin: 20px 10px 0 10px;
+      }
+
+      .offer
+      {
+      float: left;
+      }
+
+      .attendance
+      {
+      float: right;
+      }
+
+      h3 
+      {
+      font-size: x-large;
+      font-weight: 700;
+      }
+
+      h2
+      {
+      font-weight: 700;
+      font-size: large;
+      }
+
+      .calendar-body
+      {
+      padding: 0;
+      }
+
+      .calendar-week-day
+      {
+      margin-right: 10px;
+      margin-left: -5px;
+      }
+
+      .mth
+      {
+      display: none;
+      }
+  /* 
+      .js
+      {
+        font-size: 0;
+      } */
+      
+      ::-webkit-scrollbar {
+      width: 5px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgb(238, 238, 238); 
+      border-radius: 5px;
+      }
+      
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+      background:#c278479e; 
+      border-radius: 5px;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+      background:#c27847; 
+      }
+
+      #chart
+      {
+        font-family:'Poppins',sans-serif;
+      }
+
+      #tbl {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 70%;
+      }
+
+      tr:nth-child(even) {
+      background-color:#c278472e;
+      }
+
+      .bx-down-arrow-circle
+      {
+        color: red;
+      }
+      
+      .bxs-up-arrow-circle
+      {
+        color: green;
+      }
+      
+      canvas
+      {
+        margin: 0 auto 0 auto;
+        width: 200px !important;
+        height: 200px !important;
+      }
+
+      #six-items-section
+      {
+        margin-top: -100px;
+      }
+      .meter-container {
+        width: 300px;
         text-align: center;
-        }
+      }
 
-        .actv:hover
-        {
-         background-color: #c27847;
-         color: white;   
-        }
+      .meter {
+        position: relative;
+        height: 20px;
+        border: 0.05px solid #0000006d;
+        border-radius: 10px;
+        overflow: hidden;
+      }
 
-        .actv1 
-        {
-        color: black;
-        }
+      .progress {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(135deg, #c27847 0%, #ebded7 100%);
+        animation: fillMeter 1s ease-out;
+      }
 
-        .actv1:hover
-        {
-         color: white;   
-        }
-
-        .grid-container 
-        {
-        display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto;
-        width: 100%;
-        margin: auto;
-        }
-
-        .grid-item,.wkd {
-        font-size: 11px;
-        text-align: center;
-        width: 80%;
-        margin: auto;
-        padding: 20% 0 11% 0;
-        }
-
-        .calendar
-        {
-        margin: auto;
-        width: 50%;
-        border: 1px solid #c27847;
-        border-radius:10px;
-        text-align: center;
-        }
-
-        .line
-        {
-        width: 100%;
-        border-bottom: 1px solid #c8a47e;
-        }
-
-        .mny
-        {
-        display:flex;
-        width: 70%;
-        margin: auto;
-        }
-
-        .week
-        {
-        display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto;
-        }
-
-
-        .month
-        {
-        margin-right: auto;
-        }
-
-        .insbdy
-        {
-        width: 100%;
-        display: flex;
-        }
-
-        .insbdy2
-        {
-        width: 100%;
-        display: flex;
-        }
-
-        .offer, .attendance
-        {
-        width: 50%;
-        border-radius: 20px;
-        height: 300px;
-        padding: 25px;
-        background-color: #ebded7;
-        margin: 20px 10px 0 10px;
-        }
-
-        .offer
-        {
-        float: left;
-        }
-
-        .attendance
-        {
-        float: right;
-        }
-
-        h3 
-        {
-        font-size: x-large;
-        font-weight: 700;
-        }
-
-        h2
-        {
-        font-weight: 700;
-        font-size: large;
-        }
-
-        .calendar-body
-        {
-        padding: 0;
-        }
-
-        .calendar-week-day
-        {
-        margin-right: 10px;
-        margin-left: -5px;
-        }
-
-        .mth
-        {
-        display: none;
-        }
-/* 
-        .js
-        {
-         font-size: 0;
-        } */
-        
-        ::-webkit-scrollbar {
-        width: 10px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey; 
-        border-radius: 5px;
-        }
-        
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-        background:#856e53; 
-        border-radius: 5px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-        background:#c8a47e; 
-        }
-
-        #chart
-        {
-         font-family:'Poppins',sans-serif;
-        }
-
-        #tbl {
-        border-collapse: collapse;
-        width: 100%;
-        font-size: 70%;
-        }
-
-        tr:nth-child(even) {
-        background-color:#c278472e;
-        }
-
-        .bx-down-arrow-circle
-        {
-         color: red;
-        }
-        
-        .bxs-up-arrow-circle
-        {
-         color: green;
-        }
-        
-        canvas
-        {
-          margin: 0 auto 0 auto;
-          width: 200px !important;
-          height: 200px !important;
-        }
-
-        #six-items-section
-        {
-         margin-top: -100px;
-        }
-        .meter-container {
-          width: 300px;
-          text-align: center;
-        }
-
-        .meter {
-          position: relative;
-          height: 20px;
-          border: 1px solid #ccc;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-
-        .progress {
-          height: 100%;
+      @keyframes fillMeter {
+        from {
           width: 0;
-          background: linear-gradient(135deg, #c27847 0%, #ebded7 100%);
-          animation: fillMeter 1s ease-out;
         }
+      }
 
-        @keyframes fillMeter {
-          from {
-            width: 0;
-          }
-        }
+      .percentage {
+        font-size: 15px;
+        color: #333;
+        font-weight: bold;
+        text-align: left;
+        margin-top: 5%;
+      }
 
-        .percentage {
-          font-size: 15px;
-          color: #333;
-          font-weight: bold;
-          text-align: left;
-          margin-top: 5%;
-        }
+      #name
+      {
+        display: none;
+      }
 
-        #name
-        {
-         display: none;
-        }
+      #revenue
+      {
+       display: none;
+      }
 
     </style>
 </head>
@@ -331,11 +336,16 @@
             <h3>UPDATES</h3>
         </div>
     </div>
+    <div id="revenue">{{rev}}</div>
  <script>
 
     let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
+    
+    const rev = JSON.stringify(document.getElementById('revenue').innerHTML);
+    const revinfo = JSON.parse(rev);
+    const allrevinfo = JSON.parse(revinfo);
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const actmth = []
@@ -344,8 +354,6 @@
     const tyrofr = [getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500),getRndInt(100,500)]
     const actlyofr = []
     const acttyofr = []
-
-    
 
     function getlyofrs()
     {
@@ -409,9 +417,9 @@
 
     console.log(getrev())
 
-    var labels = getrev().map(entry => entry.month);
-    var lastYearRevenue = getrev().map(entry => entry.lastyearrevenue);
-    var thisYearRevenue = getrev().map(entry => entry.thisyearrevenue);
+    var labels = allrevinfo.map(entry => entry.month);
+    var lastYearRevenue = allrevinfo.map(entry => entry.lastyearrevenue);
+    var thisYearRevenue = allrevinfo.map(entry => entry.thisyearrevenue);
 
     document.addEventListener('DOMContentLoaded', function () {
             // Sample data
@@ -476,13 +484,16 @@
     {
      let atndiv = document.getElementById('empatn')
      let divtag2 = ``
-     let rndays = getRndInt(200,365)
-     let rndper = (rndays/365)*100
+     let days = Math.floor((currMonth)*30.41666666667)
+     let mindays = Math.floor(days*0.7)
+     let rndays = getRndInt(mindays,days)
+     let rndper = (rndays/days)*100
+     console.log(days)
      
      for (let j = 0; j<n2.length; j++)
      {
       divtag2 += `
-          <div class="percentage">${n2[j].username} (${rndays}/365 days)</div>
+          <div class="percentage">${n2[j].username} (${rndays}/${days} days)</div>
           <div class="meter">
             <div class="progress" style="width: ${rndper}%;"></div>
           </div>`
@@ -664,9 +675,9 @@
                 </tr>`
      for (let i = 0; i<currMonth; i++)
      {
-      mth = getmths()[i]
-      lyoffr = getlyofrs()[i]
-      tyoffr = gettyofrs()[i]
+      mth = allrevinfo[i]['month']
+      lyoffr = allrevinfo[i]['lyofrs']
+      tyoffr = allrevinfo[i]['tyofrs']
       perc =  ((tyoffr/lyoffr)*100).toFixed(2)
 
       if (lyoffr<tyoffr)

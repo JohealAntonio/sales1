@@ -22,6 +22,8 @@ from flask import Flask, request, url_for
 import random
 from django.db import IntegrityError
 from django.db import ProgrammingError
+import random
+
 
 # def signup(request):
 #     ttl = 'Create a user account'
@@ -47,6 +49,8 @@ cur.execute("CREATE TABLE IF NOT EXISTS offer(id int NOT NULL AUTO_INCREMENT, se
 con.commit()
 cur.execute("CREATE TABLE IF NOT EXISTS cstr_invoices(id int NOT NULL AUTO_INCREMENT, service_no varchar(255), invoice text, PRIMARY KEY (id));")
 con.commit()
+cur.execute("CREATE TABLE IF NOT EXISTS sales_analytics(id int NOT NULL AUTO_INCREMENT, year varchar(255), month varchar(255), revenue bigint(25), profit bigint(25), expenditure bigint(25), customers_reached bigint(25), PRIMARY KEY (id));")
+con.commit()
 
 cur.close()
 con.close()
@@ -63,8 +67,45 @@ con.close()
 #     user = User.objects.create_user(username=uname, password=pword, first_name=fname, last_name=lname, email=eml, is_staff = 1)
 #     all_permissions = Permission.objects.filter(codename__in=codename)
 #     user.user_permissions.set(all_permissions)
+
+cryr = int(dt.now().strftime("%Y"))
+crmthint = int(dt.now().strftime("%m"))
+crmth = dt.now().strftime("%B")
     
+mnthlst = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+# lyrlist = []
+# for i in range(1,13):
+# 	lyrlist.append(random.randint(50,200))
+# 	i+=1
+
+# tyrlist = []
+# for i in range(1,crmthint):
+# 	tyrlist.append(random.randint(140,600))
+# 	i+=1
+
+# lyrev = []
+# for i in range(0,12):
+# 	el=lyrlist[i]*999
+# 	lyrev.append(el)
+
+# tyrev = []
+# for i in range(0,len(tyrlist)):
+# 	el=tyrlist[i]*999
+# 	tyrev.append(el)
+
+# for k in range(0, 12):
+#     con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+#     cur = con.cursor()
+
+#     cur.execute("INSERT INTO sales_analytics (`year`,`month`,`offers_that_month`,`revenue`,`profit`,`expenditure`,`people_reached`) VALUES (%s,%s,%s,%s,%s,%s,%s)",(cryr,mnthlst[k],tyrlist[k],tyrev[k],tyrev[k]-35000,35000,random.randint(550,1000)))
+#     con.commit()
     
+#     cur.close()
+#     con.close()
+
+
+
 def signup(request):
     form = CustomUserCreationForm()
 
@@ -157,17 +198,48 @@ def offers(request):
 #                 c = '''let day = document.getElementById("grditm").innerHTML;let con = document.querySelector(".grid-item");if (days==%s){con.className += " actv};'''% s 
 #                 return c
 
+def getrev():
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT month, offers_that_month, revenue FROM sales_analytics WHERE year={};".format(cryr-1))
+    columns = [col for col in list(zip(*cur.description))[0]]
+    lstyrev = cur.fetchall()
+    cur.close()
+    con.close()
+    
+    con = mysql.connector.connect(user='root', password='', host='localhost', database='mydb')
+    cur = con.cursor()
+
+    cur.execute("SELECT month, offers_that_month, revenue FROM sales_analytics WHERE year={};".format(cryr))
+    columns1 = [col for col in list(zip(*cur.description))[0]]
+    tstyrev = cur.fetchall()
+    cur.close()
+    con.close()
+
+    lyrlist = [dict(zip(columns, row)) for row in lstyrev]
+    tyrlist = [dict(zip(columns1, row)) for row in tstyrev]
+
+    rev_list = []
+    for i in range(0,crmthint-1):
+        rev_list.append({'month':lyrlist[i]['month'], 'lastyearrevenue':lyrlist[i]['revenue'], 'thisyearrevenue':tyrlist[i]['revenue'], 'lyofrs':lyrlist[i]['offers_that_month'], 'tyofrs':tyrlist[i]['offers_that_month']})
+
+    return json.dumps(rev_list)
+
+
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+        if request.user.is_staff:
+            return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
     else:
         return redirect('http://127.0.0.1:8000/loginpage/')
 
 def md_dashboard(request):
-    # if request.user.is_authenticated:
-        return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2], 'users':getnames()})
-    # else:
-    #     return redirect('http://127.0.0.1:8000/loginpage/')    
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2], 'users':getnames(), 'rev':getrev()})
+    else:
+        return redirect('http://127.0.0.1:8000/loginpage/')    
 
 # def register_user(request):
 #     context = {}
@@ -272,7 +344,7 @@ def lgn(request):
                 return redirect('/manager/dashboard/')
             else:
                 # Handle other cases if needed
-                return HttpResponse("Unauthorized Access"+str(isprusr)+str(istf))
+                return HttpResponse("Unauthorized Access")
         else:
             msg = 'Error Login'
             form = AuthenticationForm(request.POST)
