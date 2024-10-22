@@ -17,6 +17,7 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
     <link rel="icon" href="/static/img/logocs.png">
+
     <title>{{ request.user }}</title>
     <style>
         :root {
@@ -315,25 +316,23 @@
         <section class="msger" id="flxbx">
             <header class="msger-header">
               <div class="msger-header-title">
-                <i class="fas fa-comment-alt"></i> SimpleChat
+                <i class="fas fa-comment-alt"></i>
               </div>
               <div class="msger-header-options">
                 <span><i class="fas fa-cog"></i></span>
               </div>
             </header>
             <main class="msger-chat">
+                <p style="text-align: center; color: #856e53;" id="msgdate"></p>
                 <div class="msg left-msg">
-                    <div
-                     class="msg-img"
-                    ><i class="fi fi-rr-circle-user"></i></div>
-              
+                    <div class="msg-img"><i class="fi fi-rr-circle-user"></i></div>
                     <div class="msg-bubble" id="wqmsg"></div>
                 </div>
             </main>
           
             <form class="msger-inputarea">
               <input type="text" class="msger-input" placeholder="Enter your message...">
-              <button type="submit" class="msger-send-btn">Send</button>
+              <button type="submit" onclick="sendEmail()" class="msger-send-btn">Send</button>
             </form>
         </section>
     </div>
@@ -378,8 +377,42 @@
         </div>
     `;
 
+    
     msgerChat.insertAdjacentHTML("beforeend", msgHTML);
     msgerChat.scrollTop += 500;
+    }
+
+    
+    const ds = JSON.stringify(document.getElementById('msginfo').innerHTML);
+    const info = JSON.parse(ds);
+    const msginfo = JSON.parse(info);
+    
+    console.log(msginfo)
+
+    const nodemailer = require('nodemailer');
+
+    async function sendEmail() {
+    try {
+        const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'johealcharlessolutions@gmail.com',
+            pass: 'Jaja@123'
+        }
+        });
+
+        const mailOptions = {
+        from: 'johealcharlessolutions@gmail.com',
+        to: `${msginfo[0]["email"]}`,
+        subject: 'Hello',
+        text: `${msgerInput.value}`
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent:', info.messageId);
+    } catch (error) {
+        console.error('Error occurred:', error);
+    }
     }
 
 
@@ -395,14 +428,10 @@
     return `${h.slice(-2)}:${m.slice(-2)}`;
     }
 
-    
-    const ds = JSON.stringify(document.getElementById('msginfo').innerHTML);
-    const info = JSON.parse(ds);
-    const msginfo = JSON.parse(info);
-    console.log(msginfo)
     let message_list = document.querySelector("#msg_list")
     let wqmsg = document.querySelector("#wqmsg")
     let tm = document.querySelector("#tm")
+    let dt = document.querySelector("#msgdate")
 
     const rendermsg = () => 
     {
@@ -440,6 +469,7 @@
 
         // passing current mon and yr as currentDate text
         message_list.innerHTML = divTag;
+        dt.innerHTML = msginfo[0]["date"]
         wqmsg.innerHTML = divtag1;
     }
 

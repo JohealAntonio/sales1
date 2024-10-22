@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Joheal Antonio -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200;300;400;500;600;700;800&family=Imbue:opsz,wght@10..100,100;10..100,600&family=Montserrat:wght@300&family=Nabla&family=Reem+Kufi+Fun:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
+<!-- font flat-ui cdn 2.2.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.2.2/css/flat-ui.min.css"
+    integrity="sha512-PvB3Q4vTvWD/9aiiELYI3uebup/4mtou3Mc/uGudC/Zl+C9BdKUkAI+5jORfA+fvLK4DpzC5VyEN7P2kK43hjg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% load static %}
+    <link href="{% static 'css/sidenav.css' %}" rel="stylesheet" />
+    <link rel="icon" href="/static/img/logocs_white.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!-- <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
+    <script defer src="{% static 'js/cldr.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+
+    <title>{{ request.user }}</title>
+    
+    <style>
+
+      .inactv
+      {
+      color: #c278479e;
+      }
+
+      .actv
+      {
+      color: black;
+      background-color:#c27847a7;
+      border-radius: 20px;
+      margin: auto;
+      text-align: center;
+      }
+
+      .actv:hover
+      {
+        background-color: #c27847;
+        color: white;   
+      }
+
+      .actv1 
+      {
+      color: black;
+      }
+
+      .actv1:hover
+      {
+        color: white;   
+      }
+
+      .grid-container 
+      {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      width: 100%;
+      margin: auto;
+      }
+
+      .grid-item,.wkd {
+      font-size: 11px;
+      text-align: center;
+      width: 80%;
+      margin: auto;
+      padding: 20% 0 11% 0;
+      }
+
+      .calendar
+      {
+      margin: auto;
+      width: 50%;
+      border: 1px solid #c27847;
+      border-radius:10px;
+      text-align: center;
+      }
+
+      .line
+      {
+      width: 100%;
+      border-bottom: 1px solid #c8a47e;
+      }
+
+      .mny
+      {
+      display:flex;
+      width: 70%;
+      margin: auto;
+      }
+
+      .week
+      {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      }
+
+
+      .month
+      {
+      margin-right: auto;
+      }
+
+      .insbdy
+      {
+      width: 100%;
+      display: flex;
+      }
+
+      .insbdy2
+      {
+      width: 100%;
+      display: flex;
+      }
+
+      .offer, .attendance
+      {
+      width: 50%;
+      border-radius: 20px;
+      height: 500px;
+      padding: 25px;
+      background-color: #ebded7;
+      margin: 20px 10px 0 10px;
+      }
+
+      .offer
+      {
+      float: left;
+      }
+
+      .attendance
+      {
+      float: right;
+      }
+
+      h3 
+      {
+      font-size: x-large;
+      font-weight: 700;
+      }
+
+      h2
+      {
+      font-weight: 700;
+      font-size: large;
+      }
+
+      .calendar-body
+      {
+      padding: 0;
+      }
+
+      .calendar-week-day
+      {
+      margin-right: 10px;
+      margin-left: -5px;
+      }
+
+      .mth
+      {
+      display: none;
+      }
+  /* 
+      .js
+      {
+        font-size: 0;
+      } */
+      
+      ::-webkit-scrollbar {
+      width: 5px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgb(238, 238, 238); 
+      border-radius: 5px;
+      }
+      
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+      background:#c278479e; 
+      border-radius: 5px;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+      background:#c27847; 
+      }
+
+      #chart
+      {
+        font-family:'Poppins',sans-serif;
+      }
+
+      #tbl {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 70%;
+      }
+
+      tr:nth-child(even) {
+      background-color:#c278472e;
+      }
+
+      .bx-down-arrow-circle
+      {
+        color: red;
+      }
+      
+      .bxs-up-arrow-circle
+      {
+        color: green;
+      }
+      
+      canvas
+      {
+        margin: 0 auto 0 auto;
+        width: 200px !important;
+        height: 200px !important;
+      }
+
+      #six-items-section
+      {
+        margin-top: -100px;
+      }
+      .meter-container {
+        width: 300px;
+        text-align: center;
+      }
+
+      .meter {
+        position: relative;
+        height: 20px;
+        border: 0.05px solid #0000006d;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(135deg, #c27847 0%, #ebded7 100%);
+        animation: fillMeter 1s ease-out;
+      }
+
+      @keyframes fillMeter {
+        from {
+          width: 0;
+        }
+      }
+
+      .percentage {
+        font-size: 15px;
+        color: #333;
+        font-weight: bold;
+        text-align: left;
+        margin-top: 5%;
+      }
+
+      #name
+      {
+        display: none;
+      }
+
+      #revenue
+      {
+       display: none;
+      }
+
+    canvas 
+    {
+     margin: auto;
+     width: 400px !important;
+     height: 350px !important;
+    }
+
+    </style>
+</head>
+<body style="background-color: rgb(238, 238, 238); color: #bd6f3b;" id="body-pd">
+    <header style="background-color: #ffdfc9;" class="header" id="header">
+        <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
+        <span style="display: flex; float: left; color: #c27847;"><p>Hey {{ request.user }}!</p></span>
+        <input type="text" name="usr" value="{{request.user}}" hidden>
+    </header>
+    <div style="background-color: rgb(255, 255, 255);" class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> <a style="color: #c27847;" href="#" class="nav_logo"><img style="height: 20px; width: 20px;" src="/static/img/logocs_white.png" alt=""><span style="font-family: 'Poppins', sans-serif; font-weight: 600; color:#c27847;" class="nav_logo-name">Charles Solutions</span> </a>
+                <div class="nav_list"> 
+                    <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/dashboard" id="n1" onclick="changec(this)" class="nav_link active">
+                        <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span>
+                    </a> 
+                    <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/messages" id="n2" onclick="changec(this)" class="nav_link">
+                        <i class='bx bx-message-square-detail nav_icon'></i><span class="nav_name">Messages</span>
+                    </a> 
+                    <a style="color: #c27847; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/finances/" id="n3" onclick="changec(this)" class="nav_link">
+                      <i class="fi fi-rr-chart-line-up"></i><span class="nav_name">Finances and growth</span>
+                    </a>
+                    <a style="color: #c278479e; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/updates" id="n4" onclick="changec(this)" class="nav_link">
+                        <i class='bx bx-info-circle'></i><span class="nav_name">Updates</span>
+                    </a>
+                </div>
+            </div> 
+            {% if user.is_authenticated %}
+                <form id="logoutform" style="margin: 0;" method="POST" action="http://127.0.0.1:8000/employee/logout">
+                    {% csrf_token %} 
+                    <a style="padding-left: 15px; margin: 0; color: #c278479e; font-family: 'Poppins', sans-serif;" href="#" id="n5" onclick="changec(this)" class="nav_link">
+                        <button style="height: max-content; text-decoration: none; color: #c8a47e; background:none; border: none;"  onClick="javascript:document.getElementById('logoutform').submit()">
+                            <i class='bx bx-log-out nav_icon' style="margin-right: 10px; margin-left: 0;"></i><span style="height: 110%;" class="nav_name">Sign Out</span>
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
+        </nav>
+    </div>
+    <div class="insbdy">
+        <div class="offer">
+            <h3>REVENUE</h3>
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="attendance">
+            <h3>PROFIT</h3>
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+    <div id="revenue">{{rev}}</div>
+ <script>
+
+    
+    let date = new Date(),
+    currYear = date.getFullYear(),
+    currMonth = date.getMonth();
+
+    var ctx = document.getElementById('chart').getContext('2d');
+
+    var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(1, '#c278479e');
+    gradient.addColorStop(0.2, '#c27847');
+    gradient.addColorStop(0, '#c278479e');
+
+    function getRndInt(min, max) 
+    {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const randayslst = [getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000),getRndInt(50000,100000)] 
+    const mth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const actmth = []
+    const actmth2 = []
+    const actdays = []
+    const actprof = []
+
+    function getmths()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actmth.push(mth[i]) 
+     }
+     return actmth
+    }
+    
+    function getmths2()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actmth2.push(mth[i]) 
+     }
+     return actmth2
+    }
+
+    function getdays()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actdays.push(randayslst[i]) 
+     }
+     return actdays
+    }
+
+    
+    function getprofits()
+    {
+     for (let i = 0; i < currMonth; i++)
+     {
+      actprof.push(randayslst[i]*0.60) 
+     }
+     return actprof
+    }
+
+    
+    var ctx1 = document.getElementById('chart1').getContext('2d');
+    var barColors = ["#c27847","#c278479e","#a1643c","#c2784777","#c2784766"];
+
+    var myChart1 = new Chart(ctx1, {
+    type: "pie",
+    data: {
+        labels: getmths().slice(0),
+        datasets: [{
+        backgroundColor: barColors,
+        data: getdays().slice(0)
+        }]
+    },
+    options: {
+        title: {
+        display: true,
+        text: "World Wide Wine Production 2018"
+        }
+    }
+    });
+
+    var ctx = document.getElementById('chart').getContext('2d');
+    var barColors = ["#c27847","#c278479e","#a1643c","#c2784777","#c2784766"];
+
+    var myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+        labels: getmths2().slice(0),
+        datasets: [{
+        backgroundColor: barColors,
+        data: getprofits().slice(0)
+        }]
+    },
+    options: {
+        title: {
+        display: true,
+        text: "World Wide Wine Production 2018"
+        }
+    }
+    });
+
+
+    const days = document.querySelector(".grid-container")
+    const bigdiv = document.getElementById("thebigd")
+
+    // getting new date, current year and month
+    let ds = JSON.parse('{{days}}');
+    let ms = JSON.parse('{{months}}');
+    console.log(ds)
+
+    // storing full name of all months in array
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+    const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+    const toggle = document.getElementById(toggleId),
+    nav = document.getElementById(navId),
+    bodypd = document.getElementById(bodyId),
+    headerpd = document.getElementById(headerId)
+
+    // Validate that all variables exist
+    if(toggle && nav && bodypd && headerpd){
+    toggle.addEventListener('click', ()=>{
+    // show navbar
+    nav.classList.toggle('show')
+    // change icon
+    toggle.classList.toggle('bx-x')
+    // add padding to body
+    bodypd.classList.toggle('body-pd')
+    // add padding to header
+    headerpd.classList.toggle('body-pd')
+    })
+    }
+    }
+
+    showNavbar('header-toggle','nav-bar','body-pd','header')
+
+    /*===== LINK ACTIVE =====*/
+    const linkColor = document.querySelectorAll('.nav_link')
+
+    function colorLink(){
+    if(linkColor){
+    linkColor.forEach(l=> l.classList.remove('active'))
+    this.classList.add('active')
+    }
+    }
+    linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+        // Your code to run since DOM is loaded and ready
+    });
+
+    // prevNextIcon.forEach(icon => { // getting prev and next icons
+    //     icon.addEventListener("click", () => { // adding click event on both icons
+    //         // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
+    //         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+    //         if(currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+    //             // creating a new date of current year & month and pass it as date value
+    //             date = new Date(currYear, currMonth, new Date().getDate());
+    //             currYear = date.getFullYear(); // updating current year with new date year
+    //             currMonth = date.getMonth(); // updating current month with new date month
+    //         } else {
+    //             date = new Date(); // pass the current date as date value
+    //         }
+    //         renderCalendar(); // calling renderCalendar function
+    //     });
+    // });
+ </script>
+</body>
+<!-- Joheal Antonio -->
+</html>

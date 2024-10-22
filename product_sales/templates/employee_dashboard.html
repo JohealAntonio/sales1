@@ -114,7 +114,7 @@
         display: flex;
         }
 
-        .offer, .attendance
+        .offer, .msgs, .attendance, .updts
         {
         width: 50%;
         border-radius: 20px;
@@ -124,12 +124,12 @@
         margin: 20px 10px 0 10px;
         }
 
-        .offer
+        .offer, .msgs
         {
         float: left;
         }
 
-        .attendance
+        .attendance, .updts
         {
         float: right;
         }
@@ -182,6 +182,10 @@
         background:#c8a47e; 
         }
 
+        #msginfo
+        {
+         font-size: 0;
+        }
 
     </style>
 </head>
@@ -251,15 +255,22 @@
         </div>
     </div>
     <div class="insbdy2">
-        <div class="offer">
+        <div class="msgs">
             <h3>MESSAGES</h3>
         </div>
-        <div class="attendance">
+        <div class="updts">
             <h3>UPDATES</h3>
         </div>
     </div>
+    <div id="msginfo">{{msginfo}}</div>
  <script>
 
+    const d = JSON.stringify(document.getElementById('msginfo').innerHTML);
+    const info = JSON.parse(d);
+    const msginfo = JSON.parse(info);
+    
+    console.log(msginfo)
+    
     let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();

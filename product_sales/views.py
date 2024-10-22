@@ -221,8 +221,21 @@ def getrev():
     tyrlist = [dict(zip(columns1, row)) for row in tstyrev]
 
     rev_list = []
-    for i in range(0,crmthint-1):
-        rev_list.append({'month':lyrlist[i]['month'], 'lastyearrevenue':lyrlist[i]['revenue'], 'thisyearrevenue':tyrlist[i]['revenue'], 'lyofrs':lyrlist[i]['offers_that_month'], 'tyofrs':tyrlist[i]['offers_that_month']})
+    # for i in range(0,crmthint-1):
+    #     rev_list.append({'month':lyrlist[i]['month'], 'lastyearrevenue':lyrlist[i]['revenue'], 'thisyearrevenue':tyrlist[i]['revenue'], 'lyofrs':lyrlist[i]['offers_that_month'], 'tyofrs':tyrlist[i]['offers_that_month']})
+    
+    if len(lyrlist) == len(tyrlist):
+        for i in range(len(lyrlist)):
+            rev_list.append({
+                'month': lyrlist[i]['month'],
+                'lastyearrevenue': lyrlist[i]['revenue'],
+                'thisyearrevenue': tyrlist[i]['revenue'],
+                'lyofrs': lyrlist[i]['offers_that_month'],
+                'tyofrs': tyrlist[i]['offers_that_month']
+            })
+    else:
+        # Handle the case where the lists have different lengths
+        print("Error: Lists have different lengths.")
 
     return json.dumps(rev_list)
 
@@ -230,7 +243,9 @@ def getrev():
 def dashboard(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
-            return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2]})
+            return render(request, 'employee_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2], 'msginfo':getmsgs()})
+        else:
+            return redirect('http://127.0.0.1:8000/manager/dashboard')
     else:
         return redirect('http://127.0.0.1:8000/loginpage/')
 
@@ -238,8 +253,26 @@ def md_dashboard(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return render(request, 'md_dashboard.html', {'days':getdnm()[1], 'months':getdnm()[2], 'users':getnames(), 'rev':getrev()})
+        else:
+            return redirect('http://127.0.0.1:8000/employee/dashboard')
     else:
         return redirect('http://127.0.0.1:8000/loginpage/')    
+
+def md_messages(request):
+    return render(request, 'md_messages.html')
+
+def md_finances(request):
+    return render(request, 'md_finance.html')
+
+def md_updates(request):
+    return render(request, 'md_updates.html')
+
+def md_messages_emps(request):
+    return render(request, 'md_messages_emps.html')
+
+def md_messages_clients(request):
+    return render(request, 'md_messages_clients.html')
+
 
 # def register_user(request):
 #     context = {}

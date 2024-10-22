@@ -23,8 +23,11 @@
         .nav_list1
         {
          margin-left: -32px;
-         max-width: fit-content;
+         width: 205px;
+         height: 575px;
+         background-color: rgb(238, 238, 238);
         }
+
 
         h3
         {
@@ -36,8 +39,8 @@
 
     </style>
 </head>
-<body style="background-color: rgb(238, 238, 238);" id="body-pd">
-    <header style="background-color: #ffdfc9;" class="header" id="header">
+<body style="background-color: rgb(255, 243, 237);" id="body-pd">
+    <header style="background-color: rgb(255, 223, 201);" class="header" id="header">
         <div style="margin-left: -10px; " class="header_toggle"><i style="display: flex; color: #c8a47e;" class='bx bx-menu' id="header-toggle"></i></div>
         <span style="display: flex; float: left; color: #c27847;"><p>Hey {{ request.user }}!</p></span>
     </header>
@@ -76,10 +79,9 @@
             <i id="emp" class="fi fi-rr-id-card-clip-alt"></i><span class="nav_name">Employees</span>
         </a> 
         <a style="color: #c27847; font-family: 'Poppins', sans-serif;" href="http://127.0.0.1:8000/manager/messages/clients" id="n8" class="nav_link">
-            <i id="cl" class="fi fi-rr-users"></i><span class="nav_name">Clients</span>
+            <i id="cl" class="fi fi-sr-users"></i><span class="nav_name">Clients</span>
         </a>
     </div>
-    <h3>Select who you want to message</h3>
  <script>
 
     document.addEventListener("DOMContentLoaded", function(event) {
